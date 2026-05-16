@@ -1,0 +1,9 @@
+{{ define "main" }}
+    <main class="max-w-xl">
+        <h1 class="text-3xl font-black mb-2">{{ .Title }}</h1>
+        <div class="text-sm text-slate-400 font-mono mb-6">Location: <code>/buildTestSite/content/posts/</code></div>
+        <div class="prose prose-invert">
+            {{ .Content }}
+        </div>
+    </main>
+{{ end }}

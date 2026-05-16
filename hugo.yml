@@ -1,0 +1,8 @@
+name: "Stellar Vector Theme"
+description: "Central theme for Stellar Vector sites"
+homepage: "https://github.com/stellarvector/theme#readme"
+min_hugo_version: "0.120.0"
+
+author:
+  name: "Stellar Vector"
+  homepage: "https://stellarvector.be"

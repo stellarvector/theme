@@ -1,0 +1,10 @@
+{{ define "main" }}
+    <main class="max-w-xl">
+        <h1 class="text-3xl font-black mb-6">{{ .Title }}</h1>
+        <ul class="space-y-2">
+            {{ range .Pages }}
+                <li><a href="{{ .RelPermalink }}" class="underline">{{ .Title }}</a></li>
+            {{ end }}
+        </ul>
+    </main>
+{{ end }}
