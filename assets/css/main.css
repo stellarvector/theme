@@ -9,8 +9,8 @@
     --color-card: light-dark(#f4eaea, #221010);
     --color-line: light-dark(#d21010, #421010);
 
-    --color-heading: light-dark(#0e0e0e, #f0f0f0);
-    --color-body: light-dark(#1a1a1a, #e5dede);
+    --color-heading: light-dark(#0e0e0e, #d0d0d0);
+    --color-body: light-dark(#1a1a1a, #cecece);
     --color-muted: light-dark(#606060, #a39595);
 
     --color-accent: light-dark(#b21010, #b21010);
