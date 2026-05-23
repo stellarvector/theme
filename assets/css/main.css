@@ -5,18 +5,19 @@
 @source "hugo_stats.json";
 
 @theme {
-    --color-page: light-dark(#fdfbfb, #1a1616);
-    --color-card: light-dark(#f4eeee, #282222);
-    --color-line: light-dark(#a38f8f, #3d3333);
+    --color-page: light-dark(#fff9f9, #0a0505);
+    --color-card: light-dark(#f4eaea, #121010);
+    --color-line: light-dark(#d21010, #421010);
 
-    --color-heading: light-dark(#120e0e, #fdfbfb);
-    --color-body: light-dark(#2d2525, #e5dede);
-    --color-muted: light-dark(#706060, #a39595);
+    --color-heading: light-dark(#0e0e0e, #f0f0f0);
+    --color-body: light-dark(#1a1a1a, #e5dede);
+    --color-muted: light-dark(#606060, #a39595);
 
     --color-accent: light-dark(#b21010, #b21010);
-    --color-accent-hover: light-dark(#940d0d, #940d0d);
-    --color-accent-tint: light-dark(#f9e7e7, #2f1212);
-    --color-accent-text: light-dark(#ffffff, #ffffff);
+    --color-accent-dark: light-dark(#821010, #821010);
+    --color-accent-light: light-dark(#e21010, #e21010);
+    --color-accent-tint: light-dark(#f2caca, #321010);
+    --color-accent-text: light-dark(#f0f0f0, #f0f0f0);
 
     --color-success-solid: light-dark(#1b6b43, #1b6b43);
     --color-success-tint: light-dark(#e8f5ee, #14291e);
@@ -60,12 +61,26 @@
         --tw-prose-td-borders: var(--color-line);
     }
 
-    .prose code {
-        @apply bg-accent-tint;
-    }
+    .prose {
+        code {
+            @apply bg-accent-tint rounded-sm;
+        }
 
-    .prose blockquote {
-        @apply bg-accent-tint px-6 py-1 rounded-r-md;
+        blockquote {
+            @apply bg-accent-tint px-6 py-1 rounded-r-md;
+        }
+
+        :where(p) {
+            @apply text-justify;
+        }
+
+        :where(ol, ul, li) {
+            @apply my-0;
+        }
+
+        :where(a) {
+            @apply no-underline hover:underline text-accent hover:text-accent-light;
+        }
     }
 
     body {
@@ -74,7 +89,7 @@
 
     h1, h2, h3, h4, h5, h6,
     .prose :where(h1, h2, h3, h4, h5, h6) {
-        @apply font-display font-bold text-heading mt-4 mb-2;
+        @apply font-display font-bold text-heading mt-6 mb-4;
     }
 
     h3, h4, h5, h6,
@@ -99,18 +114,10 @@
     }
 
     a {
-        @apply underline text-accent hover:text-accent-hover;
+        @apply no-underline hover:underline text-accent hover:text-accent-light;
     }
 
     hr, .prose :where(hr) {
-        @apply my-4;
-    }
-
-    .prose :where(p) {
-        @apply text-justify;
-    }
-
-    .prose :where(ol, ul, li) {
-        @apply my-0;
+        @apply my-8 border-line;
     }
 }
