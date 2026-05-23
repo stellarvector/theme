@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Title }}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    {{ $css := resources.Get "css/main.css" }}
+    {{ $opts := dict "minify" (not hugo.IsDevelopment) }}
+    {{ $style := $css | css.TailwindCSS $opts }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+</head>
+<body class="p-8 min-h-screen flex flex-col items-center">
+    <div class="max-w-3xl w-full">
+        <div class="max-w-none">
+            <p>This page showcases all elements in the Stellar Vector common theme. <a href="#" onclick="document.documentElement.classList.toggle('light');">Click here to toggle the theme</a>.</p>
+
+            <h1>Main styles</h1>
+            <h2>Typography</h2>
+            <div class="space-y-4 border-line border px-8 py-6 rounded-md bg-card">
+                <h1>Stellar Vector - Heading 1 - 5xl</h1>
+                <h2>Heading 2 - 4xl</h2>
+                <h3>Heading 3 - 3xl</h3>
+                <h4>Heading 4 - 2xl</h4>
+                <p>Standard paragraph text using the <span class="font-bold">Sans Font (Inter)</span>. It should be legible and well-spaced for technical reading.</p>
+                <p class="font-mono text-sm">Monospace text using Space Mono for code snippets and data display.</p>
+            </div>
+
+            <h2>Brand Colors</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="flex flex-col gap-2">
+                    <div class="h-16 w-full bg-accent rounded"></div>
+                    <span class="text-xs font-mono">Stellar Vector red</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="h-16 w-full bg-accent-hover rounded"></div>
+                    <span class="text-xs font-mono">Stellar Vector hover</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="h-16 w-full bg-accent-tint rounded"></div>
+                    <span class="text-xs font-mono">Stellar Vector tint</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="h-16 w-full bg-accent-text rounded"></div>
+                    <span class="text-xs font-mono">Stellar Vector text</span>
+                </div>
+            </div>
+
+            <h2>Background Hierarchy</h2>
+            <div class="not-prose space-y-4 mt-6">
+                <div class="p-4 bg-canvas border border-line rounded">bg-canvas (Level 0)</div>
+                <div class="p-4 bg-card border border-line rounded">bg-card (Level 1)</div>
+                <div class="p-4 bg-line border border-line rounded">bg-line (Level 2)</div>
+            </div>
+
+            <div class="prose max-w-none">
+                {{ $renderOpts := dict "display" "block" }}
+                {{ print `
+# Markdown typography
+
+This is a lead paragraph. If you want Tailwind to style it as a slightly larger, distinct introductory text, you can apply the ` "`lead`" ` class directly in HTML, or just rely on standard paragraph styling.
+
+This is a standard paragraph demonstrating **bold text**, *italic text*, and ~~strikethrough~~. We also have ` "`inline code`" ` snippets here, and a [standard hyperlink](https://example.com). The plugin styles all of these automatically within the prose block.
+
+## Headings
+
+### Heading 3
+#### Heading 4
+
+---
+
+## Blockquotes
+
+> Some random quote that noone has heard of
+
+*Note: Here is some italic text again, under a blockquote this time.*
+
+---
+
+## Lists
+
+### Unordered List
+* Apples
+* Oranges
+  * Mandarin
+  * Clementine
+* Bananas
+
+### Ordered List
+1. First, initialize the variable.
+2. Second, map over the array.
+    1. Check for null values.
+    2. Append to the new list.
+3. Return the result.
+
+---
+
+## Tables
+
+| Feature | Support | Description |
+| :--- | :---: | ---: |
+| Dark Mode | **Yes** | Uses ` "`.prose-invert`" ` |
+| Typography | **Yes** | Built-in via Tailwind |
+| Nested Lists | **Yes** | Fully supported |
+
+---
+
+## Code Blocks
+
+Here is a standard fenced code block to test your syntax highlighting and background variables:
+
+~~~javascript
+// This tests the --tw-prose-pre-bg and --tw-prose-pre-code variables
+function testTypography(isWorking) {
+    if (isWorking) {
+        console.log("Tailwind Typography is functioning perfectly.");
+    } else {
+        throw new Error("Check your @layer utilities");
+    }
+}
+~~~
+` | .RenderString $renderOpts }}
+            </div>
+
+            <h1>Components</h1>
+            <p>No components have been defined so far</p>
+        </div>
+    </div>
+</body>
+</html>
