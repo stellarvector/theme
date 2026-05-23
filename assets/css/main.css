@@ -6,7 +6,7 @@
 
 @theme {
     --color-page: light-dark(#fff9f9, #0a0505);
-    --color-card: light-dark(#f4eaea, #121010);
+    --color-card: light-dark(#f4eaea, #221010);
     --color-line: light-dark(#d21010, #421010);
 
     --color-heading: light-dark(#0e0e0e, #f0f0f0);
