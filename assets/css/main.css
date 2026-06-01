@@ -1,16 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;600&family=Space+Grotesk:wght@400;500&family=Space+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Space+Grotesk:wght@400;500&family=Space+Mono&display=swap');
 
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @source "hugo_stats.json";
+
+@custom-variant light (&:where(.light, .light *));
 
 @theme {
     --color-page: light-dark(#fff9f9, #0a0505);
     --color-card: light-dark(#f4eaea, #221010);
     --color-line: light-dark(#d21010, #421010);
 
-    --color-heading: light-dark(#0e0e0e, #d0d0d0);
-    --color-body: light-dark(#1a1a1a, #cecece);
+    --color-heading: light-dark(#0e0e0e, #e0e0e0);
+    --color-body: light-dark(#1a1a1a, #cfcfcf);
     --color-muted: light-dark(#606060, #a39595);
 
     --color-accent: light-dark(#b21010, #b21010);
@@ -28,7 +30,7 @@
     --color-error-text: light-dark(#c92a2a, #ff8787);
 
     --font-display: "Space Grotesk", sans-serif;
-    --font-sans: "Inter", sans-serif;
+    --font-sans: "IBM Plex Sans", sans-serif;
     --font-mono: "Space Mono", monospace;
 }
 
@@ -75,21 +77,17 @@
         }
 
         :where(ol, ul, li) {
-            @apply my-0;
-        }
-
-        :where(a) {
-            @apply no-underline hover:underline text-accent hover:text-accent-light;
+            @apply my-0 leading-tight;
         }
     }
 
     body {
-        @apply bg-page text-body font-sans font-light;
+        @apply bg-page text-body font-sans font-normal tracking-wide leading-relaxed font-light;
     }
 
     h1, h2, h3, h4, h5, h6,
     .prose :where(h1, h2, h3, h4, h5, h6) {
-        @apply font-display font-bold text-heading mt-6 mb-4;
+        @apply font-display font-black text-heading mt-6 mb-4;
     }
 
     h3, h4, h5, h6,
@@ -113,11 +111,15 @@
         @apply text-2xl;
     }
 
-    a {
-        @apply no-underline hover:underline text-accent hover:text-accent-light;
+    a, .prose :where(a) {
+        @apply underline decoration-from-font hover:underline text-accent-light cursor-pointer;
+    }
+
+    b, strong, .prose :where(b), .prose :where(strong) {
+        @apply font-black tracking-wider;
     }
 
     hr, .prose :where(hr) {
-        @apply my-8 border-line;
+        @apply my-8 border border-line;
     }
 }
