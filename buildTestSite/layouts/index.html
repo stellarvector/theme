@@ -2,28 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ .Title }}</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     {{ $css := resources.Get "css/main.css" }}
     {{ $opts := dict "minify" (not hugo.IsDevelopment) }}
     {{ $style := $css | css.TailwindCSS $opts }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}">
 </head>
-<body class="p-8 min-h-screen flex flex-col items-center">
+<body class="p-4 sm:p-8 min-h-screen flex flex-col items-center">
     <div class="max-w-3xl w-full">
         <div class="max-w-none">
-            <p class="text-muted">This page showcases all elements in the Stellar Vector common theme. <a href="#" onclick="document.documentElement.classList.toggle('light');">Click here to toggle the theme</a>.</p>
+            <p class="text-muted">This page showcases all elements in the Stellar Vector common theme.
+                <button type="button" class="text-link underline decoration-from-font underline-offset-4 hover:text-link-hover cursor-pointer"
+                        onclick="document.documentElement.classList.toggle('light');">Toggle the theme</button>.
+            </p>
 
-            <h1>Main styles</h1>
+            <h1 class="sv-marker">Main styles</h1>
+
             <h2>Typography</h2>
-            <div class="space-y-4 border-line border px-8 py-6 rounded-md bg-card">
-                <h1>Stellar Vector - Heading 1 - 5xl</h1>
-                <h2>Heading 2 - 4xl</h2>
-                <h3>Heading 3 - 3xl</h3>
-                <h4>Heading 4 - 2xl</h4>
+            <div class="space-y-4 border-line border px-4 sm:px-8 py-6 rounded-md bg-card">
+                <p class="sv-label">Type specimen</p>
+                <h1>Stellar Vector - Heading 1</h1>
+                <h2>Heading 2</h2>
+                <h3>Heading 3</h3>
+                <h4>Heading 4</h4>
                 <p>Standard paragraph text using the <span class="font-bold">Sans Font (IBM Plex Sans)</span>. It should be legible and well-spaced for technical reading.</p>
                 <p class="font-mono text-sm">Monospace text using Space Mono for code snippets and data display.</p>
             </div>
@@ -31,20 +34,40 @@
             <h2>Brand Colors</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                 <div class="flex flex-col gap-2">
-                    <div class="h-16 w-full bg-accent-tint rounded"></div>
-                    <span class="text-xs font-mono">Stellar Vector tint</span>
+                    <div class="h-16 w-full bg-accent-tint border border-line rounded"></div>
+                    <span class="sv-label">Tint</span>
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="h-16 w-full bg-accent-dark rounded"></div>
-                    <span class="text-xs font-mono">Stellar Vector dark</span>
+                    <span class="sv-label">Dark</span>
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="h-16 w-full bg-accent rounded"></div>
-                    <span class="text-xs font-mono">Stellar Vector red</span>
+                    <span class="sv-label">Red</span>
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="h-16 w-full bg-accent-light rounded"></div>
-                    <span class="text-xs font-mono">Stellar Vector light</span>
+                    <span class="sv-label">Light</span>
+                </div>
+            </div>
+
+            <h2>Semantic Colors</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="flex flex-col gap-2">
+                    <div class="h-16 w-full bg-page border border-line-strong rounded flex items-center justify-center text-link font-mono text-sm">link</div>
+                    <span class="sv-label">Link</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="h-16 w-full bg-page border border-line-strong rounded flex items-center justify-center text-terminal font-mono text-sm">output</div>
+                    <span class="sv-label">Terminal</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="h-16 w-full bg-success-tint border border-success-solid rounded flex items-center justify-center text-success-text font-mono text-sm">solved</div>
+                    <span class="sv-label">Success</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="h-16 w-full bg-error-tint border border-error-solid rounded flex items-center justify-center text-error-text font-mono text-sm">failed</div>
+                    <span class="sv-label">Error</span>
                 </div>
             </div>
 
@@ -52,7 +75,8 @@
             <div class="not-prose space-y-4 mt-6">
                 <div class="p-4 bg-page border border-line rounded">bg-page (Level 0)</div>
                 <div class="p-4 bg-card border border-line rounded">bg-card (Level 1)</div>
-                <div class="p-4 bg-line border border-line rounded">bg-line (Level 2)</div>
+                <div class="p-4 bg-surface border border-line rounded">bg-surface (Level 2)</div>
+                <div class="p-4 bg-page border border-line-strong rounded">border-line-strong (emphasised divider)</div>
             </div>
 
             <div class="prose max-w-none">
@@ -124,8 +148,61 @@ function testTypography(isWorking) {
 ` | .RenderString $renderOpts }}
             </div>
 
-            <h1>Components</h1>
-            <p>No components have been defined so far</p>
+            <h1 class="sv-marker">Character set</h1>
+            <p>Opt-in classes that carry the CTF flavour. None of them apply automatically, so prose content stays readable.</p>
+
+            <h2>Markers &amp; labels</h2>
+            <div class="space-y-3 border-line border px-4 sm:px-8 py-6 rounded-md bg-card">
+                <p class="sv-label">sv-label — section kicker</p>
+                <h3 class="sv-marker">sv-marker heading</h3>
+                <p class="font-mono sv-prompt">sv-prompt on a line of shell output</p>
+                <p class="font-mono sv-prompt-root">sv-prompt-root for privileged commands</p>
+                <p class="font-mono sv-caret">sv-caret trailing cursor</p>
+                <h3 class="sv-glitch" data-text="sv-glitch on hover">sv-glitch on hover</h3>
+            </div>
+
+            <h2>Tags</h2>
+            <div class="flex flex-wrap gap-2 mt-6">
+                <span class="sv-tag">web</span>
+                <span class="sv-tag">pwn</span>
+                <span class="sv-tag">crypto</span>
+                <span class="sv-tag sv-tag-accent">500 pts</span>
+                <span class="sv-tag sv-tag-solved">solved</span>
+                <span class="sv-tag sv-tag-failed">unsolved</span>
+            </div>
+
+            <h2>Terminal panel</h2>
+            <div class="sv-terminal mt-6" data-title="stellarvector@ctf ~">
+                <div>
+                    <p class="sv-prompt">nc challenge.example.be 1337</p>
+                    <p class="text-terminal">[+] connection established</p>
+                    <p class="text-muted">[*] waiting for input...</p>
+                    <p class="sv-caret"></p>
+                </div>
+            </div>
+
+            <h2>Backdrops &amp; glow</h2>
+            <div class="grid gap-4 sm:grid-cols-2 mt-6">
+                <div class="sv-grid border border-line rounded-md p-6">
+                    <p class="sv-label">sv-grid</p>
+                    <p>Coordinate grid backdrop.</p>
+                </div>
+                <div class="sv-scanlines bg-card border border-line rounded-md p-6">
+                    <p class="sv-label">sv-scanlines</p>
+                    <p>CRT overlay.</p>
+                </div>
+                <div class="bg-card border border-line rounded-md p-6">
+                    <p class="sv-label">sv-glow</p>
+                    <p class="sv-glow font-display font-bold text-2xl text-accent-light">Stellar Vector</p>
+                </div>
+                <div class="sv-glow-box bg-card border border-accent rounded-md p-6">
+                    <p class="sv-label">sv-glow-box</p>
+                    <p>Accent bloom around a panel.</p>
+                </div>
+            </div>
+
+            <h1 class="sv-marker">Components</h1>
+            <p>No layout components have been defined so far.</p>
         </div>
     </div>
 </body>

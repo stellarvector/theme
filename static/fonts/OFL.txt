@@ -1,0 +1,15 @@
+The fonts in this directory are licensed under the
+SIL Open Font License, Version 1.1.
+
+  Space Grotesk   (c) Florian Karsten
+                  https://github.com/floriankarsten/space-grotesk
+  IBM Plex Sans   (c) IBM Corp.
+                  https://github.com/IBM/plex
+  Space Mono      (c) Colophon Foundry
+                  https://github.com/googlefonts/spacemono
+
+Full license text: https://openfontlicense.org/open-font-license-official-text/
+
+These files are the latin and latin-ext woff2 subsets as distributed by
+Google Fonts, self-hosted here so that Stellar Vector sites do not send
+visitor IP addresses to fonts.gstatic.com.

@@ -8,6 +8,16 @@ disableKinds:
   - sitemap
   - robotsTXT
 
+security:
+  exec:
+    allow:
+      - '^(dart-)?sass$'
+      - '^go$'
+      - '^git$'
+      - '^node$'
+      - '^postcss$'
+      - '^tailwindcss$'
+
 build:
   buildStats:
     enable: true
