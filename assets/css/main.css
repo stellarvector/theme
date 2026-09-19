@@ -105,14 +105,24 @@
 }
 
 @theme {
-    /* Surfaces, low to high. Each step is a real elevation level, not a hue jump. */
+    /*
+     * Surfaces, low to high. Each step is a real elevation level, not a hue jump.
+     * The steps are deliberately small but never cosmetic: card sits at 1.13:1
+     * against page in both modes, which is enough for a panel to read as raised
+     * while keeping the near-black ground the identity is built on.
+     */
     --color-page: light-dark(#fff9f9, #0a0505);
-    --color-card: light-dark(#f7efef, #1a0d0d);
-    --color-surface: light-dark(#eedede, #2a1414);
+    --color-card: light-dark(#f5eaea, #221414);
+    --color-surface: light-dark(#e9d6d6, #332020);
 
-    /* Hairlines stay quiet; -strong is for deliberate rules and dividers. */
-    --color-line: light-dark(#e3cccc, #5e2828);
-    --color-line-strong: light-dark(#c08484, #7a2c2c);
+    /*
+     * Hairlines stay quiet; -strong is for deliberate rules and dividers.
+     * -strong is also the only boundary some components have (cards, chips,
+     * the search field), so it is held at >=3:1 against both page and card to
+     * meet WCAG 1.4.11 non-text contrast: 3.62/3.19 dark, 4.01/3.55 light.
+     */
+    --color-line: light-dark(#d9bcbc, #6e3232);
+    --color-line-strong: light-dark(#b06868, #a05050);
 
     --color-heading: light-dark(#0e0e0e, #f0eaea);
     --color-body: light-dark(#1a1a1a, #d8cccc);
@@ -122,7 +132,9 @@
     --color-accent: light-dark(#b21010, #b21010);
     --color-accent-dark: light-dark(#821010, #821010);
     --color-accent-light: light-dark(#e21010, #e21010);
-    --color-accent-tint: light-dark(#f7dede, #2e1414);
+    /* Tint doubles as the hover/selected fill on card surfaces, so it has to
+       clear card itself (1.21:1), not just page. */
+    --color-accent-tint: light-dark(#f0d0d0, #401e1e);
     --color-accent-text: light-dark(#f5f0f0, #f5f0f0);
 
     /* Link colours are separate from the brand ramp so both can stay legible. */
@@ -137,7 +149,9 @@
     --color-success-text: light-dark(#1b6b43, #72d9a2);
 
     --color-error-solid: light-dark(#c92a2a, #c92a2a);
-    --color-error-tint: light-dark(#ffebeb, #2c1414);
+    /* Dark tint tracks the card step: at #2c1414 it went flat (1.03:1) once
+       card was raised, leaving the failed chip with no fill at all. */
+    --color-error-tint: light-dark(#ffebeb, #3a1c1c);
     --color-error-text: light-dark(#a81c1c, #ff8787);
 
     --font-display: "Space Grotesk", sans-serif;
@@ -150,8 +164,9 @@
 :root {
     color-scheme: dark;
     scroll-behavior: smooth;
-    /* Keep anchored headings clear of any sticky site chrome. */
-    scroll-padding-top: 5rem;
+    /* Keep anchored headings clear of any sticky site chrome: the tallest
+       header is md:h-20 (5rem), plus room to breathe. */
+    scroll-padding-top: 6rem;
 }
 
 .light {
@@ -185,7 +200,10 @@
         --tw-prose-lead: var(--color-muted);
         --tw-prose-links: var(--color-link);
         --tw-prose-bold: var(--color-heading);
-        --tw-prose-counters: var(--color-accent-light);
+        /* Bullets are decorative and may stay on the brand ramp. Ordered-list
+           numbers are content, so they need text contrast: accent-light is only
+           3.66:1 on card in dark mode, link is 6.02:1. */
+        --tw-prose-counters: var(--color-link);
         --tw-prose-bullets: var(--color-accent-light);
         --tw-prose-hr: var(--color-line-strong);
         --tw-prose-quotes: var(--color-body);
@@ -314,12 +332,19 @@
         margin-left: 0.15em;
     }
 
-    /* Category / difficulty chips. Stays on one line by contract. */
+    /*
+     * Category / difficulty chips. Stays on one line by contract.
+     *
+     * py-1.5 rather than py-1: at 12px/1rem text that is a 30px target instead
+     * of 26px. Still short of the 44pt/48dp platform guidance, but chips are a
+     * dense wrapped collection where full-size targets would wreck the layout;
+     * WCAG 2.2 target-size (24px) is cleared with room to spare.
+     */
     .sv-tag {
         @apply inline-flex items-center gap-1.5 whitespace-nowrap min-w-0
                font-mono text-xs uppercase tracking-widest
                border border-line-strong bg-card text-body
-               px-2 py-1 rounded-sm;
+               px-2 py-1.5 rounded-sm;
     }
 
     .sv-tag-accent {
