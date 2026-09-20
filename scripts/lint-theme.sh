@@ -92,7 +92,7 @@ while read -r partial_path; do
     rel_path=$(echo "$partial_path" | sed "s|.*layouts/partials/||")
     partial_name="${rel_path%.html}"
     
-    if ! grep -rq "partial \"$partial_name\"" "$THEME_ROOT/layouts" "$THEME_ROOT/exampleSite/layouts" | grep -v "$partial_path" > /dev/null; then
+    if ! grep -r "partial \"$partial_name\"" "$THEME_ROOT/layouts" "$THEME_ROOT/exampleSite/layouts" | grep -v "$partial_path" > /dev/null; then
         echo "WARN: Partial '$partial_name' seems unused."
     fi
 done < <(find "$THEME_ROOT/layouts/partials/sv" -name "*.html")
