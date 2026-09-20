@@ -31,7 +31,7 @@
                        id="password" name="password" type="password" value="" required>
             </div>
 
-            <input type="hidden" name="nonce" value="{{ Session.get('csrf_token') }}">
+            <input type="hidden" name="nonce" value="{{ Session.nonce }}">
 
             <button type="submit" class="group mt-2 font-mono font-bold no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-2.5 px-6">
                 Login
