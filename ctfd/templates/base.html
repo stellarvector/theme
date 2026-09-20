@@ -9,9 +9,9 @@
     <meta name="theme-color" content="#0a0505">
     <title>{% block title %}{{ get_config('ctf_name') }}{% endblock %}</title>
     
-    <link rel="stylesheet" href="{{ url_for('views.themes', theme='sv', path='static/css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('views.themes', theme='sv', path='css/main.css') }}">
     
-    <script src="{{ url_for('views.themes', theme='sv', path='static/js/sv-theme.js') }}"></script>
+    <script src="{{ url_for('views.themes', theme='sv', path='js/sv-theme.js') }}"></script>
     
     {% block head %}{% endblock %}
 </head>
@@ -24,7 +24,7 @@
 
     {% include "partials/footer.html" %}
 
-    <script defer src="{{ url_for('views.themes', theme='sv', path='static/js/sv-chrome.js') }}"></script>
+    <script defer src="{{ url_for('views.themes', theme='sv', path='js/sv-chrome.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>
