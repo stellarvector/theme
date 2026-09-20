@@ -48,8 +48,8 @@ if [ -d "static/icons" ]; then cp -r static/icons "$FINAL_DIR/static/"; fi
 # Copy ONLY minified css and js
 mkdir -p "$FINAL_DIR/static/css"
 mkdir -p "$FINAL_DIR/static/js"
-cp static/css/*.min.css "$FINAL_DIR/static/css/"
-cp static/js/*.min.js "$FINAL_DIR/static/js/"
+if ls static/css/*.min.css >/dev/null 2>&1; then cp static/css/*.min.css "$FINAL_DIR/static/css/"; fi
+if ls static/js/*.min.js >/dev/null 2>&1; then cp static/js/*.min.js "$FINAL_DIR/static/js/"; fi
 
 # 5. Cleanup
 rm -rf "$TEMP_BUILD"

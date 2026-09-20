@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build:css": "tailwindcss -i static/css/main.css -o static/css/main.min.css --minify",
-    "build:js": "for f in static/js/*.js; do if [[ $f != *.min.js ]]; then npx terser $f -o ${f%.js}.min.js --compress --mangle; fi; done",
+    "build:js": "for f in static/js/*.js; do case \"$f\" in *.min.js) :;; *) terser \"$f\" -o \"${f%.js}.min.js\" --compress --mangle;; esac; done",
     "build": "npm run build:css && npm run build:js"
   },
   "devDependencies": {
