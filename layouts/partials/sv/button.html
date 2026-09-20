@@ -4,7 +4,8 @@
 
         {{ partial "sv/button" (dict "text" "Click me" "url" "/foo") }}
 
-    text        required. Button label.
+    text        optional. Button label (used if html is absent).
+    html        optional. Raw HTML for button content (e.g. for responsive text).
     url         optional. Target URL. If absent, renders as a <button>.
     variant     optional. "solid" (default), "outline", or "ghost".
     size        optional. "md" (default) or "sm".
@@ -44,7 +45,7 @@
        {{ with .aria_label }}aria-label="{{ . }}"{{ end }}
        {{ range $k, $v := .data }}data-{{ $k }}="{{ $v }}"{{ end }}>
         {{- with .icon }}{{ partial "sv/icon" (dict "name" . "class" "h-5 w-auto shrink-0") }}{{ end -}}
-        <span>{{ .text }}</span>
+        <span>{{ with .html }}{{ . | safeHTML }}{{ else }}{{ .text }}{{ end }}</span>
         {{- if $external }}{{ partial "sv/external-mark" . }}{{ end -}}
     </a>
 {{- else -}}
@@ -52,6 +53,6 @@
             {{ with .aria_label }}aria-label="{{ . }}"{{ end }}
             {{ range $k, $v := .data }}data-{{ $k }}="{{ $v }}"{{ end }}>
         {{- with .icon }}{{ partial "sv/icon" (dict "name" . "class" "h-5 w-auto shrink-0") }}{{ end -}}
-        <span>{{ .text }}</span>
+        <span>{{ with .html }}{{ . | safeHTML }}{{ else }}{{ .text }}{{ end }}</span>
     </button>
 {{- end -}}
