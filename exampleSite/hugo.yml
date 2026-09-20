@@ -1,5 +1,5 @@
 baseURL: "https://localhost:1313/"
-title: "Stellar Vector Theme"
+title: "Stellar Vector Gallery"
 
 disableKinds:
   - taxonomy
@@ -7,6 +7,33 @@ disableKinds:
   - RSS
   - sitemap
   - robotsTXT
+
+params:
+  host: "example"
+  analytics:
+    website_id: ""
+    domains: "localhost"
+  css:
+    extra:
+      - "css/chroma.css"
+      - "css/gallery.css"
+  external_links:
+    - title: "Main Site"
+      url: "https://stellarvector.be"
+    - title: "Blog"
+      url: "https://blog.stellarvector.be"
+
+menu:
+  main:
+    - name: "home"
+      url: "/"
+      weight: 1
+    - name: "about"
+      url: "/#typography"
+      weight: 2
+    - name: "components"
+      url: "/#components"
+      weight: 3
 
 security:
   exec:
@@ -31,6 +58,8 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+  highlight:
+    noClasses: false
 
 module:
   imports:

@@ -1,0 +1,412 @@
+{{ define "main" }}
+    <div class="max-w-5xl mx-auto p-6 sm:p-12">
+        <header class="mb-12">
+            <h1 class="sv-glitch sv-glitch-auto text-4xl font-bold mb-4" data-text="Stellar Vector Gallery">Stellar Vector Gallery</h1>
+            <p class="text-muted max-w-2xl mb-8 leading-relaxed">
+                This gallery is the living contract for the Stellar Vector theme. Every exported component, partial, and utility class must be represented here.
+            </p>
+            <div class="flex items-center gap-4">
+                {{ partial "sv/theme-toggle" (dict "variant" "inline") }}
+                <span class="text-xs text-muted">← Use this toggle to test sv-chrome.js and mode-aware highlighting</span>
+            </div>
+        </header>
+
+        <nav class="mb-12 flex flex-wrap gap-x-4 gap-y-2 font-mono text-sm border-y border-line py-4">
+            <a href="#skeleton" class="hover:text-accent">Skeleton</a>
+            <a href="#palette" class="hover:text-accent">Palette</a>
+            <a href="#typography" class="hover:text-accent">Typography</a>
+            <a href="#character" class="hover:text-accent">Character Set</a>
+            <a href="#tags" class="hover:text-accent">Tags</a>
+            <a href="#terminal" class="hover:text-accent">Terminal</a>
+            <a href="#headings" class="hover:text-accent">Headings</a>
+            <a href="#safe-areas" class="hover:text-accent">Safe Areas</a>
+            <a href="#icons" class="hover:text-accent">Icons</a>
+            <a href="#buttons" class="hover:text-accent">Buttons</a>
+            <a href="#navigation" class="hover:text-accent">Navigation</a>
+            <a href="#chrome" class="hover:text-accent">Chrome</a>
+            <a href="#footer-gallery" class="hover:text-accent">Footer</a>
+        </nav>
+
+        <section id="skeleton" class="gallery-section">
+            <h2 class="gallery-header">Document Skeleton</h2>
+            <span class="gallery-caption">The shared baseof.html structure. Standardizes head assembly and layout blocks.</span>
+            <div class="border border-line p-6 rounded bg-card space-y-4">
+                <p class="text-sm">The theme provides four named blocks for customization:</p>
+                <ul class="list-disc list-inside text-xs font-mono space-y-2 text-muted">
+                    <li>head: For site-specific head tags (e.g., MathJax)</li>
+                    <li>header: To override the default sv/header</li>
+                    <li>main: The primary content area (this section)</li>
+                    <li>footer: To override the default sv/footer</li>
+                    <li>body-end: For dialogs, templates, and scripts at the end of body</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="palette" class="gallery-section">
+            <h2 class="gallery-header">1. Palette</h2>
+            <span class="gallery-caption">The core color system. Every token pair is computed for contrast in both modes.</span>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="border border-line p-6 rounded bg-card">
+                    <h3 class="sv-label mb-4">Core Surfaces</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4">
+                            <div class="h-12 bg-page border border-line-strong rounded flex items-center justify-center text-xs text-body">page</div>
+                            <div class="h-12 bg-card border border-line rounded flex items-center justify-center text-xs text-body">card</div>
+                            <div class="h-12 bg-surface border border-line rounded flex items-center justify-center text-xs text-body">surface</div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="h-12 bg-accent rounded flex items-center justify-center text-xs text-white">accent</div>
+                            <div class="h-12 bg-accent-tint rounded flex items-center justify-center text-xs text-on-accent-tint">tint</div>
+                            <div class="h-12 bg-accent-dark rounded flex items-center justify-center text-xs text-white">dark</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-line p-6 rounded bg-card flex flex-col justify-center">
+                    <p class="text-sm text-muted leading-relaxed">Use the theme toggle at the top of the page to see how these surfaces adapt to light mode.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="typography" class="gallery-section">
+            <h2 class="gallery-header">2. Typography</h2>
+            <span class="gallery-caption">IBM Plex Sans for prose, Space Mono for terminal UI and metadata.</span>
+            
+            <div class="prose max-w-none border border-line p-6 rounded bg-card">
+                <h1 class="sv-glitch" data-text="Heading 1 — Glitching">Heading 1 — Glitching</h1>
+                <h2>Heading 2 — Jumps over the lazy dog</h2>
+                <h3>Heading 3 — Sphinx of black quartz</h3>
+                <h4>Heading 4 — Pack my box with five dozen</h4>
+                <p>Paragraph text. Stellar Vector uses <strong>bold text</strong> for emphasis and <em>italics</em> for secondary notes. We also support <a href="#">hyperlinks</a> and <code>inline code</code>.</p>
+                <ul>
+                    <li>Unordered list item one</li>
+                    <li>Nested list item
+                        <ul>
+                            <li>Deeply nested item</li>
+                        </ul>
+                    </li>
+                </ul>
+                <blockquote>"The only way to win is not to play." — WOPR</blockquote>
+                <pre><code>// Code block in prose
+function stellar() {
+  return "vector";
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="character" class="gallery-section">
+            <h2 class="gallery-header">3. Character Set</h2>
+            <span class="gallery-caption">Opt-in classes that define the "terminal" aesthetic.</span>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="border border-line p-6 rounded bg-card space-y-6">
+                    <div>
+                        <span class="sv-label block mb-2">sv-label</span>
+                        <p class="text-xs uppercase tracking-widest font-mono">12px mono, 0.2em tracking. Use for kickers and small metadata.</p>
+                    </div>
+                    <div>
+                        <h3 class="sv-marker">sv-marker</h3>
+                        <p class="text-sm">Adds a prompt-like prefix to headings.</p>
+                    </div>
+                    <div>
+                        <p class="sv-prompt">sv-prompt (Standard command prompt)</p>
+                        <p class="sv-prompt-root">sv-prompt-root (Privileged prompt)</p>
+                    </div>
+                    <div>
+                        <span class="sv-caret text-xl">sv-caret (Scaling blinking block cursor)</span>
+                    </div>
+                    <div>
+                        <h3 class="sv-section-title sv-prompt">sv-section-title</h3>
+                        <p class="text-xs text-muted mt-1 leading-relaxed">Section heading inside a page. Bold, uppercase, and larger than sv-label.</p>
+                    </div>
+                </div>
+                <div class="border border-line p-6 rounded bg-card space-y-6">
+                    <div>
+                        <h3 class="sv-glitch sv-glitch-auto hover:text-accent" data-text="sv-glitch">sv-glitch</h3>
+                        <span class="gallery-caption">Glitches automatically every few seconds (sv-glitch-auto), and continuously on hover. Cursor becomes a crosshair.</span>
+                    </div>
+                    <div class="h-24 sv-grid border border-line rounded flex items-center justify-center">
+                        <span class="sv-label bg-page px-2">sv-grid backdrop</span>
+                    </div>
+                    <div class="h-24 sv-grid sv-grid-fade border border-line rounded flex items-end justify-center">
+                        <span class="sv-label bg-page px-2 mb-2">sv-grid-fade</span>
+                    </div>
+                    <div class="h-24 sv-scanlines border border-line rounded flex items-center justify-center bg-card">
+                        <span class="sv-label px-2">sv-scanlines overlay</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tags" class="gallery-section">
+            <h2 class="gallery-header">4. Tags</h2>
+            <span class="gallery-caption">Status indicators and metadata chips. Powered by sv/tag.</span>
+            
+            <div class="space-y-8">
+                <div class="gallery-item border border-line p-6 rounded bg-card">
+                    <span class="sv-label mb-2 block">sv/tag Partial</span>
+                    <p class="text-xs text-muted mb-4 leading-relaxed">Recommended for managed contracts. Supports icons for status clarity.</p>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        {{ partial "sv/tag" (dict "text" "default") }}
+                        {{ partial "sv/tag" (dict "text" "accent" "variant" "accent") }}
+                        {{ partial "sv/tag" (dict "text" "solved" "variant" "solved" "icon" "pin") }}
+                        {{ partial "sv/tag" (dict "text" "static" "variant" "static") }}
+                        {{ partial "sv/tag" (dict "text" "neutral" "variant" "neutral") }}
+                    </div>
+                </div>
+
+                <div class="gallery-item border border-line p-6 rounded bg-card">
+                    <span class="sv-label mb-2 block">sv-tag Classes (Manual Usage)</span>
+                    <p class="text-xs text-muted mb-4 leading-relaxed">Direct CSS classes for non-Hugo elements or simple styling overrides.</p>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <span class="sv-tag">sv-tag</span>
+                        <span class="sv-tag sv-tag-accent">sv-tag-accent</span>
+                        <span class="sv-tag sv-tag-solved">sv-tag-solved</span>
+                        <span class="sv-tag sv-tag-static">sv-tag-static</span>
+                        <span class="sv-tag sv-tag-neutral">sv-tag-neutral</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="terminal" class="gallery-section">
+            <h2 class="gallery-header">5. Terminal Panel</h2>
+            <span class="gallery-caption">sv-terminal container and sv/terminal-title partial.</span>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="sv-terminal" data-title="stellarvector@example ~">
+                    <p class="sv-prompt">cat README.md</p>
+                    <p class="text-terminal">Welcome to the Stellar Vector terminal.</p>
+                    <p class="text-muted"># This uses data-title</p>
+                    <p class="sv-caret"></p>
+                </div>
+                <div class="sv-terminal">
+                    {{ partial "sv/terminal-title" "title bar partial" }}
+                    <div class="p-4">
+                        <p class="text-sm">This uses sv/terminal-title manually.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="headings" class="gallery-section">
+            <h2 class="gallery-header">9. Command & Headings</h2>
+            <span class="gallery-caption">sv/command and sv/page-heading partials.</span>
+            
+            <div class="space-y-8 border border-line p-6 rounded bg-card">
+                <div>
+                    <span class="sv-label mb-2 block">sv/command</span>
+                    {{ partial "sv/command" (dict "text" "whoami") }}
+                </div>
+                <hr class="border-line">
+                <div>
+                    <span class="sv-label mb-2 block">sv/page-heading</span>
+                    {{ partial "sv/page-heading" (dict "label" "cat /etc/motd" "title" "Welcome Home") }}
+                </div>
+            </div>
+        </section>
+
+        <section id="safe-areas" class="gallery-section">
+            <h2 class="gallery-header">Safe Area Layout</h2>
+            <span class="gallery-caption">Classes that handle viewport-fit=cover insets.</span>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                <div class="sv-safe-top bg-card p-4 border border-line">sv-safe-top (adds padding-top)</div>
+                <div class="sv-safe-bottom bg-card p-4 border border-line">sv-safe-bottom (adds padding-bottom)</div>
+                <div class="sv-safe-fixed-top sticky bg-surface p-4 border border-accent">sv-safe-fixed-top (sticky/fixed top offset)</div>
+                <div class="sv-safe-offset-bottom hidden">sv-safe-offset-bottom (used for floating elements)</div>
+                <div class="md:col-span-2 p-4 text-muted leading-relaxed">
+                    Note: sv-safe-fixed-top-right is used for the floating theme toggle. sv-safe-offset-bottom is used to position elements above bottom safe areas.
+                </div>
+            </div>
+        </section>
+
+        <section id="icons" class="gallery-section">
+            <h2 class="gallery-header">6. Icons</h2>
+            <span class="gallery-caption">All UI and Brand icons. Powered by sv/icon.</span>
+            
+            <h3 class="sv-label mt-8 mb-4">UI Icons (Heroicons Outline)</h3>
+            <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-4">
+                {{ range (resources.Match "icons/ui/*.svg") }}
+                    {{ $name := (path.Base .Name) | replaceRE "\\.svg$" "" }}
+                    <div class="flex flex-col items-center p-2 border border-line rounded bg-card hover:border-accent group">
+                        {{ partial "sv/icon" (dict "name" $name "set" "ui" "class" "h-6 w-6 mb-2 group-hover:text-accent") }}
+                        <span class="text-[10px] font-mono truncate w-full text-center">{{ $name }}</span>
+                    </div>
+                {{ end }}
+            </div>
+
+            <h3 class="sv-label mt-8 mb-4">Brand Icons</h3>
+            <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-4">
+                {{ range (resources.Match "icons/brand/*.svg") }}
+                    {{ $name := (path.Base .Name) | replaceRE "\\.svg$" "" }}
+                    <div class="flex flex-col items-center p-2 border border-line rounded bg-card hover:border-accent group">
+                        {{ partial "sv/icon" (dict "name" $name "set" "brand" "class" "h-6 w-6 mb-2 group-hover:text-accent") }}
+                        <span class="text-[10px] font-mono truncate w-full text-center">{{ $name }}</span>
+                    </div>
+                {{ end }}
+            </div>
+        </section>
+
+        <section id="buttons" class="gallery-section">
+            <h2 class="gallery-header">7. Buttons</h2>
+            <span class="gallery-caption">sv/button — variants and sizes. Now with consistent animated external arrows.</span>
+            
+            <div class="space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4 border border-line p-4 rounded bg-card">
+                        <span class="sv-label mb-2 block">Variants (md)</span>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            {{ partial "sv/button" (dict "text" "Solid") }}
+                            {{ partial "sv/button" (dict "text" "Outline" "variant" "outline") }}
+                            {{ partial "sv/button" (dict "text" "Ghost" "variant" "ghost") }}
+                        </div>
+                    </div>
+                    <div class="space-y-4 border border-line p-4 rounded bg-card">
+                        <span class="sv-label mb-2 block">Sizes (solid)</span>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            {{ partial "sv/button" (dict "text" "Medium (Default)") }}
+                            {{ partial "sv/button" (dict "text" "Small" "size" "sm") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4 border border-line p-4 rounded bg-card">
+                        <span class="sv-label mb-2 block">Features</span>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            {{ partial "sv/button" (dict "text" "With Icon" "icon" "github") }}
+                            {{ partial "sv/button" (dict "text" "External" "url" "https://example.com") }}
+                            {{ partial "sv/button" (dict "text" "Full Width" "full" true) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="navigation" class="gallery-section">
+            <h2 class="gallery-header">Navigation & Breadcrumbs</h2>
+            
+            <div class="gallery-item mb-8">
+                <span class="gallery-caption">sv/nav-link — Standardized menu items with underlines and terminal prefixes.</span>
+                <div class="flex flex-wrap gap-4 border border-line p-4 rounded bg-card">
+                    {{ partial "sv/nav-link" (dict "text" "active page" "url" "/" "page" . "active" true) }}
+                    {{ partial "sv/nav-link" (dict "text" "inactive" "url" "/other" "page" . "active" false) }}
+                    {{ partial "sv/nav-link" (dict "text" "external site" "url" "https://example.com" "page" .) }}
+                </div>
+            </div>
+
+            <div class="gallery-item mb-8">
+                <span class="gallery-caption">sv/external-mark — Indicator for outside links. Animated on hover.</span>
+                <div class="flex items-center gap-4 border border-line p-4 rounded bg-card">
+                    <a href="https://example.com" target="_blank" rel="noopener" class="group hover:text-link flex items-center">
+                        Example Link {{ partial "sv/external-mark" . }}
+                    </a>
+                    <span class="text-xs text-muted">(Used automatically by sv/nav-link and sv/button for external URLs)</span>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <span class="gallery-caption">sv/breadcrumbs — Site-agnostic path indicator (lowercase).</span>
+                <div class="border border-line p-4 rounded bg-card">
+                    {{ partial "sv/breadcrumbs" (dict "items" (slice (dict "title" "Home" "url" "/") (dict "title" "Gallery" "url" "/gallery") (dict "title" "Current Page"))) }}
+                </div>
+            </div>
+        </section>
+
+        <section id="header" class="gallery-section">
+            <h2 class="gallery-header">15. Header</h2>
+            <span class="gallery-caption">sv/header — Sticky navigation shell with slots. The page's actual header (at the top) is the live specimen.</span>
+            <div class="border border-line rounded bg-card overflow-hidden">
+                {{ partial "sv/header" . }}
+            </div>
+            <div class="mt-4 p-4 border border-line rounded bg-surface">
+                <h3 class="sv-label mb-2">header-actions slot</h3>
+                <p class="text-xs text-muted leading-relaxed">Sites can inject custom actions (like a Search button) into the header.</p>
+            </div>
+        </section>
+
+        <section id="logos" class="gallery-section">
+            <h2 class="gallery-header">14. Logo & Host Chip</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="gallery-item border border-line p-6 rounded bg-card">
+                    <span class="gallery-caption">sv/logo — standard sizes (sm vs md). Alt text included for lighthouse.</span>
+                    <div class="flex items-center gap-8">
+                        <div class="flex flex-col items-center gap-2">
+                            {{ partial "sv/logo" (dict "size" "md") }}
+                            <span class="sv-label">md</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            {{ partial "sv/logo" (dict "size" "sm") }}
+                            <span class="sv-label">sm</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item border border-line p-6 rounded bg-card">
+                    <span class="gallery-caption">sv/host-chip — modern terminal-style host label. Accessible contrast for 'sv'.</span>
+                    <div class="flex items-center gap-4">
+                        {{ partial "sv/host-chip" . }}
+                        <span class="text-xs text-muted">← Identifies the current host</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skip-link" class="gallery-section">
+            <h2 class="gallery-header">17. Skip Link</h2>
+            <span class="gallery-caption">sv/skip-link — Accessibility helper. Appears on focus.</span>
+            <div class="p-4 border border-line rounded bg-card flex justify-center">
+                {{ partial "sv/skip-link" (dict "label" "Press TAB to see me" "target" "#") }}
+            </div>
+        </section>
+
+        <section id="chrome" class="gallery-section">
+            <h2 class="gallery-header">12. Theme Toggle & Mobile Menu</h2>
+            <span class="gallery-caption">sv/theme-toggle and sv-chrome.js behaviors. Use browser mobile emulation (F12) to test the real mobile menu in the header.</span>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-8">
+                <div class="border border-line p-4 rounded bg-card">
+                    <span class="sv-label mb-4 block">Inline Variant</span>
+                    <div class="flex justify-center">
+                        {{ partial "sv/theme-toggle" (dict "variant" "inline") }}
+                    </div>
+                </div>
+                <div class="border border-line p-4 rounded bg-card">
+                    <span class="sv-label mb-4 block">Mobile Variant</span>
+                    <div class="bg-surface rounded border border-line">
+                        {{ partial "sv/theme-toggle" (dict "variant" "inline" "mobile" true) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 border border-line p-4 rounded bg-card max-w-sm">
+                <span class="sv-label mb-4 block">Floating Toggle (Top-Right)</span>
+                <p class="text-xs text-muted leading-relaxed">A fixed toggle for pages without a header. Now positioned top-right.</p>
+                {{ partial "sv/theme-toggle" (dict "variant" "floating") }}
+            </div>
+        </section>
+
+        <section id="highlighting" class="gallery-section">
+            <h2 class="gallery-header">18. Syntax Highlighting</h2>
+            <span class="gallery-caption">Powered by chroma.css. Now follows the theme correctly via class-based mode switching.</span>
+            
+            <div class="space-y-6">
+                <h3 class="sv-label">Bash</h3>
+                {{ highlight "echo \"Hello World\"\nls -la /var/log" "bash" "" }}
+                
+                <h3 class="sv-label">Go</h3>
+                {{ highlight "package main\nimport \"fmt\"\nfunc main() {\n  fmt.Println(\"Stellar Vector\")\n}" "go" "" }}
+            </div>
+        </section>
+
+        <section id="footer-gallery" class="gallery-section">
+            <h2 class="gallery-header">16. Footer</h2>
+            <span class="gallery-caption">sv/footer — Standardized family-wide credits, social grid (8 cols above 930px), and Hub link.</span>
+            <div class="border border-line rounded bg-card">
+                {{ partial "sv/footer" . }}
+            </div>
+        </section>
+    </div>
+{{ end }}

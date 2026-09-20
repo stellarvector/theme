@@ -1,0 +1,63 @@
+{{- /*
+    sv/footer.html -- Standardized site footer.
+    Features credits, social links, and copyright.
+*/ -}}
+
+{{- $measure := site.Params.measure | default "5xl" -}}
+{{- $labels := dict
+    "github" "GitHub" "htb" "Hack The Box" "ctftime" "CTFtime"
+    "linkedin" "LinkedIn" "x" "X" "facebook" "Facebook"
+    "instagram" "Instagram" "discord" "Discord" "mailing" "Mailing List" "email" "Email"
+-}}
+
+<footer class="sv-safe-bottom mt-auto border-t border-line-strong bg-card print:hidden">
+    <div class="mx-auto w-full max-w-{{ $measure }} px-4 py-10 sm:px-6">
+        <div class="grid gap-12 min-[930px]:grid-cols-2 text-center min-[930px]:text-left">
+            {{- /* Left: Credits */ -}}
+            <div class="flex flex-col">
+                <p class="sv-label mb-4">{{ site.Params.credit.org | lower }}</p>
+                <p class="text-sm text-muted text-pretty leading-relaxed">
+                    Powered by the
+                    {{ range $index, $parent := site.Params.credit.parents -}}
+                        {{- if $index }}, {{ if eq (add $index 1) (len site.Params.credit.parents) }}and {{ end }}{{ end -}}
+                        <a href="{{ $parent.url }}" class="hover:text-link">{{ $parent.name }}</a>
+                    {{- end }}.
+                </p>
+                <p class="mt-3 flex items-center justify-center min-[930px]:justify-start gap-1.5 text-sm text-muted">
+                    A
+                    <a href="{{ site.Params.credit.loko_url }}" class="inline-flex items-center text-muted hover:text-link no-underline" target="_blank" rel="noopener" aria-label="LOKO website">
+                        {{ partial "sv/icon" (dict "name" "loko" "class" "h-4 w-auto") }}
+                        <span class="sr-only">LOKO</span>
+                    </a>
+                    recognized association.
+                </p>
+            </div>
+
+            {{- /* Right: Social Links & Hub */ -}}
+            <div class="flex flex-col items-center min-[930px]:items-start">
+                <p class="sv-label mb-6">find us</p>
+                {{- /* Container restricted to exactly 4 items wide on small screens to force 2 rows */ -}}
+                <div class="grid grid-cols-4 sm:flex sm:flex-wrap gap-2 mb-8 max-w-[240px] sm:max-w-none">
+                    {{ range $key, $val := site.Params.social -}}
+                        <a href="{{ $val }}" target="_blank" rel="noopener" 
+                           aria-label="{{ index $labels $key | default ($key | title) }}"
+                           class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
+                            {{ partial "sv/icon" (dict "name" $key "class" "size-6") }}
+                        </a>
+                    {{- end }}
+                </div>
+                
+                {{- if ne site.Params.host "find" -}}
+                    {{ partial "sv/button" (dict "text" "find.stellarvector.be" "url" "https://find.stellarvector.be" "variant" "ghost" "size" "sm" "class" "!-ml-2") }}
+                {{- end -}}
+            </div>
+        </div>
+
+        {{- /* Footer Extra Slot (e.g. blog disclaimer) */ -}}
+        {{ block "footer-extra" . }}{{ end }}
+
+        <div class="mt-10 pt-6 border-t border-line font-mono text-xs text-muted text-center md:text-left">
+            &copy; {{ now.Year }} Stellar Vector
+        </div>
+    </div>
+</footer>

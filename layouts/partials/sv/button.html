@@ -1,0 +1,55 @@
+{{- /*
+    sv/button.html -- Standardized theme button.
+    Supports multiple variants, sizes, and icon integration.
+
+        {{ partial "sv/button" (dict "text" "Click me" "url" "/foo") }}
+
+    text        required. Button label.
+    url         optional. Target URL. If absent, renders as a <button>.
+    variant     optional. "solid" (default), "outline", or "ghost".
+    size        optional. "md" (default) or "sm".
+    icon        optional. Name of a theme icon to show before text.
+    external    optional. bool. If true, adds external-mark and target="_blank".
+    full        optional. bool. If true, adds w-full.
+    aria-label  optional. Custom aria-label.
+    class       optional. Extra classes for the root element.
+*/ -}}
+
+{{- $variant := .variant | default "solid" -}}
+{{- $size := .size | default "md" -}}
+{{- $url := .url -}}
+{{- $external := .external | default (strings.HasPrefix $url "http") -}}
+
+{{- /* 
+    The ! on text-accent-text is required to override Tailwind's prose-invert 
+    when a button sits inside a .prose block. 
+*/ -}}
+{{- $variants := dict
+    "solid"   "rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95"
+    "outline" "rounded-sm border border-accent text-on-accent-tint hover:bg-accent-dark hover:border-accent-dark hover:text-accent-text! active:scale-95"
+    "ghost"   "text-link hover:text-link-hover"
+-}}
+
+{{- $sizes := dict
+    "md" (cond (eq $variant "ghost") "px-2" "py-2.5 px-6")
+    "sm" (cond (eq $variant "ghost") "px-1 text-sm" "py-1.5 px-3 text-sm")
+-}}
+
+{{- $base := "group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200" -}}
+{{- $class := printf "%s %s %s %s %s" $base (index $variants $variant) (index $sizes $size) (cond .full "w-full" "") (.class | default "") -}}
+
+{{- if $url -}}
+    <a class="{{ $class }}" href="{{ $url | relURL }}"
+       {{ if $external }}target="_blank" rel="noopener"{{ end }}
+       {{ with .aria_label }}aria-label="{{ . }}"{{ end }}>
+        {{- with .icon }}{{ partial "sv/icon" (dict "name" . "class" "h-5 w-auto shrink-0") }}{{ end -}}
+        <span>{{ .text }}</span>
+        {{- if $external }}{{ partial "sv/external-mark" . }}{{ end -}}
+    </a>
+{{- else -}}
+    <button type="button" class="{{ $class }} cursor-pointer"
+            {{ with .aria_label }}aria-label="{{ . }}"{{ end }}>
+        {{- with .icon }}{{ partial "sv/icon" (dict "name" . "class" "h-5 w-auto shrink-0") }}{{ end -}}
+        <span>{{ .text }}</span>
+    </button>
+{{- end -}}

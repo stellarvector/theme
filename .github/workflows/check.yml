@@ -1,0 +1,19 @@
+name: Theme Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Gallery Check
+        run: ./scripts/check-gallery.sh
+
+      - name: Run Theme Lint
+        run: ./scripts/lint-theme.sh

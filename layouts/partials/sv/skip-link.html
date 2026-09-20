@@ -1,0 +1,18 @@
+{{- /*
+    sv/skip-link.html -- Accessibility shortcut to main content.
+    Appears only on focus.
+*/ -}}
+{{- $target := "#content" -}}
+{{- $label := "skip to content" -}}
+
+{{- if reflect.IsMap . -}}
+    {{- with .target }}{{ $target = . }}{{ end -}}
+    {{- with .label }}{{ $label = . }}{{ end -}}
+{{- end -}}
+
+<a href="{{ $target }}"
+   class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[2000]
+          focus:rounded-sm focus:bg-accent focus:px-4 focus:py-2 focus:font-mono
+          focus:text-accent-text focus:no-underline">
+    {{ $label }}
+</a>

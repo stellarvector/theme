@@ -1,0 +1,18 @@
+{{- /*
+    sv/head/css.html -- The unified CSS pipeline.
+    Standardizes Concat -> TailwindCSS -> Fingerprint.
+    gallery-exempt: sv/head/css
+*/ -}}
+{{- $sheets := slice (resources.Get "css/main.css") -}}
+{{- range site.Params.css.extra -}}
+    {{- with resources.Get . -}}
+        {{- $sheets = $sheets | append . -}}
+    {{- else -}}
+        {{- errorf "partial sv/head/css: could not find extra stylesheet %q" . -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $css := $sheets | resources.Concat "css/bundle.css"
+         | css.TailwindCSS (dict "minify" true) | fingerprint "sha256" -}}
+
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

@@ -1,0 +1,13 @@
+{{- /*
+    sv/host-chip.html -- Identifies the current site in the family.
+    Uses a modern terminal-style host label.
+*/ -}}
+{{- with site.Params.host -}}
+    <div class="hidden sm:flex items-center font-mono text-xs tracking-tight text-muted/80 select-none" aria-hidden="true">
+        <span class="text-line-strong">[</span>
+        <span class="text-link">sv</span>
+        <span class="text-line-strong">@</span>
+        <span class="text-body font-bold">{{ . }}</span>
+        <span class="text-line-strong">]</span>
+    </div>
+{{- end -}}

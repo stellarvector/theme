@@ -1,0 +1,23 @@
+{{- /*
+    sv/tag.html -- Metadata chip or status indicator.
+
+        {{ partial "sv/tag" (dict "text" "pwn" "icon" "chip") }}
+
+    text     optional. Tag text.
+    html     optional. Raw HTML for tag content (overrides text).
+    variant  optional. "accent", "solved", or "static" (neutral).
+    icon     optional. Name of a theme icon to show before content.
+    class    optional. Extra classes for the root element.
+*/ -}}
+
+{{- $variants := dict 
+    "accent"  "sv-tag-accent" 
+    "solved"  "sv-tag-solved" 
+    "static"  "sv-tag-static"
+    "neutral" "sv-tag-neutral"
+-}}
+
+<span class="sv-tag tracking-wide {{ with .variant }}{{ index $variants . }}{{ end }} {{ .class }}">
+    {{- with .icon }}{{ partial "sv/icon" (dict "name" . "class" "h-3.5 w-3.5 shrink-0") }}{{ end -}}
+    {{- with .html }}{{ . | safeHTML }}{{ else }}{{ .text }}{{ end -}}
+</span>

@@ -1,0 +1,22 @@
+{{- /*
+    sv/head/js.html -- Unified JavaScript assembly.
+    Standardizes theme application (blocking) and chrome behaviors (deferred).
+    gallery-exempt: sv/head/js
+*/ -}}
+
+{{- /* 1. Pre-paint theme application (external, render-blocking) */ -}}
+{{- $themeJs := resources.Get "js/sv-theme.js" | fingerprint -}}
+<script src="{{ $themeJs.RelPermalink }}" integrity="{{ $themeJs.Data.Integrity }}"></script>
+
+{{- /* 2. Chrome behavior bundle (deferred) */ -}}
+{{- $scripts := slice (resources.Get "js/sv-chrome.js") -}}
+{{- range site.Params.js.extra -}}
+    {{- with resources.Get . -}}
+        {{- $scripts = $scripts | append . -}}
+    {{- else -}}
+        {{- errorf "partial sv/head/js: could not find extra script %q" . -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $bundle := $scripts | resources.Concat "js/bundle.js" | resources.Minify | fingerprint "sha256" -}}
+<script src="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}" defer></script>

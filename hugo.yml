@@ -51,4 +51,10 @@ params:
     x: "https://x.com/stellar_vector"
     facebook: "https://www.facebook.com/stellarvector.be"
     instagram: "https://www.instagram.com/stellar.vector"
-    mailing: "https://groups.google.com/a/stellarvector.be/g/ctf"
+    email:     "https://groups.google.com/a/stellarvector.be/g/ctf"
+
+markup:
+  highlight:
+    noClasses: false
+
+

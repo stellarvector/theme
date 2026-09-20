@@ -1,0 +1,44 @@
+{{- /*
+    sv/logo.html -- Renders the theme logos (light/dark pair).
+    
+        {{ partial "sv/logo" (dict "size" "md") }}
+
+    class  optional. Extra classes for the anchor.
+    size   optional. "sm" or "md" (default).
+    href   optional. Default "/".
+    label  optional. Aria-label for the link. Default "Stellar Vector home".
+*/ -}}
+
+{{- $size := "md" -}}
+{{- $href := "/" -}}
+{{- $label := "Stellar Vector home" -}}
+{{- $class := "" -}}
+
+{{- if reflect.IsMap . -}}
+    {{- with .size }}{{ $size = . }}{{ end -}}
+    {{- with .href }}{{ $href = . }}{{ end -}}
+    {{- with .label }}{{ $label = . }}{{ end -}}
+    {{- with .class }}{{ $class = . }}{{ end -}}
+{{- end -}}
+
+{{- /* Dimensions based on established usage in www/blog. */ -}}
+{{- $width := 110 -}}{{- $height := 48 -}}{{- $hClass := "h-9 md:h-12" -}}
+{{- if eq $size "sm" -}}
+    {{- $width = 84 -}}{{- $height = 36 -}}{{- $hClass = "h-7 md:h-9" -}}
+{{- end -}}
+
+<a href="{{ $href | relURL }}" 
+   class="group shrink-0 flex items-center no-underline hover:no-underline {{ $class }}"
+   aria-label="{{ $label | default "Stellar Vector Home" }}">
+    {{- /* Dark Mode Logo (Visible in Dark mode) */ -}}
+    <img src="{{ site.Params.logo.dark | relURL }}" 
+         width="{{ $width }}" height="{{ $height }}"
+         alt="Stellar Vector (Dark Mode)"
+         class="block w-auto {{ $hClass }} transition-transform duration-300 group-hover:scale-105 light:hidden">
+    
+    {{- /* Light Mode Logo (Visible in Light mode) */ -}}
+    <img src="{{ site.Params.logo.light | relURL }}" 
+         width="{{ $width }}" height="{{ $height }}"
+         alt="Stellar Vector (Light Mode)"
+         class="hidden w-auto {{ $hClass }} transition-transform duration-300 group-hover:scale-105 light:block">
+</a>

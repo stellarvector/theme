@@ -1,0 +1,27 @@
+{{- /*
+    sv/head/analytics.html -- Umami analytics assembly.
+    No-ops entirely when website_id is empty.
+    gallery-exempt: sv/head/analytics
+*/ -}}
+
+{{- with site.Params.analytics.website_id -}}
+    {{- $domains := site.Params.analytics.domains -}}
+    {{- $script := site.Params.analytics.script -}}
+    
+    {{- /* data-tag calculation (lifts blog's logic and generalizes) */ -}}
+    {{- $tag := .tag -}}
+    {{- if not $tag -}}
+        {{- if site.Home.IsMenuCurrent "main" . -}}{{ $tag = "homepage" }}
+        {{- else if .IsHome -}}{{ $tag = "homepage" }}
+        {{- else if .IsPage -}}{{ $tag = "page" }}
+        {{- else if .IsSection -}}{{ $tag = "section" }}
+        {{- else if eq .Kind "taxonomy" -}}{{ $tag = "taxonomy" }}
+        {{- else if eq .Kind "term" -}}{{ $tag = "term" }}
+        {{- else -}}{{ $tag = "page" }}{{- end -}}
+    {{- end -}}
+
+    <script defer src="{{ $script }}"
+            data-website-id="{{ . }}"
+            data-domains="{{ $domains }}"
+            data-tag="{{ $tag }}"></script>
+{{- end -}}

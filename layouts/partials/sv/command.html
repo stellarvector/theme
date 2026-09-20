@@ -1,0 +1,10 @@
+{{- /*
+    sv/command.html -- A muted shell prompt representing a path or command.
+    Used in kickers and terminal simulations.
+
+        {{ partial "sv/command" (dict "text" "ls -la /events") }}
+
+    text   required. The command text.
+    class  optional. Extra classes for the element.
+*/ -}}
+<p class="sv-prompt font-mono text-sm text-muted {{ .class }}">{{ .text }}</p>

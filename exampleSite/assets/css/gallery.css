@@ -1,0 +1,26 @@
+/* 
+ * Gallery-specific styles to fix spacing and visual presentation.
+ * Processed by Tailwind via params.css.extra.
+ */
+
+.gallery-section {
+    @apply mt-12 pt-8 border-t border-line;
+}
+
+.gallery-header {
+    @apply text-xl font-bold mb-6 text-heading flex items-center gap-3;
+}
+
+.gallery-header::before {
+    content: "#";
+    @apply text-accent-light font-mono opacity-50;
+}
+
+.gallery-caption {
+    @apply block text-sm text-muted mb-6 max-w-2xl leading-relaxed;
+}
+
+/* Ensure all glitch elements have crosshair and consistent sizing */
+.sv-glitch {
+    @apply cursor-crosshair;
+}

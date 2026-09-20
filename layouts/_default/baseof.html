@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale }}"
+      data-theme-light="{{ site.Params.theme_color_light }}"
+      data-theme-dark="{{ site.Params.theme_color_dark }}">
+<head>
+    {{ partial "sv/head/meta" . }}
+    {{ partial "sv/head/js" . }}
+    {{ partial "sv/head/fonts" . }}
+    {{ partial "sv/head/css" . }}
+    {{ partial "sv/head/analytics" . }}
+    {{ block "head" . }}{{ end }}          {{/* site extras, e.g. MathJax */}}
+</head>
+<body class="antialiased min-h-dvh flex flex-col">
+    {{ partial "sv/skip-link" . }}
+    {{ block "header" . }}{{ partial "sv/header" . }}{{ end }}
+    <main id="content" tabindex="-1" class="flex-1 w-full">
+        {{ block "main" . }}{{ end }}
+    </main>
+    {{ block "footer" . }}{{ partial "sv/footer" . }}{{ end }}
+    {{ block "body-end" . }}{{ end }}      {{/* dialogs, lightbox, to-top, templates */}}
+</body>
+</html>

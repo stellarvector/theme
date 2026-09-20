@@ -1,0 +1,51 @@
+{{- /* 
+    sv/head/meta.html -- SEO, OpenGraph and browser metadata.
+    gallery-exempt: sv/head/meta
+*/ -}}
+
+{{- $title := site.Title -}}
+{{- if and (not .IsHome) .Title -}}
+    {{- $title = printf "%s | %s" .Title site.Title -}}
+{{- end -}}
+
+{{- $desc := .Description -}}
+{{- if not $desc -}}
+    {{- if .IsPage -}}
+        {{- $desc = .Summary | plainify | truncate 300 -}}
+    {{- else -}}
+        {{- $desc = site.Params.description -}}
+    {{- end -}}
+{{- end -}}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="{{ site.Params.theme_color_dark }}">
+
+<title>{{ $title }}</title>
+{{ with $desc }}<meta name="description" content="{{ . }}">{{ end }}
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{- /* Favicon: theme-hosted, per-site from Phase 11. 
+       For now, using the common favicon from static/assets/logo/favicon.ico 
+       aliased to PNG as per Phase 4.1 note. */ -}}
+<link rel="icon" type="image/png" href="{{ "/assets/logo/favicon.ico" | relURL }}">
+
+{{- with site.Home.OutputFormats.Get "rss" }}
+    <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{- end }}
+
+{{- /* OpenGraph */ -}}
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+{{ with $desc }}<meta property="og:description" content="{{ . }}">{{ end }}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+
+{{- /* Per-site OG image from Phase 11. For now default to dark logo. */ -}}
+<meta property="og:image" content="{{ site.Params.logo.dark | absURL }}">
+
+<meta name="twitter:card" content="summary">
+
+{{- /* Structured data (exempt from D5 as it's data, not executable JS) */ -}}
+{{ template "_internal/schema.html" . }}

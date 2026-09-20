@@ -1,0 +1,12 @@
+{{- /*
+    sv/page-heading.html -- Standardized page header with kicker and title.
+
+        {{ partial "sv/page-heading" (dict "label" "ls -la /events" "title" "Events") }}
+
+    label  required. The command-style kicker text.
+    title  required. The H1 title text.
+*/ -}}
+<div>
+    {{ partial "sv/command" (dict "text" .label "class" "mb-3") }}
+    <h1 class="sv-marker !mt-0">{{ .title }}</h1>
+</div>

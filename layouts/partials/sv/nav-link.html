@@ -1,0 +1,57 @@
+{{- /*
+    sv/nav-link.html -- Standardized navigation link with terminal prefix.
+
+        {{ partial "sv/nav-link" (dict "text" "home" "url" "/" "page" .) }}
+
+    text     required. Link text.
+    url      required. Target URL.
+    page     required (unless active is supplied). The current page context.
+    mobile   optional. bool (default false). Render for mobile menu.
+    active   optional. bool. Force active state.
+    exact    optional. bool. Force aria-current="page" rather than "true".
+*/ -}}
+
+{{- $url := .url -}}
+{{- $text := .text -}}
+{{- $mobile := .mobile | default false -}}
+{{- $external := strings.HasPrefix $url "http" -}}
+
+{{- /* Active state detection (www-style prefix matching) */ -}}
+{{- $isActive := .active -}}
+{{- if and (not $external) (eq $isActive nil) -}}
+    {{- if eq $url "/" -}}
+        {{- $isActive = .page.IsHome -}}
+    {{- else -}}
+        {{- $isActive = strings.HasPrefix .page.RelPermalink (printf "%s/" (strings.TrimSuffix "/" $url)) -}}
+    {{- end -}}
+{{- end -}}
+
+{{- /* Classes and styles */ -}}
+{{- $base := "group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative" -}}
+{{- $shape := cond $mobile "flex items-center min-h-12 px-2 py-3" "inline-flex items-center h-11 px-3" -}}
+
+{{- $state := "" -}}
+{{- if $isActive -}}
+    {{- $state = cond $mobile "bg-accent-tint text-heading" "text-link" -}}
+{{- else -}}
+    {{- $state = cond $mobile "text-body hover:text-link" "text-muted hover:text-link" -}}
+{{- end -}}
+
+<a href="{{ $url | relURL }}"
+   class="{{ $base }} {{ $shape }} {{ $state }}"
+   {{ if $isActive }}aria-current="{{ cond (default false .exact) "page" "true" }}"{{ end }}
+   {{ if $external }}target="_blank" rel="noopener"{{ end }}
+   data-umami-event="click: nav-{{ $text | anchorize }}">
+    <span class="text-terminal" aria-hidden="true">$&nbsp;</span>
+    <span class="relative">
+        {{ $text }}
+        {{- /* Underline for active/hover states. Desktop only for the stylized look. */ -}}
+        {{- if not $mobile -}}
+            <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left 
+                         group-hover:scale-x-100 {{ if $isActive }}scale-x-100{{ end }}"></span>
+        {{- end -}}
+    </span>
+    {{- if $external -}}
+        {{ partial "sv/external-mark" . }}
+    {{- end -}}
+</a>
