@@ -17,13 +17,13 @@
             'urlRoot': "{{ request.script_root }}",
             'csrfToken': "{{ Session.nonce }}",
             'userMode': "{{ get_config('user_mode') }}",
-            'userId': {{ id or 0 }},
-            'userName': {{ name | tojson or 'null' }},
-            'userEmail': {{ email | tojson or 'null' }},
-            'teamId': {{ team_id or 'null' }},
-            'teamName': {{ team_name | tojson or 'null' }},
-            'start': {{ start or 'null' }},
-            'end': {{ end or 'null' }}
+            'userId': {{ id | default(0) }},
+            'userName': {{ name | default(None) | tojson }},
+            'userEmail': {{ email | default(None) | tojson }},
+            'teamId': {{ team_id | default(None) | tojson }},
+            'teamName': {{ team_name | default(None) | tojson }},
+            'start': {{ start | default(None) | tojson }},
+            'end': {{ end | default(None) | tojson }}
         };
     </script>
     
@@ -33,6 +33,7 @@
 </head>
 <body class="antialiased min-h-dvh flex flex-col">
     {% include "partials/header.html" %}
+    {% include "partials/notifications.html" %}
     
     <main id="content" tabindex="-1" class="flex-1 w-full">
         {% with messages = get_flashed_messages() %}

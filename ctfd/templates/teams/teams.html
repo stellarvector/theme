@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <div class="mb-12">
+        <p class="sv-label sv-prompt normal-case mb-2">ls /teams</p>
+        <h1 class="sv-marker text-3xl">Teams</h1>
+    </div>
+
+    <div class="sv-terminal overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left font-mono text-sm">
+                <thead>
+                    <tr class="border-b border-line-strong bg-surface/50">
+                        <th class="px-6 py-4 font-bold text-accent uppercase">Team</th>
+                        <th class="px-6 py-4 font-bold text-accent uppercase">Website</th>
+                        <th class="px-6 py-4 font-bold text-accent uppercase">Affiliation</th>
+                        <th class="px-6 py-4 font-bold text-accent uppercase">Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for team in teams.items %}
+                    <tr class="border-b border-line last:border-0 hover:bg-surface transition-colors group">
+                        <td class="px-6 py-4">
+                            <a href="{{ url_for('teams.public', team_id=team.id) }}" class="text-body font-bold group-hover:text-link no-underline">
+                                {{ team.name }}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 text-muted">
+                            {% if team.website %}
+                                <a href="{{ team.website }}" target="_blank" rel="noopener" class="hover:text-link">{{ team.website }}</a>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-muted">{{ team.affiliation or '' }}</td>
+                        <td class="px-6 py-4 text-muted">{{ team.country or '' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if teams.pages > 1 %}
+    <div class="mt-8 flex justify-center gap-2">
+        {% if teams.has_prev %}
+            <a href="{{ url_for('teams.listing', page=teams.prev_num) }}" class="px-4 py-2 font-mono text-sm border border-line-strong hover:border-accent">$ prev</a>
+        {% endif %}
+        <span class="px-4 py-2 font-mono text-sm text-accent">{{ teams.page }} / {{ teams.pages }}</span>
+        {% if teams.has_next %}
+            <a href="{{ url_for('teams.listing', page=teams.next_num) }}" class="px-4 py-2 font-mono text-sm border border-line-strong hover:border-accent">$ next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

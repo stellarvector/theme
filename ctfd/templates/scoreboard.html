@@ -36,5 +36,6 @@
 {% endblock %}
 
 {% block scripts %}
+    <script defer src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     <script defer src="{{ url_for('views.themes', theme='sv', path='js/scoreboard.min.js') }}"></script>
 {% endblock %}

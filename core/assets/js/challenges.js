@@ -101,26 +101,81 @@
         });
     }
 
-    function loadChallenge(id) {
-        fetch(`/api/v1/challenges/${id}`)
-            .then(res => res.json())
-            .then(res => {
-                const challenge = res.data;
-                // For now, we'll use a simple alert/prompt or just log.
-                // In a real theme, this would populate and show a modal.
-                console.log('Challenge loaded:', challenge);
-                // Since we don't have a full modal system implemented in JS yet,
-                // we'll advise the user to use CTFd's standard modal if possible
-                // or we can implement a simple one.
-            });
+    async function loadChallenge(id) {
+        try {
+            const res = await fetch(`/api/v1/challenges/${id}`);
+            const challenge = (await res.json()).data;
+            
+            renderModal(challenge);
+        } catch (err) {
+            console.error('Failed to load challenge:', err);
+        }
     }
 
-    // Handle flag submission if the elements exist (e.g. in a modal)
+    function renderModal(c) {
+        const container = document.getElementById('modal-container');
+        if (!container) return;
+
+        container.innerHTML = `
+            <div id="challenge-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-page/90 backdrop-blur-sm">
+                <div class="relative w-full max-w-2xl rounded-sm border border-line-strong bg-card shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+                    <div class="flex items-center justify-between border-b border-line-strong p-6">
+                        <div>
+                            <span class="sv-label text-xs text-accent mb-1 block">${c.category}</span>
+                            <h2 class="sv-marker text-xl">${c.name}</h2>
+                        </div>
+                        <button type="button" class="text-muted hover:text-accent transition-colors" id="close-modal">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="p-6 sm:p-8 overflow-y-auto">
+                        <div class="prose max-w-none text-muted mb-8">
+                            ${c.description}
+                        </div>
+
+                        ${c.files && c.files.length ? `
+                        <div class="grid gap-2 mb-8">
+                            ${c.files.map(f => `
+                            <a href="${f}" class="flex items-center gap-2 p-3 rounded-xs border border-line-strong bg-surface hover:border-accent group transition-colors no-underline">
+                                <svg class="w-4 h-4 text-muted group-hover:text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/></svg>
+                                <span class="font-mono text-xs text-body group-hover:text-link">${f.split('/').pop().split('?')[0]}</span>
+                            </a>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+
+                        <div class="flex flex-col gap-4 mt-auto">
+                            <div class="flex gap-2">
+                                <input type="text" id="flag-input" placeholder="sv{...}" 
+                                       class="flex-1 rounded-sm border border-line-strong bg-surface px-4 py-2.5 font-mono text-sm text-body focus:border-accent focus:outline-none">
+                                <button id="submit-flag" data-id="${c.id}" class="font-mono font-bold px-6 bg-accent text-accent-text! hover:bg-accent-dark transition-colors rounded-sm">
+                                    SUBMIT
+                                </button>
+                            </div>
+                            <div id="submission-response"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between border-t border-line-strong bg-surface/50 p-4 px-6 text-xs text-muted font-mono">
+                        <span>${c.value} points</span>
+                        <span>${c.solves} solves</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('close-modal').onclick = () => container.innerHTML = '';
+        window.location.hash = c.id;
+    }
+
+    // Handle flag submission
     document.addEventListener('click', async (e) => {
-        if (e.target.id === 'submit-flag') {
+        const btn = e.target.closest('#submit-flag');
+        if (btn) {
             const input = document.getElementById('flag-input');
             const responseDiv = document.getElementById('submission-response');
-            const challengeId = window.location.hash.slice(1);
+            const challengeId = btn.dataset.id;
 
             if (!input || !challengeId) return;
 
@@ -144,7 +199,7 @@
                         responseDiv.innerHTML = `<p class="text-accent mt-2 font-mono text-xs">CORRECT!</p>`;
                         setTimeout(() => window.location.reload(), 1000);
                     } else {
-                        responseDiv.innerHTML = `<p class="text-muted mt-2 font-mono text-xs">INCORRECT</p>`;
+                        responseDiv.innerHTML = `<p class="text-muted mt-2 font-mono text-xs">${data.data.message || 'INCORRECT'}</p>`;
                     }
                 }
             } catch (err) {
@@ -153,5 +208,10 @@
         }
     });
 
-    fetchChallenges();
+    fetchChallenges().then(() => {
+        if (window.location.hash) {
+            const id = window.location.hash.slice(1);
+            if (!isNaN(id)) loadChallenge(id);
+        }
+    });
 })();

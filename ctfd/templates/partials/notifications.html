@@ -1,0 +1,36 @@
+<div id="notifications" class="fixed top-24 right-4 z-50 flex flex-col gap-3 w-80 pointer-events-none">
+</div>
+
+<script>
+    (function() {
+        async function checkNotifications() {
+            try {
+                const res = await fetch('/api/v1/notifications');
+                const data = await res.json();
+                if (data.success && data.data.length) {
+                    const container = document.getElementById('notifications');
+                    data.data.forEach(n => {
+                        if (document.getElementById(`notif-${n.id}`)) return;
+                        
+                        const el = document.createElement('div');
+                        el.id = `notif-${n.id}`;
+                        el.className = 'sv-terminal p-4 bg-accent/90 text-accent-text! border-accent shadow-xl animate-in slide-in-from-right pointer-events-auto cursor-pointer';
+                        el.innerHTML = `
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="sv-label text-[10px] text-accent-text!/80">Notification</span>
+                                <span class="text-[10px] opacity-60 font-mono">${n.date}</span>
+                            </div>
+                            <p class="font-mono text-xs font-bold">${n.title}</p>
+                            <p class="text-xs mt-1 opacity-90">${n.content}</p>
+                        `;
+                        el.onclick = () => el.remove();
+                        container.appendChild(el);
+                    });
+                }
+            } catch (err) {}
+        }
+        
+        checkNotifications();
+        setInterval(checkNotifications, 60000);
+    })();
+</script>
