@@ -8,6 +8,15 @@
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0505">
     <meta name="csrf-token" content="{{ Session.nonce }}">
+
+    <link rel="preload" href="{{ url_for('views.themes', theme='sv', path='fonts/space-grotesk-normal-400_700-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ url_for('views.themes', theme='sv', path='fonts/ibm-plex-sans-normal-300_600-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ url_for('views.themes', theme='sv', path='fonts/space-mono-normal-400-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
+
+    <script defer src="https://go.stellarvector.be/go.js" 
+            data-website-id="2bfb19ad-e57e-4124-a51a-273cb690cedc" 
+            data-domains="play.stellarvector.be"></script>
+
     <title>{% block title %}{{ get_config('ctf_name') }}{% endblock %}</title>
     
     <link rel="stylesheet" href="{{ url_for('views.themes', theme='sv', path='css/main.min.css') }}">

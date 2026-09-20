@@ -5,16 +5,20 @@
     <div class="sv-grid sv-grid-fade pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
 
     <div class="relative mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
-        <p class="sv-label sv-prompt normal-case">{% block hero_prompt %}whoami{% endblock %}</p>
+        <p class="sv-label sv-prompt normal-case">{{ hero_prompt | default('whoami') }}</p>
 
         <h1 class="sv-marker !mt-0 !mb-4">
-            <span class="sv-glitch sv-glitch-auto" data-text="{% block hero_title %}{{ get_config('ctf_name') }}{% endblock %}">{% block hero_title_text %}{{ get_config('ctf_name') }}{% endblock %}</span>
+            <span class="sv-glitch sv-glitch-auto" data-text="{{ hero_title | default(get_config('ctf_name')) }}">{{ hero_title | default(get_config('ctf_name')) }}</span>
         </h1>
 
         <p class="mt-4 max-w-2xl text-base text-muted text-pretty sm:text-lg">
-            {% block hero_subtitle %}{% endblock %}<span class="sv-caret" aria-hidden="true"></span>
+            {{ hero_subtitle | default('') }}<span class="sv-caret" aria-hidden="true"></span>
         </p>
 
-        {% block hero_extra %}{% endblock %}
+        {% if hero_extra %}
+            <div class="mt-8">
+                {{ hero_extra | safe }}
+            </div>
+        {% endif %}
     </div>
 </section>

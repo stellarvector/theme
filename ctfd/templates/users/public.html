@@ -38,10 +38,10 @@
                     {% if user.solves %}
                         {% for solve in user.solves %}
                         <tr class="border-b border-line last:border-0 hover:bg-surface transition-colors">
-                            <td class="px-6 py-4 font-bold text-body">{{ solve.challenge.name }}</td>
+                            <td class="px-6 py-4 text-terminal font-mono">{{ solve.challenge.name }}</td>
                             <td class="px-6 py-4 text-muted">{{ solve.challenge.category }}</td>
-                            <td class="px-6 py-4 text-right text-accent">{{ solve.challenge.value }}</td>
-                            <td class="px-6 py-4 text-right text-muted">{{ solve.date | datetime }}</td>
+                            <td class="px-6 py-4 text-accent font-mono">{{ solve.challenge.value }}</td>
+                            <td class="px-6 py-4 text-right text-muted">{{ solve.date.strftime('%b %d, %Y') if solve.date else '' }}</td>
                         </tr>
                         {% endfor %}
                     {% else %}

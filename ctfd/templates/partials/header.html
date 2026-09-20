@@ -2,7 +2,7 @@
 
 <header class="sv-safe-top sticky top-0 z-[1000] bg-page/95 backdrop-blur-sm border-b border-line-strong">
     <div class="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4 sm:px-6 md:h-20">
-        {# Left: Logo & Host Chip #}
+        {# Site Identity & Site Switcher #}
         <div class="flex items-center gap-2">
             <a href="/" class="flex items-center gap-2 no-underline group">
                 <img src="{{ url_for('views.themes', theme='sv', path='img/logo-light.png') }}" alt="Stellar Vector" class="h-8 w-auto light:block hidden">
@@ -11,94 +11,137 @@
             {% include "partials/host-chip.html" %}
         </div>
 
-        {# Centre: Desktop Nav #}
+        {# Desktop Navigation #}
         <nav class="hidden md:flex items-center gap-x-1" aria-label="Main">
-            <a href="{{ url_for('challenges.listing') }}" class="flex min-h-12 items-center px-4 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
-                <span class="text-terminal mr-1.5">$</span> challenges
+            <a href="{{ url_for('challenges.listing') }}" 
+               class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path.startswith('/challenges') else 'text-muted hover:text-link' }}">
+                <span class="text-terminal" aria-hidden="true">$ </span>
+                <span class="relative">
+                    challenges
+                    <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path.startswith('/challenges') }}"></span>
+                </span>
             </a>
-            <a href="{{ url_for('scoreboard.listing') }}" class="flex min-h-12 items-center px-4 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
-                <span class="text-terminal mr-1.5">$</span> scoreboard
+            <a href="{{ url_for('scoreboard.listing') }}" 
+               class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path.startswith('/scoreboard') else 'text-muted hover:text-link' }}">
+                <span class="text-terminal" aria-hidden="true">$ </span>
+                <span class="relative">
+                    scoreboard
+                    <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path.startswith('/scoreboard') }}"></span>
+                </span>
+            </a>
+            <a href="https://blog.stellarvector.be" 
+               target="_blank" rel="noopener"
+               class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 text-muted hover:text-link">
+                <span class="text-terminal" aria-hidden="true">$ </span>
+                <span class="relative">
+                    blog
+                    <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100"></span>
+                </span>
+                {{ icon("external", "inline-block ml-1 size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5") }}
             </a>
         </nav>
 
-        {# Right: Actions & Toggles #}
+        {# Right Actions (Auth + Theme Toggle) #}
         <div class="flex items-center gap-2">
             <div class="hidden md:flex items-center gap-2">
                 {% if authed() %}
-                    <a href="{{ url_for('users.private') }}" class="flex min-h-12 items-center px-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline" aria-label="Profile">
-                        {{ icon("user", "w-5 h-5") }}
+                    <a href="{{ url_for('users.private') }}" 
+                       class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path.startswith('/user') else 'text-muted hover:text-link' }}">
+                        <span class="text-terminal" aria-hidden="true">$ </span>
+                        <span class="relative">
+                            profile
+                            <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path.startswith('/user') }}"></span>
+                        </span>
                     </a>
                     {% if is_admin() %}
-                        <a href="{{ url_for('admin.view') }}" class="flex min-h-12 items-center px-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline" aria-label="Admin Panel">
-                            {{ icon("settings", "w-5 h-5") }}
+                        <a href="{{ url_for('admin.view') }}" target="_blank"
+                           class="inline-flex h-11 items-center px-3 font-mono text-sm text-muted hover:text-link">
+                            {{ icon("cog", "size-4") }}
                         </a>
                     {% endif %}
-                    <a href="{{ url_for('auth.logout') }}" class="flex min-h-12 items-center px-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline" aria-label="Logout">
-                        {{ icon("logout", "w-5 h-5") }}
+                    <a href="{{ url_for('auth.logout') }}" 
+                       class="inline-flex h-11 items-center px-3 font-mono text-sm text-muted hover:text-accent">
+                        {{ icon("logout", "size-4") }}
                     </a>
                 {% else %}
-                    <a href="{{ url_for('auth.login') }}" class="flex min-h-12 items-center px-4 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
-                        login
+                    <a href="{{ url_for('auth.login') }}" 
+                       class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path.startswith('/login') else 'text-muted hover:text-link' }}">
+                        <span class="relative">
+                            login
+                            <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path.startswith('/login') }}"></span>
+                        </span>
                     </a>
-                    <a href="{{ url_for('auth.register') }}" class="flex min-h-12 items-center px-4 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
-                        register
+                    <a href="{{ url_for('auth.register') }}" 
+                       class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path.startswith('/register') else 'text-muted hover:text-link' }}">
+                        <span class="relative">
+                            register
+                            <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path.startswith('/register') }}"></span>
+                        </span>
                     </a>
                 {% endif %}
 
                 <span class="ml-2 inline-flex">
                     {% from "macros/theme.html" import theme_toggle %}
-                    {{ theme_toggle(variant="inline") }}
+                    {{ theme_toggle() }}
                 </span>
             </div>
 
+            {# Mobile Toggle #}
             <button id="menu-toggle" type="button"
                     class="group md:hidden inline-flex h-11 w-11 items-center justify-center rounded-sm
                            border border-line-strong bg-card text-muted cursor-pointer
                            transition-colors duration-200 hover:border-accent hover:text-link"
                     aria-expanded="false" aria-controls="menu-panel" aria-label="Open menu">
                 {{ icon("menu", "w-6 h-6 group-aria-expanded:hidden") }}
-                {{ icon("close", "w-6 h-6 hidden group-aria-expanded:block") }}
+                {{ icon("x", "w-6 h-6 hidden group-aria-expanded:block") }}
             </button>
         </div>
     </div>
 
-    {# No-JS Fallback #}
+    {# Mobile No-JS Fallback #}
     <noscript><style>
         #menu-toggle, [data-theme-toggle] { display: none !important; }
         #menu-panel { display: block !important; }
         @media (min-width: 768px) { #menu-panel { display: none !important; } }
     </style></noscript>
 
-    {# Mobile Menu Panel #}
+    {# Mobile Panel #}
     <nav id="menu-panel" class="hidden md:hidden overflow-y-auto overscroll-contain
                              border-t border-line-strong bg-surface px-4 pb-4 pt-3 sm:px-6"
          aria-label="Mobile">
         <div class="flex flex-col">
-            <a href="{{ url_for('challenges.listing') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+            <a href="{{ url_for('challenges.listing') }}" 
+               class="flex min-h-12 items-center px-2 py-3 font-mono text-sm {{ 'bg-accent-tint text-heading' if request.path.startswith('/challenges') else 'text-body hover:text-link' }}">
                 <span class="text-terminal mr-1.5">$</span> challenges
             </a>
-            <a href="{{ url_for('scoreboard.listing') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+            <a href="{{ url_for('scoreboard.listing') }}" 
+               class="flex min-h-12 items-center px-2 py-3 font-mono text-sm {{ 'bg-accent-tint text-heading' if request.path.startswith('/scoreboard') else 'text-body hover:text-link' }}">
                 <span class="text-terminal mr-1.5">$</span> scoreboard
+            </a>
+            <a href="https://blog.stellarvector.be" 
+               target="_blank" rel="noopener"
+               class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-body hover:text-link">
+                <span class="text-terminal mr-1.5">$</span> blog
+                {{ icon("external", "ml-auto size-4 opacity-50") }}
             </a>
             
             <div class="mt-3 border-t border-line pt-3 flex flex-col">
                 {% if authed() %}
-                    <a href="{{ url_for('users.private') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                    <a href="{{ url_for('users.private') }}" 
+                       class="flex min-h-12 items-center px-2 py-3 font-mono text-sm {{ 'bg-accent-tint text-heading' if request.path.startswith('/user') else 'text-body hover:text-link' }}">
                         <span class="text-terminal mr-1.5">$</span> profile
                     </a>
-                    {% if is_admin() %}
-                        <a href="{{ url_for('admin.view') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
-                            <span class="text-terminal mr-1.5">$</span> admin
-                        </a>
-                    {% endif %}
-                    <a href="{{ url_for('auth.logout') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                    <a href="{{ url_for('auth.logout') }}" 
+                       class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted hover:text-accent">
                         <span class="text-terminal mr-1.5">$</span> logout
                     </a>
                 {% else %}
-                    <a href="{{ url_for('auth.login') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                    <a href="{{ url_for('auth.login') }}" 
+                       class="flex min-h-12 items-center px-2 py-3 font-mono text-sm {{ 'bg-accent-tint text-heading' if request.path.startswith('/login') else 'text-body hover:text-link' }}">
                         <span class="text-terminal mr-1.5">$</span> login
                     </a>
-                    <a href="{{ url_for('auth.register') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                    <a href="{{ url_for('auth.register') }}" 
+                       class="flex min-h-12 items-center px-2 py-3 font-mono text-sm {{ 'bg-accent-tint text-heading' if request.path.startswith('/register') else 'text-body hover:text-link' }}">
                         <span class="text-terminal mr-1.5">$</span> register
                     </a>
                 {% endif %}

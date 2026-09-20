@@ -8,21 +8,16 @@
 
     async function fetchChallenges() {
         try {
-            const [challengesRes, solvesRes] = await Promise.all([
-                fetch('/api/v1/challenges'),
-                fetch('/api/v1/challenges/solves')
-            ]);
-
+            const challengesRes = await fetch('/api/v1/challenges');
             const challenges = (await challengesRes.json()).data;
-            const solves = (await solvesRes.json()).data.map(s => s.challenge_id);
 
-            renderBoard(challenges, solves);
+            renderBoard(challenges);
         } catch (err) {
             board.innerHTML = `<p class="text-accent">Error loading challenges. Please check your connection.</p>`;
         }
     }
 
-    function renderBoard(challenges, solves) {
+    function renderBoard(challenges) {
         const categories = {};
         challenges.forEach(c => {
             if (!categories[c.category]) categories[c.category] = [];
@@ -53,7 +48,7 @@
             grid.className = 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3';
 
             items.forEach(c => {
-                const solved = solves.includes(c.id);
+                const solved = c.solved_by_me;
                 const card = document.createElement('button');
                 card.type = 'button';
                 card.className = `flex flex-col text-left p-4 rounded-sm border transition-all duration-200 group relative overflow-hidden

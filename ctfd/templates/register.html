@@ -3,13 +3,18 @@
 {% block content %}
 <div class="mx-auto max-w-md px-4 py-12 sm:py-20">
     <div class="sv-terminal p-6 sm:p-8">
-        <h2 class="sv-marker mb-8 text-2xl">Register</h2>
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="sv-marker text-2xl">
+                <span class="sv-glitch sv-glitch-auto" data-text="Register">Register</span>
+            </h2>
+            <span class="font-mono text-xs text-muted opacity-50">v1.0.4-provision</span>
+        </div>
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
-                    <div class="mb-6 rounded-sm border border-accent/30 bg-accent/5 p-4 text-sm text-accent-light">
-                        {{ message }}
+                    <div class="mb-6 rounded-sm border border-accent/30 bg-accent/5 p-4 text-sm text-accent-light font-mono">
+                        <span class="text-accent mr-2">!</span> {{ message }}
                     </div>
                 {% endfor %}
             {% endif %}
@@ -18,14 +23,14 @@
         <form method="post" accept-charset="utf-8" autocomplete="off" class="flex flex-col gap-6">
             <div class="flex flex-col gap-2">
                 <label for="name" class="sv-label text-muted">User Name</label>
-                <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
-                       id="name" name="name" type="text" value="" required>
+                <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none placeholder:text-muted/30" 
+                       id="name" name="name" type="text" value="" placeholder="alias" required>
             </div>
 
             <div class="flex flex-col gap-2">
                 <label for="email" class="sv-label text-muted">Email</label>
-                <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
-                       id="email" name="email" type="email" value="" required>
+                <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none placeholder:text-muted/30" 
+                       id="email" name="email" type="email" value="" placeholder="operator@stellarvector.be" required>
             </div>
             
             <div class="flex flex-col gap-2">
@@ -34,25 +39,20 @@
                        id="password" name="password" type="password" value="" required>
             </div>
 
-            {% if get_config('registration_code') %}
-            <div class="flex flex-col gap-2">
-                <label for="registration_code" class="sv-label text-muted">Registration Code</label>
-                <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
-                       id="registration_code" name="registration_code" type="text" value="" required>
-            </div>
-            {% endif %}
-
             <input type="hidden" name="nonce" value="{{ Session.nonce }}">
 
             <button type="submit" class="group mt-2 font-mono font-bold no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-2.5 px-6">
-                Register
+                <span>Provision Account</span>
+                <span class="sv-caret-static opacity-50"></span>
             </button>
         </form>
 
-        <p class="mt-8 text-center text-sm text-muted">
-            Already have an account? 
-            <a href="{{ url_for('auth.login') }}" class="text-link hover:text-link-hover">Login</a>
-        </p>
+        <div class="mt-10 pt-6 border-t border-line text-center">
+            <p class="text-sm text-muted">
+                Already registered? 
+                <a href="{{ url_for('auth.login') }}" class="text-link hover:text-link-hover font-bold">Authenticate</a>
+            </p>
+        </div>
     </div>
 </div>
 {% endblock %}
