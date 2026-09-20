@@ -193,6 +193,38 @@
     }
 }
 
+@layer base {
+    /*
+     * No 300ms tap delay and no grey tap flash.
+     *
+     * overscroll-behavior-y is deliberately NOT set here: on the root element
+     * it also cancels pull-to-refresh, which readers expect on a content site.
+     * A site that wants it (find, which is one non-scrolling screen) sets it
+     * locally, and a panel that needs chaining protection carries
+     * overscroll-contain itself.
+     */
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    a, button, summary {
+        touch-action: manipulation;
+    }
+
+    /* viewport-fit=cover lets the page reach under notches, so the gutters
+       have to be paid back here or content sits under the rounded corners. */
+    body {
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+
+    /* Long tokens (hashes, base64, flags) must not force the whole page to
+       scroll sideways on a 375px screen. */
+    .prose :where(p, li, td, th) {
+        overflow-wrap: break-word;
+    }
+}
+
 @layer utilities {
     .prose {
         --tw-prose-body: var(--color-body);
@@ -398,14 +430,6 @@
         background-size: 32px 32px;
     }
 
-    .sv-glow {
-        text-shadow: 0 0 0.5em color-mix(in oklab, var(--color-accent-light) 55%, transparent);
-    }
-
-    .sv-glow-box {
-        box-shadow: 0 0 1.5rem -0.25rem color-mix(in oklab, var(--color-accent) 45%, transparent);
-    }
-
     /*
      * Hover glitch. Needs data-text matching the element's own text:
      *   <h1 class="sv-glitch" data-text="Stellar Vector">Stellar Vector</h1>
@@ -443,6 +467,70 @@
             animation: sv-glitch-b 0.4s steps(2, end) infinite;
         }
     }
+
+    /* The grid backdrop is atmosphere, not content: fade it out at the edges.
+       Tuned against a full-width hero. */
+    .sv-grid-fade {
+        -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 78%);
+        mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 78%);
+    }
+
+    /*
+     * Safe-area affordances under viewport-fit=cover.
+     *
+     * The three sv-safe-* classes below PAY the inset as padding, so a sticky
+     * bar clears the status bar or home indicator while still reaching the
+     * screen edge. sv-safe-offset-bottom is the different job: it OFFSETS a
+     * fixed element by the inset. Two sites had both jobs under the one name
+     * sv-safe-bottom and disagreed about which it was; they are separate names
+     * here on purpose.
+     */
+    .sv-safe-top {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    .sv-safe-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* Fixed to the top edge, but clear of the status bar. */
+    .sv-safe-fixed-top {
+        top: env(safe-area-inset-top, 0px);
+    }
+
+    /* Fixed to the bottom edge, held above the iOS home indicator and the
+       Android gesture bar. The 1rem/2rem step is the family's standing gap
+       from the viewport edge, so it travels with the class. */
+    .sv-safe-offset-bottom {
+        bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    @media (min-width: 48rem) {
+        .sv-safe-offset-bottom {
+            bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+        }
+    }
+
+    /*
+     * A chip that is not a link must not look like one. For a tag inside a
+     * card where the whole card is already the hit target.
+     */
+    .sv-tag-static {
+        @apply border-transparent bg-surface text-muted;
+    }
+
+    /*
+     * Section heading inside a page ("featured", "recent", "on this page").
+     * These are signposts between blocks of content, so they carry the green
+     * shell prompt from .sv-prompt and sit a step above the metadata labels
+     * they used to share .sv-label with -- at 12px muted they were not
+     * readable. Margins stay out of it: the h2 callers set their own, and the
+     * <summary> callers want none.
+     */
+    .sv-section-title {
+        @apply font-mono text-sm font-bold uppercase tracking-[0.15em] text-heading sm:text-base;
+        line-height: 1.4;
+    }
 }
 
 @keyframes sv-glitch-a {
@@ -455,4 +543,62 @@
     0%   { transform: translate(2px, 1px);   clip-path: inset(72% 0 0 0); }
     50%  { transform: translate(-2px, -1px); clip-path: inset(22% 0 52% 0); }
     100% { transform: translate(1px, -1px);  clip-path: inset(0 0 68% 0); }
+}
+
+/*
+ * Print base. Anything a printed page always wants, whatever the site: the
+ * light palette, no chrome, and links that survive losing their href. A site
+ * that prints long-form content adds its own running header/footer machinery
+ * on top of this.
+ */
+@media print {
+    @page {
+        margin: 12mm;
+    }
+
+    /*
+     * Force the light palette regardless of the reader's theme. Every colour in
+     * this file and in chroma.css is a light-dark() pair, so flipping
+     * color-scheme is all that is needed -- including syntax tokens, which
+     * would otherwise print near-white on white.
+     */
+    :root {
+        color-scheme: light !important;
+    }
+
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    /*
+     * Site chrome only. Scoped to direct children of <body> on purpose: an
+     * unscoped `header`/`footer` also matches an article's own header and
+     * author footer, which are exactly the context a printout needs.
+     */
+    body > header,
+    body > footer,
+    aside,
+    dialog,
+    [data-theme-toggle],
+    [data-search-open],
+    [data-print],
+    [data-share] {
+        display: none !important;
+    }
+
+    .prose {
+        max-width: none !important;
+    }
+
+    /* A link is dead on paper unless its destination comes with it. */
+    .prose a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        word-break: break-all;
+    }
+
+    h1, h2, h3 { break-after: avoid; }
+
+    .sv-tag { break-inside: avoid; }
 }

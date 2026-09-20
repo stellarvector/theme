@@ -1,0 +1,51 @@
+{{- /*
+    sv/icon.html -- inline an SVG from the theme's icon sets.
+
+        {{ partial "sv/icon.html" (dict "name" "search") }}
+        {{ partial "sv/icon.html" (dict "name" "github" "class" "h-6 w-6") }}
+        {{ partial "sv/icon.html" (dict "name" "pin" "set" "ui") }}
+
+    name   required. File basename without .svg.
+    class  optional. Classes for the root <svg>. Default "w-5 h-5".
+    set    optional. "ui" or "brand". Omitted, ui is searched first, then brand.
+
+    Icons are decorative by contract: every caller pairs one with a text label
+    or an aria-label, so aria-hidden and focusable are forced on here rather
+    than leaving the icon to be announced as a second, redundant name.
+
+    Unknown names are a build error, never a silent blank: a missing icon that
+    ships is worse than one that stops the build.
+
+    A site may add assets/icons/<set>/<name>.svg of its own and it resolves,
+    because Hugo unions asset mounts with the site's own files winning.
+*/ -}}
+
+{{- $name := .name -}}
+{{- $class := .class | default "w-5 h-5" -}}
+{{- $sets := slice "ui" "brand" -}}
+{{- with .set -}}
+    {{- $sets = slice . -}}
+{{- end -}}
+
+{{- $svg := "" -}}
+{{- range $sets -}}
+    {{- if not $svg -}}
+        {{- with resources.Get (printf "icons/%s/%s.svg" . $name) -}}
+            {{- $svg = .Content -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if not $svg -}}
+    {{- errorf "partial sv/icon.html: no icon %q in assets/icons/{%s}/" $name (delimit $sets "," ) -}}
+{{- end -}}
+
+{{- /* Class first, so a caller-supplied one replaces nothing it did not mean to. */ -}}
+{{- $svg = $svg | replaceRE `^\s*<svg` (printf `<svg class=%q` $class) -}}
+{{- if not (findRE `aria-hidden=` $svg 1) -}}
+    {{- $svg = $svg | replaceRE `^<svg` `<svg aria-hidden="true"` -}}
+{{- end -}}
+{{- if not (findRE `focusable=` $svg 1) -}}
+    {{- $svg = $svg | replaceRE `^<svg` `<svg focusable="false"` -}}
+{{- end -}}
+{{- $svg | safeHTML -}}

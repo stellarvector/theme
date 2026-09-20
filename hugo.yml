@@ -6,3 +6,49 @@ min_hugo_version: "0.165.0"
 author:
   name: "Stellar Vector"
   homepage: "https://stellarvector.be"
+
+# Family-wide defaults. Hugo merges a theme's params *under* the site's, so
+# every key here is a default a site may override, and the ones marked REQUIRED
+# have no sensible default and must be set per site.
+params:
+  # These two must track --color-page in assets/css/main.css by hand:
+  # <meta name="theme-color"> cannot read a custom property. Change them
+  # together or the browser chrome drifts from the page it frames.
+  theme_color_light: "#fff9f9"
+  theme_color_dark: "#0a0505"
+
+  measure: "5xl"    # default content max-width token; sites override
+  host: ""          # REQUIRED per site: www | blog | find
+
+  logo:
+    dark: "/assets/logo/logo-dark.png"
+    light: "/assets/logo/logo-light.png"
+    star: "/assets/logo/star.png"
+
+  analytics:
+    script: "https://go.stellarvector.be/go.js"
+    website_id: ""  # REQUIRED per site
+    domains: ""     # REQUIRED per site
+
+  credit:
+    org: "Stellar Vector"
+    parents:
+      - name: "DistriNet research group"
+        url: "https://distrinet.cs.kuleuven.be"
+      - name: "KU Leuven"
+        url: "https://www.kuleuven.be"
+    loko_url: "https://www.loko.be/en/societies"
+
+  # The canonical identity list: which accounts are ours. find's
+  # data/links/*.yml stays separate -- that carries copy, ordering, per-
+  # destination UTM tags and analytics event ids, which is content.
+  social:
+    github: "https://www.github.com/stellarvector"
+    discord: "https://discord.gg/tbP75TNfNR"
+    ctftime: "https://www.ctftime.org/team/192988"
+    htb: "https://app.hackthebox.com/teams/overview/4886"
+    linkedin: "https://www.linkedin.com/company/stellarvector/"
+    x: "https://x.com/stellar_vector"
+    facebook: "https://www.facebook.com/stellarvector.be"
+    instagram: "https://www.instagram.com/stellar.vector"
+    mailing: "https://groups.google.com/a/stellarvector.be/g/ctf"
