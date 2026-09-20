@@ -1,24 +1,15 @@
-{{- /*
-    sv/logo.html -- Renders the theme logos (light/dark pair).
-    
-        {{ partial "sv/logo" (dict "size" "md") }}
-
-    class  optional. Extra classes for the anchor.
-    size   optional. "sm" or "md" (default).
-    href   optional. Default "/".
-    label  optional. Aria-label for the link. Default "Stellar Vector home".
-*/ -}}
-
 {{- $size := "md" -}}
 {{- $href := "/" -}}
 {{- $label := "Stellar Vector home" -}}
 {{- $class := "" -}}
+{{- $img_class := "" -}}
 
 {{- if reflect.IsMap . -}}
     {{- with .size }}{{ $size = . }}{{ end -}}
     {{- with .href }}{{ $href = . }}{{ end -}}
     {{- with .label }}{{ $label = . }}{{ end -}}
     {{- with .class }}{{ $class = . }}{{ end -}}
+    {{- with .img_class }}{{ $img_class = . }}{{ end -}}
 {{- end -}}
 
 {{- /* Dimensions based on established usage in www/blog. */ -}}
@@ -26,6 +17,8 @@
 {{- if eq $size "sm" -}}
     {{- $width = 84 -}}{{- $height = 36 -}}{{- $hClass = "h-7 md:h-9" -}}
 {{- end -}}
+
+{{- if $img_class }}{{ $hClass = $img_class }}{{ end -}}
 
 <a href="{{ $href | relURL }}" 
    class="group shrink-0 flex items-center no-underline hover:no-underline {{ $class }}"
