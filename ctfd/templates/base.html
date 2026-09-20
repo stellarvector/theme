@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      data-theme-light="#fff9f9"
+      data-theme-dark="#0a0505">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0a0505">
+    <title>{% block title %}{{ Config.ctf_name }}{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{{ url_for('views.themes', theme='sv', path='assets/css/main.css') }}">
+    
+    <script src="{{ url_for('views.themes', theme='sv', path='assets/core/js/sv-theme.js') }}"></script>
+    
+    {% block head %}{% endblock %}
+</head>
+<body class="antialiased min-h-dvh flex flex-col">
+    {% include "partials/header.html" %}
+    
+    <main id="content" tabindex="-1" class="flex-1 w-full">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "partials/footer.html" %}
+
+    <script defer src="{{ url_for('views.themes', theme='sv', path='assets/core/js/sv-chrome.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

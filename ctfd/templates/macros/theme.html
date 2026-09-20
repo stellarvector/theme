@@ -1,0 +1,36 @@
+{% from "macros/icons.html" import icon %}
+
+{% macro theme_toggle(variant="inline", mobile=False) %}
+    {% if variant == "floating" %}
+        <div class="sv-safe-fixed-top-right print:hidden">
+            <button type="button" data-theme-toggle aria-pressed="false"
+                    aria-label="Switch theme"
+                    class="grid size-11 place-items-center rounded-sm bg-card/90 backdrop-blur border border-line-strong
+                           text-muted shadow-lg cursor-pointer
+                           hover:text-body hover:border-accent hover:bg-accent-tint
+                           transition-[color,background-color,border-color,transform] duration-200 hover:scale-105 active:scale-95">
+                {{ icon("sun", "size-5 block light:hidden") }}
+                {{ icon("moon", "size-5 hidden light:block") }}
+            </button>
+        </div>
+    {% else %}
+        {% if mobile %}
+            <button type="button" data-theme-toggle aria-pressed="false"
+                    aria-label="Switch theme"
+                    class="flex w-full min-h-12 items-center gap-2 rounded-sm px-2 py-3 font-mono text-sm
+                           text-body cursor-pointer transition-colors duration-200 hover:text-link">
+                {{ icon("sun", "size-5 block light:hidden") }}
+                {{ icon("moon", "size-5 hidden light:block") }}
+                <span data-theme-label>theme</span>
+            </button>
+        {% else %}
+            <button type="button" data-theme-toggle aria-pressed="false"
+                    aria-label="Switch theme"
+                    class="inline-flex h-11 w-11 items-center justify-center rounded-sm text-muted cursor-pointer
+                           transition-colors duration-200 hover:bg-accent-tint hover:text-link">
+                {{ icon("sun", "size-5 block light:hidden") }}
+                {{ icon("moon", "size-5 hidden light:block") }}
+            </button>
+        {% endif %}
+    {% endif %}
+{% endmacro %}

@@ -1,0 +1,41 @@
+{% from "macros/icons.html" import icon %}
+
+<footer class="sv-safe-bottom mt-auto border-t border-line-strong bg-card print:hidden">
+    <div class="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6">
+        <div class="grid gap-12 min-[930px]:grid-cols-2 text-center min-[930px]:text-left">
+            {# Left: Credits #}
+            <div class="flex flex-col">
+                <p class="sv-label mb-4">stellar vector</p>
+                <p class="text-sm text-muted text-pretty leading-relaxed">
+                    Powered by the
+                    <a href="https://distrinet.cs.kuleuven.be" class="hover:text-link">DistriNet research group</a> and 
+                    <a href="https://www.kuleuven.be" class="hover:text-link">KU Leuven</a>.
+                </p>
+                <p class="mt-3 flex items-center justify-center min-[930px]:justify-start gap-1.5 text-sm text-muted">
+                    A
+                    <a href="https://www.loko.be/en/societies" class="inline-flex items-center text-muted hover:text-link no-underline" target="_blank" rel="noopener" aria-label="LOKO website">
+                        {{ icon("loko", "h-4 w-auto") }}
+                        <span class="sr-only">LOKO</span>
+                    </a>
+                    recognized association.
+                </p>
+            </div>
+
+            {# Right: Social Links #}
+            <div class="flex flex-col items-center min-[930px]:items-start">
+                <p class="sv-label mb-6">find us</p>
+                <div class="grid grid-cols-4 sm:flex sm:flex-wrap gap-2 mb-8 max-w-[240px] sm:max-w-none">
+                    <a href="https://www.github.com/stellarvector" target="_blank" rel="noopener" aria-label="GitHub" class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">{{ icon("github", "size-6") }}</a>
+                    <a href="https://discord.gg/tbP75TNfNR" target="_blank" rel="noopener" aria-label="Discord" class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">{{ icon("discord", "size-6") }}</a>
+                    <a href="https://www.ctftime.org/team/192988" target="_blank" rel="noopener" aria-label="CTFtime" class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">{{ icon("ctftime", "size-6") }}</a>
+                </div>
+                
+                <a href="https://find.stellarvector.be/?utm_source=play.stellarvector.be&utm_content=footer" class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 text-link hover:text-link-hover px-1 text-sm !-ml-2">find.stellarvector.be</a>
+            </div>
+        </div>
+
+        <div class="mt-10 pt-6 border-t border-line font-mono text-xs text-muted text-center md:text-left">
+            &copy; 2026 Stellar Vector
+        </div>
+    </div>
+</footer>

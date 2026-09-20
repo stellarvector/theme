@@ -1,0 +1,9 @@
+{
+  "name": "sv-ctfd-theme",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "tailwindcss": "^4.3.0"
+  }
+}

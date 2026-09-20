@@ -1,15 +1,30 @@
-# Stellar Vector theme
+# Stellar Vector Themes
 
-Shared Hugo module for stellarvector sites: tokens, fonts, icons, logos, chrome and behaviour.
+This repository contains the shared themes for Stellar Vector sites.
 
-See every component: cd exampleSite && hugo server
+- `./hugo`: Hugo theme module. Used by `stellarvector.be`, `blog.stellarvector.be`, and `find.stellarvector.be`.
+- `./ctfd`: CTFd theme. Used by `play.stellarvector.be`.
 
-Required per-site params: host, analytics.website_id, analytics.domains, css.extra (ordered), js.extra (ordered).
-Defaults live in hugo.yml.
+## Usage
 
-Rules
-- Anything added here must appear in exampleSite and be used by a real site.
-- No inline JavaScript. External files only.
-- Site overrides go in @layer utilities, after the theme in concat order.
-- scripts/check-gallery.sh and scripts/lint-theme.sh must pass; CI runs both.
-- **Maintain consistency**: the accent red ramp, all three fonts, the near-black ground, the focus ring, tag and button shapes, and the motion vocabulary must remain identical across the family.
+### Hugo
+Add the following to your `hugo.yml`:
+```yaml
+module:
+  imports:
+    - path: github.com/stellarvector/theme/hugo
+```
+
+For local development (when the theme is unpushed or you want to see live changes), add the following to your site's `go.mod`:
+```go
+replace github.com/stellarvector/theme/hugo => ../theme/hugo
+replace github.com/stellarvector/theme/core => ../theme/core
+```
+(Adjust the relative paths based on your site's location relative to this repo).
+
+### CTFd
+Symlink the `ctfd` directory to your CTFd `themes` directory:
+```bash
+ln -s /path/to/theme/ctfd /path/to/ctfd/themes/sv
+```
+Then select the `sv` theme in the CTFd admin panel.

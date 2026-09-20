@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Gallery Check
-        run: ./scripts/check-gallery.sh
+        run: ./hugo/scripts/check-gallery.sh
 
       - name: Run Theme Lint
-        run: ./scripts/lint-theme.sh
+        run: ./hugo/scripts/lint-theme.sh

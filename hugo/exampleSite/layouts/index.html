@@ -1,4 +1,11 @@
 {{ define "main" }}
+    {{ partial "sv/hero" (dict 
+        "prompt" "cat /etc/stellarvector/gallery" 
+        "title" "Gallery Hero" 
+        "subtitle" "This is the shared hero banner, promoted from the blog for consistent branding across all sites. It now correctly follows light/dark mode."
+        "extra" `<div class="p-4 border border-accent/20 rounded bg-accent/5 font-mono text-xs text-accent">This is custom HTML dropped into the single "extra" slot.</div>`
+    ) }}
+
     <div class="max-w-5xl mx-auto p-6 sm:p-12">
         <header class="mb-12">
             <h1 class="sv-glitch sv-glitch-auto text-4xl font-bold mb-4" data-text="Stellar Vector Gallery">Stellar Vector Gallery</h1>

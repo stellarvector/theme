@@ -25,9 +25,9 @@ params:
     find: "https://find.stellarvector.be"
 
   logo:
-    dark: "/assets/logo/logo-dark.png"
-    light: "/assets/logo/logo-light.png"
-    star: "/assets/logo/star.png"
+    dark: "/core/assets/logo/logo-dark.png"
+    light: "/core/assets/logo/logo-light.png"
+    star: "/core/assets/logo/star.png"
 
   analytics:
     script: "https://go.stellarvector.be/go.js"
@@ -60,5 +60,21 @@ params:
 markup:
   highlight:
     noClasses: false
+
+module:
+  mounts:
+    - source: assets
+      target: assets
+    - source: static
+      target: static
+    - source: layouts
+      target: layouts
+  imports:
+    - path: github.com/stellarvector/theme/core
+      mounts:
+        - source: assets
+          target: assets/core
+        - source: static
+          target: static/core
 
 

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "partials/hero.html" %}
+{% endblock %}
+
+{% block hero_prompt %}which stellarvector{% endblock %}
+{% block hero_subtitle %}Official Capture The Flag platform of the Stellar Vector team at KU Leuven.{% endblock %}
+
+{% block hero_extra %}
+<div class="mt-8 flex flex-wrap items-center gap-4">
+    <a href="{{ url_for('challenges.listing') }}" class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-2.5 px-6">
+        Get Started
+    </a>
+    <a href="{{ url_for('scoreboard.listing') }}" class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 rounded-sm border border-accent text-on-accent-tint hover:bg-accent-dark hover:border-accent-dark hover:text-accent-text! active:scale-95 py-2.5 px-6">
+        Scoreboard
+    </a>
+</div>
+{% endblock %}

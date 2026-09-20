@@ -1,0 +1,45 @@
+{{- /*
+    sv/hero.html -- Central banner for homepages.
+    Features a coordinate grid, prompt, glitching title, and a customizable HTML slot.
+
+    prompt      required. The terminal command shown above the title (e.g. "whoami").
+    title       optional. The main heading. Defaults to site.Title.
+    subtitle    optional. The text description below the title. 
+                If it starts with "<", it is treated as raw HTML and not wrapped in a <p>.
+    measure     optional. max-width token (e.g. "6xl"). Defaults to site.Params.measure.
+    
+    Parameters for slots:
+    extra       optional. HTML string for custom content (buttons, links, pills).
+*/ -}}
+
+{{- $measure := .measure | default (site.Params.measure | default "5xl") -}}
+{{- $title := .title | default site.Title -}}
+
+<section class="relative overflow-hidden border-b border-line-strong">
+    {{- /* Decorative coordinate grid, faded at the edges. */ -}}
+    <div class="sv-grid sv-grid-fade pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
+
+    <div class="relative mx-auto w-full max-w-{{ $measure }} px-4 py-12 sm:px-6 sm:py-16">
+        <p class="sv-label sv-prompt normal-case">{{ .prompt }}</p>
+
+        <h1 class="sv-marker !mt-0 !mb-4">
+            <span class="sv-glitch sv-glitch-auto" data-text="{{ $title }}">{{ $title }}</span>
+        </h1>
+
+        {{- with .subtitle }}
+            {{- if (strings.HasPrefix . "<") -}}
+                {{ . | safeHTML }}
+            {{- else -}}
+                <p class="mt-4 max-w-2xl text-base text-muted text-pretty sm:text-lg">
+                    {{ . }}<span class="sv-caret" aria-hidden="true"></span>
+                </p>
+            {{- end -}}
+        {{- end }}
+
+        {{- with .extra }}
+            <div class="mt-8">
+                {{ . | safeHTML }}
+            </div>
+        {{- end }}
+    </div>
+</section>

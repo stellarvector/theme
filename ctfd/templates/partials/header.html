@@ -1,0 +1,68 @@
+{% from "macros/icons.html" import icon %}
+
+<header class="sv-safe-top sticky top-0 z-[1000] bg-page/95 backdrop-blur-sm border-b border-line-strong">
+    <div class="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4 sm:px-6 md:h-20">
+        {# Left: Logo & Host Chip #}
+        <div class="flex items-center gap-2">
+            <a href="/" class="flex items-center gap-2 no-underline group">
+                <img src="{{ url_for('views.themes', theme='sv', path='assets/core/img/logo-light.png') }}" alt="Stellar Vector" class="h-8 w-auto light:block hidden">
+                <img src="{{ url_for('views.themes', theme='sv', path='assets/core/img/logo-dark.png') }}" alt="Stellar Vector" class="h-8 w-auto light:hidden block">
+                <span class="sv-label text-link group-hover:text-accent transition-colors">play</span>
+            </a>
+            {% include "partials/host-chip.html" %}
+        </div>
+
+        {# Centre: Desktop Nav #}
+        <nav class="hidden md:flex items-center gap-x-1" aria-label="Main">
+            <a href="{{ url_for('challenges.listing') }}" class="flex min-h-12 items-center px-4 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                <span class="text-terminal mr-1.5">$</span> challenges
+            </a>
+            <a href="{{ url_for('scoreboard.listing') }}" class="flex min-h-12 items-center px-4 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                <span class="text-terminal mr-1.5">$</span> scoreboard
+            </a>
+        </nav>
+
+        {# Right: Actions & Toggles #}
+        <div class="flex items-center gap-2">
+            <span class="hidden md:inline-flex">
+                {% from "macros/theme.html" import theme_toggle %}
+                {{ theme_toggle(variant="inline") }}
+            </span>
+
+            <button id="menu-toggle" type="button"
+                    class="group md:hidden inline-flex h-11 w-11 items-center justify-center rounded-sm
+                           border border-line-strong bg-card text-muted cursor-pointer
+                           transition-colors duration-200 hover:border-accent hover:text-link"
+                    aria-expanded="false" aria-controls="menu-panel" aria-label="Open menu">
+                {{ icon("menu", "w-6 h-6 group-aria-expanded:hidden") }}
+                {{ icon("close", "w-6 h-6 hidden group-aria-expanded:block") }}
+            </button>
+        </div>
+    </div>
+
+    {# No-JS Fallback #}
+    <noscript><style>
+        #menu-toggle, [data-theme-toggle] { display: none !important; }
+        #menu-panel { display: block !important; }
+        @media (min-width: 768px) { #menu-panel { display: none !important; } }
+    </style></noscript>
+
+    {# Mobile Menu Panel #}
+    <nav id="menu-panel" class="hidden md:hidden overflow-y-auto overscroll-contain
+                             border-t border-line-strong bg-surface px-4 pb-4 pt-3 sm:px-6"
+         aria-label="Mobile">
+        <div class="flex flex-col">
+            <a href="{{ url_for('challenges.listing') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                <span class="text-terminal mr-1.5">$</span> challenges
+            </a>
+            <a href="{{ url_for('scoreboard.listing') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                <span class="text-terminal mr-1.5">$</span> scoreboard
+            </a>
+        </div>
+
+        <div class="mt-3 border-t border-line pt-3">
+            {% from "macros/theme.html" import theme_toggle %}
+            {{ theme_toggle(variant="inline", mobile=True) }}
+        </div>
+    </nav>
+</header>
