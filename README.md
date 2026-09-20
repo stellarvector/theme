@@ -12,3 +12,4 @@ Rules
 - No inline JavaScript. External files only.
 - Site overrides go in @layer utilities, after the theme in concat order.
 - scripts/check-gallery.sh and scripts/lint-theme.sh must pass; CI runs both.
+- **Maintain consistency**: the accent red ramp, all three fonts, the near-black ground, the focus ring, tag and button shapes, and the motion vocabulary must remain identical across the family.
