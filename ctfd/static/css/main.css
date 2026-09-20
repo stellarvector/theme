@@ -1,6 +1,7 @@
 /*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
+
 @layer theme {
   :root, :host {
     --font-sans: "IBM Plex Sans", sans-serif;
@@ -2058,4 +2059,21 @@ html.light {
       --tw-outline-style: solid;
     }
   }
+}
+
+@layer utilities {
+  .max-w-md { max-width: 28rem; }
+  .max-w-3xl { max-width: 48rem; }
+  .max-w-5xl { max-width: 64rem; }
+  .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+  .py-32 { padding-top: 8rem; padding-bottom: 8rem; }
+  .mb-10 { margin-bottom: 2.5rem; }
+  .mb-16 { margin-bottom: 4rem; }
+  .gap-8 { gap: 2rem; }
+  .gap-16 { gap: 4rem; }
+  .gap-24 { gap: 6rem; }
+  .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  .text-5xl { font-size: 3rem; line-height: 1; }
+  .text-6xl { font-size: 3.75rem; line-height: 1; }
+  .z-\[1001\] { z-index: 1001; }
 }

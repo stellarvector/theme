@@ -36,16 +36,15 @@
         // Render Categories
         Object.entries(categories).forEach(([name, items]) => {
             const section = document.createElement('section');
-            section.className = 'challenge-category';
-            section.dataset.category = name;
+            section.className = 'challenge-category mb-16';
 
             const header = document.createElement('h2');
-            header.className = 'sv-section-title mb-6';
+            header.className = 'sv-marker text-xl mb-8';
             header.textContent = name;
             section.appendChild(header);
 
             const grid = document.createElement('div');
-            grid.className = 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3';
+            grid.className = 'grid gap-6 sm:grid-cols-2 lg:grid-cols-3';
 
             items.forEach(c => {
                 const solved = c.solved_by_me;
@@ -112,20 +111,20 @@
         if (!container) return;
 
         container.innerHTML = `
-            <div id="challenge-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-page/90 backdrop-blur-sm">
+            <div id="challenge-modal" class="fixed inset-0 z-[1001] flex items-center justify-center p-4 bg-page/90 backdrop-blur-sm">
                 <div class="relative w-full max-w-2xl rounded-sm border border-line-strong bg-card shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
                     <div class="flex items-center justify-between border-b border-line-strong p-6">
                         <div>
                             <span class="sv-label text-xs text-accent mb-1 block">${c.category}</span>
                             <h2 class="sv-marker text-xl">${c.name}</h2>
                         </div>
-                        <button type="button" class="text-muted hover:text-accent transition-colors" id="close-modal">
+                        <button type="button" class="text-muted hover:text-accent transition-colors p-2" id="close-modal">
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
                         </button>
                     </div>
                     
-                    <div class="p-6 sm:p-8 overflow-y-auto">
-                        <div class="prose max-w-none text-muted mb-8">
+                    <div class="p-6 sm:p-10 overflow-y-auto">
+                        <div class="prose max-w-none text-muted mb-10">
                             ${c.description}
                         </div>
 

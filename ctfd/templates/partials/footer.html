@@ -2,48 +2,55 @@
 
 <footer class="sv-safe-bottom mt-auto border-t border-line-strong bg-card print:hidden">
     <div class="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6">
-        <div class="grid gap-10 md:grid-cols-2 md:gap-16">
-            <div class="flex flex-col items-center text-center md:items-start md:text-left">
-                <p class="sv-label">powered by</p>
-                <p class="mt-2 text-sm text-muted text-pretty">
-                    <a href="https://stellarvector.be" class="text-body hover:text-link transition-colors duration-200">Stellar Vector</a>
-                    is the official CTF team of KU Leuven, competing in global security competitions.
+        <div class="grid gap-12 min-[930px]:grid-cols-2 text-center min-[930px]:text-left">
+            {# Left: Credits #}
+            <div class="flex flex-col">
+                <p class="sv-label mb-4">stellar vector</p>
+                <p class="text-sm text-muted text-pretty leading-relaxed">
+                    Powered by the
+                    <a href="https://distrinet.cs.kuleuven.be" class="hover:text-link">DistriNet research group</a> and 
+                    <a href="https://www.kuleuven.be" class="hover:text-link">KU Leuven</a>.
+                </p>
+                <p class="mt-3 flex items-center justify-center min-[930px]:justify-start gap-1.5 text-sm text-muted">
+                    A
+                    <a href="https://www.loko.be/en/societies" class="inline-flex items-center text-muted hover:text-link no-underline" target="_blank" rel="noopener" aria-label="LOKO website">
+                        {{ icon("loko", "h-4 w-auto") }}
+                        <span class="sr-only">LOKO</span>
+                    </a>
+                    recognized association.
                 </p>
             </div>
 
-            <div class="flex flex-col items-center md:items-end">
-                <p class="sv-label">connect</p>
-                <div class="mt-4 flex flex-wrap justify-center gap-3 md:justify-end">
-                    <a href="https://discord.gg/tbP75TNfNR" 
-                       target="_blank" rel="noopener" aria-label="Discord"
+            {# Right: Social Links & Hub #}
+            <div class="flex flex-col items-center min-[930px]:items-end">
+                <p class="sv-label mb-3">find us</p>
+                <div class="flex flex-wrap justify-center min-[930px]:justify-end gap-2">
+                    <a href="https://discord.gg/tbP75TNfNR" target="_blank" rel="noopener"
+                       aria-label="Discord"
                        class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
                         {{ icon("discord", "size-6") }}
                     </a>
-                    <a href="https://ctftime.org/team/4886" 
-                       target="_blank" rel="noopener" aria-label="CTFtime"
+                    <a href="https://ctftime.org/team/4886" target="_blank" rel="noopener"
+                       aria-label="CTFtime"
                        class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
                         {{ icon("ctftime", "size-6") }}
                     </a>
-                    <a href="https://github.com/stellarvector" 
-                       target="_blank" rel="noopener" aria-label="GitHub"
+                    <a href="https://github.com/stellarvector" target="_blank" rel="noopener"
+                       aria-label="GitHub"
                        class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
                         {{ icon("github", "size-6") }}
                     </a>
-                    <a href="https://app.hackthebox.com/teams/overview/4886" 
-                       target="_blank" rel="noopener" aria-label="Hack The Box"
+                    <a href="https://app.hackthebox.com/teams/overview/4886" target="_blank" rel="noopener"
+                       aria-label="Hack The Box"
                        class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
                         {{ icon("htb", "size-6") }}
                     </a>
                 </div>
                 
                 <a class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 text-link hover:text-link-hover px-1 text-sm !-ml-2 mt-4" 
-                   href="https://find.stellarvector.be" target="_blank" rel="noopener">
+                   href="https://find.stellarvector.be/?utm_source=play.stellarvector.be&utm_content=footer" target="_blank" rel="noopener">
                     <span>find.stellarvector.be</span>
-                    <svg class="inline-block ml-1 size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" 
-                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                        <polyline points="7 7 17 7 17 17"></polyline>
-                    </svg>
+                    {{ icon("external", "inline-block ml-1 size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5") }}
                 </a>
             </div>
         </div>

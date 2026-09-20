@@ -1,3 +1,5 @@
+{% from "macros/icons.html" import icon %}
+
 <div class="modal-dialog overflow-hidden rounded-sm border border-line-strong bg-card shadow-2xl" role="document">
     <div class="modal-content border-none bg-transparent">
         <div class="modal-header flex items-center justify-between border-b border-line-strong p-6">
@@ -6,7 +8,6 @@
                 <h2 class="sv-marker text-xl">{{ challenge.name }}</h2>
             </div>
             <button type="button" class="text-muted hover:text-accent transition-colors" data-dismiss="modal" aria-label="Close">
-                {% from "macros/icons.html" import icon %}
                 {{ icon("close", "w-6 h-6") }}
             </button>
         </div>
@@ -19,10 +20,10 @@
             {% if challenge.files %}
             <div class="grid gap-2 mb-8">
                 {% for file in challenge.files %}
-                <a href="{{ file }}" class="flex items-center gap-2 p-3 rounded-xs border border-line-strong bg-surface hover:border-accent group transition-colors no-underline">
-                    {% from "macros/icons.html" import icon %}
+                {# File objects in CTFd have a 'location' attribute. #}
+                <a href="{{ file.location }}" class="flex items-center gap-2 p-3 rounded-xs border border-line-strong bg-surface hover:border-accent group transition-colors no-underline">
                     {{ icon("link", "w-4 h-4 text-muted group-hover:text-accent") }}
-                    <span class="font-mono text-xs text-body group-hover:text-link">{{ file.split('/')[-1] }}</span>
+                    <span class="font-mono text-xs text-body group-hover:text-link">{{ file.location.split('/') | last }}</span>
                 </a>
                 {% endfor %}
             </div>

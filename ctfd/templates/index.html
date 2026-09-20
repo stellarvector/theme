@@ -1,26 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% set hero_prompt = "which stellarvector" %}
-{% set hero_subtitle = "The central intelligence hub and operational gateway for Stellar Vector's CTF division. Secure your uplink, analyze the targets, and coordinate with your squad to achieve planetary dominance." %}
-{% set hero_extra %}
-<div class="mt-8 flex flex-wrap items-center gap-4">
-    <a href="{{ url_for('challenges.listing') }}" class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-2.5 px-6">
-        Get Started
-    </a>
-    <a href="{{ url_for('scoreboard.listing') }}" class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 rounded-sm border border-accent text-on-accent-tint hover:bg-accent-dark hover:border-accent-dark hover:text-accent-text! active:scale-95 py-2.5 px-6">
-        Scoreboard
-    </a>
-</div>
-{% endset %}
 {% include "partials/hero.html" %}
 
-<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-    <div class="grid gap-12 md:grid-cols-2">
+{% block hero_prompt %}which stellarvector{% endblock %}
+{% block hero_title %}Stellar Vector CTF{% endblock %}
+{% block hero_title_text %}Stellar Vector CTF{% endblock %}
+{% block hero_subtitle %}The central intelligence hub and operational gateway for Stellar Vector's CTF division. Secure your uplink, analyze the targets, and coordinate with your squad to achieve planetary dominance.{% endblock %}
+
+{% block hero_extra %}
+<div class="mt-8 flex flex-wrap items-center gap-4">
+    <a href="{{ url_for('challenges.listing') }}" class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-12 transition-all duration-200 rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-3 px-8 shadow-lg shadow-accent/10">
+        GET STARTED
+    </a>
+    <a href="{{ url_for('scoreboard.listing') }}" class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-12 transition-all duration-200 rounded-sm border border-accent text-on-accent-tint hover:bg-accent-dark hover:border-accent-dark hover:text-accent-text! active:scale-95 py-3 px-8">
+        SCOREBOARD
+    </a>
+</div>
+{% endblock %}
+
+<div class="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:py-32">
+    <div class="grid gap-16 md:grid-cols-2 lg:gap-24">
         <section>
-            <h2 class="sv-label mb-4 text-accent">About Stellar Vector</h2>
-            <div class="prose text-muted">
-                <p>
+            <h2 class="sv-marker text-xl mb-8">About Stellar Vector</h2>
+            <div class="prose text-muted leading-relaxed">
+                <p class="mb-6">
                     Stellar Vector is the official CTF team of KU Leuven. We are a group of security enthusiasts, 
                     researchers, and students who participate in hacking competitions around the globe.
                 </p>
@@ -32,17 +36,23 @@
         </section>
 
         <section>
-            <h2 class="sv-label mb-4 text-accent">Join the Mission</h2>
-            <div class="prose text-muted">
-                <p>
+            <h2 class="sv-marker text-xl mb-8">Join the Mission</h2>
+            <div class="prose text-muted leading-relaxed">
+                <p class="mb-8">
                     Ready to test your skills? Register now to access our challenges and compete for a spot 
-                    on the scoreboard.
+                    on the scoreboard. Join our Discord to coordinate with other operators.
                 </p>
-                <div class="mt-6 flex items-center gap-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
                     {% if not authed() %}
-                        <a href="{{ url_for('auth.register') }}" class="font-mono text-sm text-link hover:underline">$ register</a>
+                        <a href="{{ url_for('auth.register') }}" class="group font-mono text-sm text-link no-underline flex items-center gap-2">
+                            <span class="text-terminal transition-transform group-hover:translate-x-1">$</span>
+                            <span class="border-b border-transparent hover:border-link transition-colors">register_operator</span>
+                        </a>
                     {% endif %}
-                    <a href="https://discord.gg/tbP75TNfNR" class="font-mono text-sm text-link hover:underline">$ join discord</a>
+                    <a href="https://discord.gg/tbP75TNfNR" target="_blank" rel="noopener" class="group font-mono text-sm text-link no-underline flex items-center gap-2">
+                        <span class="text-terminal transition-transform group-hover:translate-x-1">$</span>
+                        <span class="border-b border-transparent hover:border-link transition-colors">join_discord</span>
+                    </a>
                 </div>
             </div>
         </section>

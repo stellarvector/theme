@@ -8,7 +8,7 @@
             <h1 class="sv-marker text-3xl">{{ user.name }}</h1>
         </div>
         <div class="flex gap-4">
-            <a href="{{ url_for('users.settings') }}" class="font-mono text-sm text-link hover:underline">$ settings</a>
+            <a href="{{ url_for('views.settings') }}" class="font-mono text-sm text-link hover:underline">$ settings</a>
             <a href="{{ url_for('auth.logout') }}" class="font-mono text-sm text-accent hover:underline">$ logout</a>
         </div>
     </div>
