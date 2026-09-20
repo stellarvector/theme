@@ -1,13 +1,31 @@
 {{- /*
-    sv/host-chip.html -- Identifies the current site in the family.
-    Uses a modern terminal-style host label.
+    sv/host-chip.html -- Identifies the current site and links to others.
+    Uses a terminal-style label that expands to a site switcher.
 */ -}}
-{{- with site.Params.host -}}
-    <div class="hidden sm:flex items-center font-mono text-xs tracking-tight text-muted/80 select-none" aria-hidden="true">
-        <span class="text-line-strong">[</span>
-        <span class="text-link">sv</span>
-        <span class="text-line-strong">@</span>
-        <span class="text-body font-bold">{{ . }}</span>
-        <span class="text-line-strong">]</span>
-    </div>
+{{- $current := site.Params.host -}}
+{{- with $current -}}
+    <details class="group relative">
+        <summary class="flex items-center font-mono text-xs tracking-tight text-muted/80 select-none cursor-pointer list-none hover:text-link transition-colors duration-200" aria-label="Switch site">
+            <span class="text-line-strong">[</span>
+            <span class="text-link">sv</span>
+            <span class="text-line-strong">@</span>
+            <span class="text-body font-bold">{{ . }}</span>
+            <span class="text-line-strong">]</span>
+            <svg class="w-3 h-3 ml-1 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+        </summary>
+        
+        <div class="absolute left-0 top-full mt-2 w-48 rounded-sm border border-line-strong bg-card p-1 shadow-xl z-2000">
+            {{ range $name, $url := site.Params.sites -}}
+                <a href="{{ $url }}/?utm_source={{ site.Params.host }}.stellarvector.be&utm_content=host-chip"
+                   class="flex items-center justify-between px-3 py-2 font-mono text-xs no-underline hover:no-underline rounded-xs transition-colors duration-150
+                          {{ if eq $name $current }}bg-accent-tint text-heading pointer-events-none{{ else }}text-muted hover:bg-surface hover:text-link{{ end }}"
+                   {{ if eq $name $current }}aria-current="page"{{ end }}>
+                    <span>sv@{{ $name }}</span>
+                    {{ if eq $name $current }}
+                        {{ partial "sv/icon" (dict "name" "pin" "class" "w-3 h-3") }}
+                    {{ end }}
+                </a>
+            {{- end }}
+        </div>
+    </details>
 {{- end -}}

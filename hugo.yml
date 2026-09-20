@@ -19,6 +19,10 @@ params:
 
   measure: "5xl"    # default content max-width token; sites override
   host: ""          # REQUIRED per site: www | blog | find
+  sites:
+    www:  "https://www.stellarvector.be"
+    blog: "https://blog.stellarvector.be"
+    find: "https://find.stellarvector.be"
 
   logo:
     dark: "/assets/logo/logo-dark.png"

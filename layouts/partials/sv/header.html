@@ -22,7 +22,7 @@
 
         {{- /* Right: Actions & Toggles */ -}}
         <div class="flex items-center gap-2">
-            {{ block "header-actions" . }}{{ end }}
+            {{ partial "sv/header-actions" . }}
 
             <span class="hidden md:inline-flex">
                 {{ partial "sv/theme-toggle" (dict "variant" "inline") }}

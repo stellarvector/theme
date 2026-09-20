@@ -48,13 +48,14 @@
                 </div>
                 
                 {{- if ne site.Params.host "find" -}}
-                    {{ partial "sv/button" (dict "text" "find.stellarvector.be" "url" "https://find.stellarvector.be" "variant" "ghost" "size" "sm" "class" "!-ml-2") }}
+                    {{ $find_utm := printf "https://find.stellarvector.be/?utm_source=%s.stellarvector.be&utm_content=footer" (site.Params.host | default "unknown") -}}
+                    {{ partial "sv/button" (dict "text" "find.stellarvector.be" "url" $find_utm "variant" "ghost" "size" "sm" "class" "!-ml-2") }}
                 {{- end -}}
             </div>
         </div>
 
         {{- /* Footer Extra Slot (e.g. blog disclaimer) */ -}}
-        {{ block "footer-extra" . }}{{ end }}
+        {{ partial "sv/footer-extra" . }}
 
         <div class="mt-10 pt-6 border-t border-line font-mono text-xs text-muted text-center md:text-left">
             &copy; {{ now.Year }} Stellar Vector
