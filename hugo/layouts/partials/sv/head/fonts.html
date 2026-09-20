@@ -3,5 +3,5 @@
     gallery-exempt: sv/head/fonts
 */ -}}
 {{- range slice "space-grotesk-normal-400_700-latin" "ibm-plex-sans-normal-300_600-latin" "space-mono-normal-400-latin" -}}
-    <link rel="preload" href="{{ (printf "/core/fonts/%s.woff2" .) | relURL }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ (printf "/fonts/%s.woff2" .) | relURL }}" as="font" type="font/woff2" crossorigin>
 {{- end -}}

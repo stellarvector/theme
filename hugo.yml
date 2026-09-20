@@ -7,27 +7,27 @@ author:
   name: "Stellar Vector"
   homepage: "https://stellarvector.be"
 
-# Family-wide defaults. Hugo merges a theme's params *under* the site's, so
-# every key here is a default a site may override, and the ones marked REQUIRED
-# have no sensible default and must be set per site.
+
 params:
-  # These two must track --color-page in assets/css/main.css by hand:
-  # <meta name="theme-color"> cannot read a custom property. Change them
-  # together or the browser chrome drifts from the page it frames.
   theme_color_light: "#fff9f9"
   theme_color_dark: "#0a0505"
 
-  measure: "5xl"    # default content max-width token; sites override
+  measure: "5xl"
   host: ""          # REQUIRED per site: www | blog | find
   sites:
-    www:  "https://www.stellarvector.be"
-    blog: "https://blog.stellarvector.be"
-    find: "https://find.stellarvector.be"
+    - name: "www"
+      url: "https://www.stellarvector.be"
+    - name: "blog"
+      url: "https://blog.stellarvector.be"
+    - name: "play"
+      url: "https://play.stellarvector.be"
+    - name: "find"
+      url: "https://find.stellarvector.be"
 
   logo:
-    dark: "/core/assets/logo/logo-dark.png"
-    light: "/core/assets/logo/logo-light.png"
-    star: "/core/assets/logo/star.png"
+    dark: "/assets/logo/logo-dark.png"
+    light: "/assets/logo/logo-light.png"
+    star: "/assets/logo/star.png"
 
   analytics:
     script: "https://go.stellarvector.be/go.js"
@@ -63,18 +63,12 @@ markup:
 
 module:
   mounts:
-    - source: assets
+    - source: core/assets
       target: assets
-    - source: static
+    - source: core/static
       target: static
-    - source: layouts
+
+    - source: hugo/assets
+      target: assets
+    - source: hugo/layouts
       target: layouts
-  imports:
-    - path: github.com/stellarvector/theme/core
-      mounts:
-        - source: assets
-          target: assets/core
-        - source: static
-          target: static/core
-
-

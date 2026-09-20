@@ -29,7 +29,7 @@
 {{- /* Favicon: theme-hosted, per-site from Phase 11. 
        For now, using the common favicon from static/assets/logo/favicon.ico 
        aliased to PNG as per Phase 4.1 note. */ -}}
-<link rel="icon" type="image/png" href="{{ "/core/assets/logo/favicon.ico" | relURL }}">
+<link rel="icon" type="image/png" href="{{ "/assets/logo/favicon.ico" | relURL }}">
 
 {{- with site.Home.OutputFormats.Get "rss" }}
     <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">

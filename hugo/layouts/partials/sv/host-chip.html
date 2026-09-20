@@ -15,7 +15,9 @@
         </summary>
         
         <div class="absolute left-0 top-full mt-2 w-48 rounded-sm border border-line-strong bg-card p-1 shadow-xl z-2000">
-            {{ range $name, $url := site.Params.sites -}}
+            {{- range site.Params.sites -}}
+                {{- $name := .name -}}
+                {{- $url := .url -}}
                 <a href="{{ $url }}/?utm_source={{ site.Params.host }}.stellarvector.be&utm_content=host-chip"
                    class="flex items-center justify-between px-3 py-2 font-mono text-xs no-underline hover:no-underline rounded-xs transition-colors duration-150
                           {{ if eq $name $current }}bg-accent-tint text-heading pointer-events-none{{ else }}text-muted hover:bg-surface hover:text-link{{ end }}"

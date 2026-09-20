@@ -35,15 +35,17 @@
 
             {{- /* Right: Social Links & Hub */ -}}
             <div class="flex flex-col items-center min-[930px]:items-start">
-                <p class="sv-label mb-6">find us</p>
-                {{- /* Container restricted to exactly 4 items wide on small screens to force 2 rows */ -}}
-                <div class="grid grid-cols-4 sm:flex sm:flex-wrap gap-2 mb-8 max-w-[240px] sm:max-w-none">
-                    {{ range $key, $val := site.Params.social -}}
-                        <a href="{{ $val }}" target="_blank" rel="noopener" 
-                           aria-label="{{ index $labels $key | default ($key | title) }}"
-                           class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
-                            {{ partial "sv/icon" (dict "name" $key "class" "size-6") }}
-                        </a>
+                <p class="sv-label mb-3">find us</p>
+                <div class="flex flex-wrap justify-center min-[930px]:justify-start gap-2">
+                    {{- $social_order := slice "discord" "ctftime" "github" "htb" -}}
+                    {{- range $key := $social_order -}}
+                        {{- with index site.Params.social . -}}
+                            <a href="{{ . }}" target="_blank" rel="noopener"
+                               aria-label="{{ index $labels $key | default ($key | title) }}"
+                               class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
+                                {{ partial "sv/icon" (dict "name" $key "class" "size-6") }}
+                            </a>
+                        {{- end -}}
                     {{- end }}
                 </div>
                 
@@ -57,8 +59,8 @@
         {{- /* Footer Extra Slot (e.g. blog disclaimer) */ -}}
         {{ partial "sv/footer-extra" . }}
 
-        <div class="mt-10 pt-6 border-t border-line font-mono text-xs text-muted text-center md:text-left">
-            &copy; {{ now.Year }} Stellar Vector
+        <div class="mt-6 pt-6 border-t border-line font-mono text-xs text-muted text-center md:text-left">
+            <span class="text-body font-sans text-sm inline-block">&copy;</span> {{ now.Year }} Stellar Vector
         </div>
     </div>
 </footer>

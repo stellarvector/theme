@@ -30,7 +30,7 @@
 {{- $svg := "" -}}
 {{- range $sets -}}
     {{- if not $svg -}}
-        {{- with resources.Get (printf "core/icons/%s/%s.svg" . $name) -}}
+        {{- with resources.Get (printf "icons/%s/%s.svg" . $name) -}}
             {{- $svg = .Content -}}
         {{- end -}}
     {{- end -}}

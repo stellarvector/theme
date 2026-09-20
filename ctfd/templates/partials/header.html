@@ -5,8 +5,8 @@
         {# Left: Logo & Host Chip #}
         <div class="flex items-center gap-2">
             <a href="/" class="flex items-center gap-2 no-underline group">
-                <img src="{{ url_for('views.themes', theme='sv', path='assets/core/img/logo-light.png') }}" alt="Stellar Vector" class="h-8 w-auto light:block hidden">
-                <img src="{{ url_for('views.themes', theme='sv', path='assets/core/img/logo-dark.png') }}" alt="Stellar Vector" class="h-8 w-auto light:hidden block">
+                <img src="{{ url_for('views.themes', theme='sv', path='assets/img/logo-light.png') }}" alt="Stellar Vector" class="h-8 w-auto light:block hidden">
+                <img src="{{ url_for('views.themes', theme='sv', path='assets/img/logo-dark.png') }}" alt="Stellar Vector" class="h-8 w-auto light:hidden block">
                 <span class="sv-label text-link group-hover:text-accent transition-colors">play</span>
             </a>
             {% include "partials/host-chip.html" %}
