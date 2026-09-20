@@ -8,7 +8,7 @@
         <p class="sv-label sv-prompt normal-case">{% block hero_prompt %}whoami{% endblock %}</p>
 
         <h1 class="sv-marker !mt-0 !mb-4">
-            <span class="sv-glitch sv-glitch-auto" data-text="{% block hero_title %}{{ Config.ctf_name }}{% endblock %}">{% block hero_title_text %}{{ Config.ctf_name }}{% endblock %}</span>
+            <span class="sv-glitch sv-glitch-auto" data-text="{% block hero_title %}{{ get_config('ctf_name') }}{% endblock %}">{% block hero_title_text %}{{ get_config('ctf_name') }}{% endblock %}</span>
         </h1>
 
         <p class="mt-4 max-w-2xl text-base text-muted text-pretty sm:text-lg">
