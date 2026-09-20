@@ -7,11 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#0a0505">
+    <meta name="csrf-token" content="{{ Session.get('csrf_token') }}">
     <title>{% block title %}{{ get_config('ctf_name') }}{% endblock %}</title>
     
-    <link rel="stylesheet" href="{{ url_for('views.themes', theme='sv', path='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('views.themes', theme='sv', path='css/main.min.css') }}">
     
-    <script src="{{ url_for('views.themes', theme='sv', path='js/sv-theme.js') }}"></script>
+    <script type="text/javascript">
+        var init = {
+            'urlRoot': "{{ request.script_root }}",
+            'csrfToken': "{{ Session.get('csrf_token') }}",
+            'userMode': "{{ get_config('user_mode') }}",
+            'userId': {{ id or 0 }},
+            'userName': {{ name | tojson or 'null' }},
+            'userEmail': {{ email | tojson or 'null' }},
+            'teamId': {{ team_id or 'null' }},
+            'teamName': {{ team_name | tojson or 'null' }},
+            'start': {{ start or 'null' }},
+            'end': {{ end or 'null' }}
+        };
+    </script>
+    
+    <script src="{{ url_for('views.themes', theme='sv', path='js/sv-theme.min.js') }}"></script>
     
     {% block head %}{% endblock %}
 </head>
@@ -19,12 +35,26 @@
     {% include "partials/header.html" %}
     
     <main id="content" tabindex="-1" class="flex-1 w-full">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="mx-auto max-w-5xl px-4 pt-8">
+                    {% for message in messages %}
+                        <div class="rounded-sm border border-accent/30 bg-accent/5 p-4 text-sm text-accent-light mb-4">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </main>
 
     {% include "partials/footer.html" %}
 
-    <script defer src="{{ url_for('views.themes', theme='sv', path='js/sv-chrome.js') }}"></script>
+    <div id="modal-container"></div>
+
+    <script defer src="{{ url_for('views.themes', theme='sv', path='js/sv-chrome.min.js') }}"></script>
+    <script defer src="{{ url_for('views.themes', theme='sv', path='js/main.min.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

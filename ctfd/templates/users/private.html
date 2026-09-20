@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+            <p class="sv-label sv-prompt normal-case mb-2">whoami</p>
+            <h1 class="sv-marker text-3xl">{{ user.name }}</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="{{ url_for('users.settings') }}" class="font-mono text-sm text-link hover:underline">$ settings</a>
+            <a href="{{ url_for('auth.logout') }}" class="font-mono text-sm text-accent hover:underline">$ logout</a>
+        </div>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-3 mb-12">
+        <div class="sv-terminal p-6">
+            <span class="sv-label text-xs text-muted block mb-2">Score</span>
+            <span class="font-mono text-2xl font-bold text-accent">{{ user.score }}</span>
+        </div>
+        <div class="sv-terminal p-6">
+            <span class="sv-label text-xs text-muted block mb-2">Place</span>
+            <span class="font-mono text-2xl font-bold text-accent">#{{ user.place }}</span>
+        </div>
+        <div class="sv-terminal p-6">
+            <span class="sv-label text-xs text-muted block mb-2">Solves</span>
+            <span class="font-mono text-2xl font-bold text-accent">{{ user.solves | length }}</span>
+        </div>
+    </div>
+
+    <section class="sv-terminal overflow-hidden">
+        <h2 class="border-b border-line-strong p-6 font-mono font-bold text-sm text-accent">Solves</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left font-mono text-xs">
+                <thead>
+                    <tr class="border-b border-line-strong bg-surface/50">
+                        <th class="px-6 py-3 font-bold text-muted uppercase">Challenge</th>
+                        <th class="px-6 py-3 font-bold text-muted uppercase">Category</th>
+                        <th class="px-6 py-3 font-bold text-muted uppercase text-right">Value</th>
+                        <th class="px-6 py-3 font-bold text-muted uppercase text-right">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if user.solves %}
+                        {% for solve in user.solves %}
+                        <tr class="border-b border-line last:border-0 hover:bg-surface transition-colors">
+                            <td class="px-6 py-4 font-bold text-body">{{ solve.challenge.name }}</td>
+                            <td class="px-6 py-4 text-muted">{{ solve.challenge.category }}</td>
+                            <td class="px-6 py-4 text-right text-accent">{{ solve.challenge.value }}</td>
+                            <td class="px-6 py-4 text-right text-muted">{{ solve.date | datetime }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="px-6 py-12 text-center text-muted">No solves yet. Go hack something!</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+{% endblock %}

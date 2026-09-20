@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-md px-4 py-12 sm:py-20">
+    <div class="sv-terminal p-6 sm:p-8">
+        <h2 class="sv-marker mb-8 text-2xl">Login</h2>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="mb-6 rounded-sm border border-accent/30 bg-accent/5 p-4 text-sm text-accent-light">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="post" accept-charset="utf-8" autocomplete="off" class="flex flex-col gap-6">
+            <div class="flex flex-col gap-2">
+                <label for="name" class="sv-label text-muted">User Name or Email</label>
+                <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
+                       id="name" name="name" type="text" value="" required>
+            </div>
+            
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                    <label for="password" class="sv-label text-muted">Password</label>
+                    <a href="{{ url_for('auth.reset_password') }}" class="text-xs text-muted hover:text-link">Forgot?</a>
+                </div>
+                <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
+                       id="password" name="password" type="password" value="" required>
+            </div>
+
+            <input type="hidden" name="nonce" value="{{ Session.get('csrf_token') }}">
+
+            <button type="submit" class="group mt-2 font-mono font-bold no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-2.5 px-6">
+                Login
+            </button>
+        </form>
+
+        <p class="mt-8 text-center text-sm text-muted">
+            Don't have an account? 
+            <a href="{{ url_for('auth.register') }}" class="text-link hover:text-link-hover">Register</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

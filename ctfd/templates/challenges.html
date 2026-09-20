@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+        <div>
+            <p class="sv-label sv-prompt normal-case mb-2">ls /challenges</p>
+            <h1 class="sv-marker text-3xl">Challenges</h1>
+        </div>
+        <div id="challenge-filters" class="flex flex-wrap gap-2">
+            {# Filters will be injected here #}
+        </div>
+    </div>
+
+    <div id="challenges-board" class="space-y-12">
+        <div class="flex items-center justify-center py-20">
+            <span class="sv-caret text-accent"></span>
+            <span class="ml-2 font-mono text-muted animate-pulse">Initializing connection...</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script defer src="{{ url_for('views.themes', theme='sv', path='js/challenges.min.js') }}"></script>
+{% endblock %}

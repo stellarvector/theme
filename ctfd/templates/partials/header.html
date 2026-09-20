@@ -7,7 +7,6 @@
             <a href="/" class="flex items-center gap-2 no-underline group">
                 <img src="{{ url_for('views.themes', theme='sv', path='img/logo-light.png') }}" alt="Stellar Vector" class="h-8 w-auto light:block hidden">
                 <img src="{{ url_for('views.themes', theme='sv', path='img/logo-dark.png') }}" alt="Stellar Vector" class="h-8 w-auto light:hidden block">
-                <span class="sv-label text-link group-hover:text-accent transition-colors">play</span>
             </a>
             {% include "partials/host-chip.html" %}
         </div>
@@ -24,10 +23,33 @@
 
         {# Right: Actions & Toggles #}
         <div class="flex items-center gap-2">
-            <span class="hidden md:inline-flex">
-                {% from "macros/theme.html" import theme_toggle %}
-                {{ theme_toggle(variant="inline") }}
-            </span>
+            <div class="hidden md:flex items-center gap-2">
+                {% if authed() %}
+                    <a href="{{ url_for('users.private') }}" class="flex min-h-12 items-center px-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline" aria-label="Profile">
+                        {{ icon("user", "w-5 h-5") }}
+                    </a>
+                    {% if is_admin() %}
+                        <a href="{{ url_for('admin.view') }}" class="flex min-h-12 items-center px-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline" aria-label="Admin Panel">
+                            {{ icon("settings", "w-5 h-5") }}
+                        </a>
+                    {% endif %}
+                    <a href="{{ url_for('auth.logout') }}" class="flex min-h-12 items-center px-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline" aria-label="Logout">
+                        {{ icon("logout", "w-5 h-5") }}
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="flex min-h-12 items-center px-4 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                        login
+                    </a>
+                    <a href="{{ url_for('auth.register') }}" class="flex min-h-12 items-center px-4 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                        register
+                    </a>
+                {% endif %}
+
+                <span class="ml-2 inline-flex">
+                    {% from "macros/theme.html" import theme_toggle %}
+                    {{ theme_toggle(variant="inline") }}
+                </span>
+            </div>
 
             <button id="menu-toggle" type="button"
                     class="group md:hidden inline-flex h-11 w-11 items-center justify-center rounded-sm
@@ -58,6 +80,29 @@
             <a href="{{ url_for('scoreboard.listing') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
                 <span class="text-terminal mr-1.5">$</span> scoreboard
             </a>
+            
+            <div class="mt-3 border-t border-line pt-3 flex flex-col">
+                {% if authed() %}
+                    <a href="{{ url_for('users.private') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                        <span class="text-terminal mr-1.5">$</span> profile
+                    </a>
+                    {% if is_admin() %}
+                        <a href="{{ url_for('admin.view') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                            <span class="text-terminal mr-1.5">$</span> admin
+                        </a>
+                    {% endif %}
+                    <a href="{{ url_for('auth.logout') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                        <span class="text-terminal mr-1.5">$</span> logout
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                        <span class="text-terminal mr-1.5">$</span> login
+                    </a>
+                    <a href="{{ url_for('auth.register') }}" class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-muted no-underline hover:text-link hover:no-underline">
+                        <span class="text-terminal mr-1.5">$</span> register
+                    </a>
+                {% endif %}
+            </div>
         </div>
 
         <div class="mt-3 border-t border-line pt-3">

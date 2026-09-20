@@ -1,9 +1,15 @@
 {
   "name": "sv-ctfd-theme",
   "version": "1.0.0",
+  "scripts": {
+    "build:css": "tailwindcss -i static/css/main.css -o static/css/main.min.css --minify",
+    "build:js": "for f in static/js/*.js; do if [[ $f != *.min.js ]]; then npx terser $f -o ${f%.js}.min.js --compress --mangle; fi; done",
+    "build": "npm run build:css && npm run build:js"
+  },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.0",
     "@tailwindcss/typography": "^0.5.19",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "terser": "^5.31.0"
   }
 }
