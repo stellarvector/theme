@@ -41,14 +41,16 @@
 {{- if $url -}}
     <a class="{{ $class }}" href="{{ $url | relURL }}"
        {{ if $external }}target="_blank" rel="noopener"{{ end }}
-       {{ with .aria_label }}aria-label="{{ . }}"{{ end }}>
+       {{ with .aria_label }}aria-label="{{ . }}"{{ end }}
+       {{ range $k, $v := .data }}data-{{ $k }}="{{ $v }}"{{ end }}>
         {{- with .icon }}{{ partial "sv/icon" (dict "name" . "class" "h-5 w-auto shrink-0") }}{{ end -}}
         <span>{{ .text }}</span>
         {{- if $external }}{{ partial "sv/external-mark" . }}{{ end -}}
     </a>
 {{- else -}}
     <button type="button" class="{{ $class }} cursor-pointer"
-            {{ with .aria_label }}aria-label="{{ . }}"{{ end }}>
+            {{ with .aria_label }}aria-label="{{ . }}"{{ end }}
+            {{ range $k, $v := .data }}data-{{ $k }}="{{ $v }}"{{ end }}>
         {{- with .icon }}{{ partial "sv/icon" (dict "name" . "class" "h-5 w-auto shrink-0") }}{{ end -}}
         <span>{{ .text }}</span>
     </button>
