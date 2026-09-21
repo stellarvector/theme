@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <div class="mb-12">
+        <p class="sv-label sv-prompt normal-case mb-2">ls /users</p>
+        <h1 class="sv-marker text-3xl">Users</h1>
+    </div>
+
+    <div class="sv-terminal overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left font-mono text-sm">
+                <thead>
+                    <tr class="border-b border-line-strong bg-surface/50">
+                        <th class="px-6 py-4 font-bold text-accent uppercase">User</th>
+                        <th class="px-6 py-4 font-bold text-accent uppercase">Website</th>
+                        <th class="px-6 py-4 font-bold text-accent uppercase">Affiliation</th>
+                        <th class="px-6 py-4 font-bold text-accent uppercase">Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users.items %}
+                    <tr class="border-b border-line last:border-0 hover:bg-surface transition-colors group">
+                        <td class="px-6 py-4">
+                            <a href="{{ url_for('users.public', user_id=user.id) }}" class="text-body font-bold group-hover:text-link no-underline">
+                                {{ user.name }}
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 text-muted">
+                            {% if user.website %}
+                                <a href="{{ user.website }}" target="_blank" rel="noopener" class="hover:text-link">{{ user.website }}</a>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-muted">{{ user.affiliation or '' }}</td>
+                        <td class="px-6 py-4 text-muted">{{ user.country or '' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if users.pages > 1 %}
+    <div class="mt-8 flex justify-center gap-2">
+        {% if users.has_prev %}
+            <a href="{{ url_for('users.listing', page=users.prev_num) }}" class="px-4 py-2 font-mono text-sm border border-line-strong hover:border-accent">$ prev</a>
+        {% endif %}
+        <span class="px-4 py-2 font-mono text-sm text-accent">{{ users.page }} / {{ users.pages }}</span>
+        {% if users.has_next %}
+            <a href="{{ url_for('users.listing', page=users.next_num) }}" class="px-4 py-2 font-mono text-sm border border-line-strong hover:border-accent">$ next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

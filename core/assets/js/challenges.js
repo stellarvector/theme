@@ -8,7 +8,7 @@
 
     async function fetchChallenges() {
         try {
-            const challengesRes = await fetch('/api/v1/challenges');
+            const challengesRes = await fetch(`${window.init.urlRoot}/api/v1/challenges`);
             const challenges = (await challengesRes.json()).data;
 
             renderBoard(challenges);
@@ -37,6 +37,7 @@
         Object.entries(categories).forEach(([name, items]) => {
             const section = document.createElement('section');
             section.className = 'challenge-category mb-16';
+            section.dataset.category = name;
 
             const header = document.createElement('h2');
             header.className = 'sv-marker text-xl mb-8';
@@ -48,21 +49,31 @@
 
             items.forEach(c => {
                 const solved = c.solved_by_me;
+                const locked = c.state === 'locked';
                 const card = document.createElement('button');
                 card.type = 'button';
                 card.className = `flex flex-col text-left p-4 rounded-sm border transition-all duration-200 group relative overflow-hidden
-                    ${solved ? 'border-accent/50 bg-accent/5' : 'border-line-strong bg-card hover:border-accent'}`;
+                    ${solved ? 'border-accent/30 bg-accent/5 opacity-60 hover:opacity-100' : 'border-line-strong bg-card hover:border-accent'}
+                    ${locked ? 'opacity-40 cursor-not-allowed pointer-events-none' : ''}`;
                 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-2">
-                        <span class="sv-label text-xs ${solved ? 'text-accent' : 'text-muted'}">${c.category}</span>
-                        ${solved ? '<span class="text-accent text-[10px] font-mono">SOLVED</span>' : ''}
+                        <span class="sv-label text-[10px] ${solved ? 'text-accent' : 'text-muted'}">${c.category}</span>
+                        <div class="flex items-center gap-2">
+                            ${solved ? '<span class="text-accent text-[10px] font-mono font-bold">SOLVED</span>' : ''}
+                            ${locked ? '<svg class="w-3 h-3 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>' : ''}
+                        </div>
                     </div>
-                    <h3 class="font-mono font-bold text-sm mb-1 group-hover:text-accent transition-colors">${c.name}</h3>
-                    <p class="text-xs text-muted">${c.value} points</p>
+                    <h3 class="font-mono font-bold text-sm mb-1 ${locked ? 'text-muted' : 'group-hover:text-accent'} transition-colors">${c.name}</h3>
+                    <div class="flex justify-between items-center mt-auto pt-1">
+                        <span class="text-[10px] font-mono text-muted">${c.value} pts</span>
+                        <span class="text-[10px] font-mono text-muted opacity-60">${c.solves} solves</span>
+                    </div>
                 `;
 
-                card.onclick = () => loadChallenge(c.id);
+                if (!locked) {
+                    card.onclick = () => loadChallenge(c.id);
+                }
                 grid.appendChild(card);
             });
 
@@ -97,7 +108,7 @@
 
     async function loadChallenge(id) {
         try {
-            const res = await fetch(`/api/v1/challenges/${id}`);
+            const res = await fetch(`${window.init.urlRoot}/api/v1/challenges/${id}`);
             const challenge = (await res.json()).data;
             
             renderModal(challenge);
@@ -174,12 +185,12 @@
             if (!input || !challengeId) return;
 
             try {
-                const res = await fetch('/api/v1/challenges/attempt', {
+                const res = await fetch(`${window.init.urlRoot}/api/v1/challenges/attempt`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
-                        'CSRF-Token': init.csrfToken
+                        'CSRF-Token': window.init.csrfToken
                     },
                     body: JSON.stringify({
                         challenge_id: challengeId,

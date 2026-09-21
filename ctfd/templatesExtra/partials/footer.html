@@ -8,7 +8,7 @@
                 <p class="sv-label mb-4">stellar vector</p>
                 <p class="text-sm text-muted text-pretty leading-relaxed">
                     Powered by the
-                    <a href="https://distrinet.cs.kuleuven.be" class="hover:text-link">DistriNet research group</a>, and 
+                    <a href="https://distrinet.cs.kuleuven.be" class="hover:text-link">DistriNet research group</a> and 
                     <a href="https://www.kuleuven.be" class="hover:text-link">KU Leuven</a>.
                 </p>
                 <p class="mt-3 flex items-center justify-center min-[930px]:justify-start gap-1.5 text-sm text-muted">
@@ -22,20 +22,20 @@
             </div>
 
             {# Right: Social Links & Hub #}
-            <div class="flex flex-col items-center min-[930px]:items-start">
+            <div class="flex flex-col items-center min-[930px]:items-end">
                 <p class="sv-label mb-3">find us</p>
-                <div class="flex flex-wrap justify-center min-[930px]:justify-start gap-2">
+                <div class="flex flex-wrap justify-center min-[930px]:justify-end gap-2">
                     <a href="https://discord.gg/tbP75TNfNR" target="_blank" rel="noopener"
                        aria-label="Discord"
                        class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
                         {{ icon("discord", "size-6") }}
                     </a>
-                    <a href="https://www.ctftime.org/team/192988" target="_blank" rel="noopener"
+                    <a href="https://ctftime.org/team/4886" target="_blank" rel="noopener"
                        aria-label="CTFtime"
                        class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
                         {{ icon("ctftime", "size-6") }}
                     </a>
-                    <a href="https://www.github.com/stellarvector" target="_blank" rel="noopener"
+                    <a href="https://github.com/stellarvector" target="_blank" rel="noopener"
                        aria-label="GitHub"
                        class="flex size-11 items-center justify-center rounded-sm text-muted hover:bg-accent-tint hover:text-link transition-colors duration-200">
                         {{ icon("github", "size-6") }}
@@ -47,7 +47,7 @@
                     </a>
                 </div>
                 
-                <a class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 text-link hover:text-link-hover px-1 text-sm !-ml-2" 
+                <a class="group font-mono font-bold no-underline hover:no-underline inline-flex items-center justify-center gap-2.5 min-h-11 transition-colors duration-200 text-link hover:text-link-hover px-1 text-sm !-ml-2 mt-4" 
                    href="https://find.stellarvector.be/?utm_source=play.stellarvector.be&utm_content=footer" target="_blank" rel="noopener">
                     <span>find.stellarvector.be</span>
                     {{ icon("external", "inline-block ml-1 size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5") }}
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <div class="mt-6 pt-6 border-t border-line font-mono text-xs text-muted text-center md:text-left">
+        <div class="mt-10 pt-6 border-t border-line font-mono text-xs text-muted text-center md:text-left">
             <span class="text-body font-sans text-sm inline-block">&copy;</span> {{ now.year if now else '2026' }} Stellar Vector
         </div>
     </div>

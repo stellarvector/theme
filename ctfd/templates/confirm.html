@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-5xl px-4 py-20 sm:py-32">
+    <div class="mx-auto max-w-md">
+        <div class="sv-terminal overflow-hidden shadow-2xl">
+            {# Terminal Header #}
+            <div class="flex items-center justify-between border-b border-line-strong bg-card/50 px-4 py-2">
+                <div class="flex gap-1.5">
+                    <div class="size-2.5 rounded-full bg-accent/20"></div>
+                    <div class="size-2.5 rounded-full bg-line"></div>
+                    <div class="size-2.5 rounded-full bg-line"></div>
+                </div>
+                <span class="font-mono text-[10px] text-muted tracking-widest uppercase">auth.confirm</span>
+            </div>
+
+            <div class="p-8 sm:p-10">
+                <div class="mb-10 text-center">
+                    <h2 class="sv-marker text-3xl inline-block">
+                        <span class="sv-glitch sv-glitch-auto" data-text="Confirm">Confirm</span>
+                    </h2>
+                    <p class="mt-2 font-mono text-xs text-muted">VERIFY COMMS CHANNEL</p>
+                </div>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="mb-8 rounded-sm border border-accent/30 bg-accent/5 p-4 text-sm text-accent-light font-mono">
+                                <span class="text-accent mr-2">!</span> {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="prose text-muted font-mono text-sm leading-relaxed text-center">
+                    <p>
+                        A verification packet has been dispatched to your registered comms channel. 
+                        Please execute the link within to authorize your uplink.
+                    </p>
+                    <p class="mt-4 opacity-50">
+                        Check your spam sector if the packet does not arrive within 5 cycles.
+                    </p>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-line/50 text-center">
+                    <a href="/" class="text-link hover:text-link-hover font-bold font-mono text-sm">RETURN TO BASE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

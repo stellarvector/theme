@@ -1,54 +1,209 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
     <div class="mb-12">
-        <p class="sv-label sv-prompt normal-case mb-2">chsh</p>
-        <h1 class="sv-marker text-3xl">Settings</h1>
+        <p class="sv-label sv-prompt normal-case mb-2">setopt /etc/operator/config</p>
+        <h1 class="sv-marker text-3xl uppercase font-bold tracking-tighter">System Configuration</h1>
     </div>
 
-    <div class="grid gap-8 md:grid-cols-2">
-        {# Profile Settings #}
-        <section class="sv-terminal p-6">
-            <h2 class="sv-label mb-6 text-accent">Profile</h2>
-            <form method="post" accept-charset="utf-8" autocomplete="off" class="flex flex-col gap-4">
-                <div class="flex flex-col gap-2">
-                    <label for="name" class="text-xs text-muted font-mono uppercase">User Name</label>
-                    <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
-                           id="name" name="name" type="text" value="{{ name }}" required>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <label for="email" class="text-xs text-muted font-mono uppercase">Email</label>
-                    <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
-                           id="email" name="email" type="email" value="{{ email }}" required>
-                </div>
-                <input type="hidden" name="nonce" value="{{ Session.nonce }}">
-                <button type="submit" class="mt-2 font-mono font-bold bg-accent text-accent-text! hover:bg-accent-dark py-2 px-4 rounded-sm transition-colors text-sm">
-                    UPDATE PROFILE
-                </button>
-            </form>
-        </section>
+    <div class="flex flex-col md:flex-row gap-8">
+        {# Configuration Sidebar #}
+        <aside class="w-full md:w-64 shrink-0">
+            <nav class="sv-terminal flex flex-col p-2 space-y-1" aria-label="Configuration Sections">
+                <a href="#profile" class="flex items-center gap-3 px-4 py-2 font-mono text-xs uppercase tracking-widest bg-accent text-accent-text! rounded-xs no-underline">
+                    <span class="opacity-50">01</span>
+                    <span>Profile</span>
+                </a>
+                <a href="#security" class="flex items-center gap-3 px-4 py-2 font-mono text-xs uppercase tracking-widest text-muted hover:bg-surface hover:text-body rounded-xs transition-colors no-underline">
+                    <span class="opacity-50">02</span>
+                    <span>Security</span>
+                </a>
+                {% if get_config('tokens') %}
+                <a href="#tokens" class="flex items-center gap-3 px-4 py-2 font-mono text-xs uppercase tracking-widest text-muted hover:bg-surface hover:text-body rounded-xs transition-colors no-underline">
+                    <span class="opacity-50">03</span>
+                    <span>Tokens</span>
+                </a>
+                {% endif %}
+                {% if team %}
+                <a href="#team" class="flex items-center gap-3 px-4 py-2 font-mono text-xs uppercase tracking-widest text-muted hover:bg-surface hover:text-body rounded-xs transition-colors no-underline">
+                    <span class="opacity-50">{{ '04' if get_config('tokens') else '03' }}</span>
+                    <span>Team</span>
+                </a>
+                {% endif %}
+            </nav>
+        </aside>
 
-        {# Password Settings #}
-        <section class="sv-terminal p-6">
-            <h2 class="sv-label mb-6 text-accent">Security</h2>
-            <form method="post" accept-charset="utf-8" autocomplete="off" class="flex flex-col gap-4">
-                <div class="flex flex-col gap-2">
-                    <label for="current_confirm" class="text-xs text-muted font-mono uppercase">Current Password</label>
-                    <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
-                           id="current_confirm" name="current_confirm" type="password">
+        {# Configuration Content #}
+        <div class="flex-1 space-y-12">
+            {# Profile Settings #}
+            <section id="profile" class="sv-terminal overflow-hidden shadow-xl">
+                <h2 class="border-b border-line-strong bg-card p-4 font-mono font-bold text-xs text-accent uppercase tracking-widest">
+                    [SEC_01] Identity Configuration
+                </h2>
+                <form method="post" accept-charset="utf-8" autocomplete="off" class="p-6 space-y-6">
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div class="flex flex-col gap-2">
+                            <label for="name" class="text-[10px] text-muted font-mono uppercase tracking-widest">User_Identity</label>
+                            <input class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none" 
+                                   id="name" name="name" type="text" value="{{ name }}" required>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label for="email" class="text-[10px] text-muted font-mono uppercase tracking-widest">Comms_Channel (Email)</label>
+                            <input class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none" 
+                                   id="email" name="email" type="email" value="{{ email }}" required>
+                        </div>
+                    </div>
+
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div class="flex flex-col gap-2">
+                            <label for="affiliation" class="text-[10px] text-muted font-mono uppercase tracking-widest">Affiliation</label>
+                            <input class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none" 
+                                   id="affiliation" name="affiliation" type="text" value="{{ affiliation or '' }}" placeholder="Organization / Group">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label for="website" class="text-[10px] text-muted font-mono uppercase tracking-widest">Website</label>
+                            <input class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none" 
+                                   id="website" name="website" type="url" value="{{ website or '' }}" placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div class="flex flex-col gap-2">
+                            <label for="country" class="text-[10px] text-muted font-mono uppercase tracking-widest">Country</label>
+                            <select class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none appearance-none" 
+                                    id="country" name="country">
+                                <option value="">Select Sector (Country)</option>
+                                {% for code, country_name in countries %}
+                                    <option value="{{ code }}" {% if code == country %}selected{% endif %}>{{ country_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label for="language" class="text-[10px] text-muted font-mono uppercase tracking-widest">Primary_Interface_Lang</label>
+                            <select class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none appearance-none" 
+                                    id="language" name="language">
+                                <option value="">Default OS Language</option>
+                                {% for code, lang_name in languages %}
+                                    <option value="{{ code }}" {% if code == language %}selected{% endif %}>{{ lang_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-line/30 flex justify-end">
+                        <input type="hidden" name="nonce" value="{{ Session.nonce }}">
+                        <button type="submit" class="font-mono font-bold bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-2.5 px-8 rounded-sm transition-all text-xs tracking-widest uppercase">
+                            Commit Identity Changes
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            {# Password Settings #}
+            <section id="security" class="sv-terminal overflow-hidden shadow-xl">
+                <h2 class="border-b border-line-strong bg-card p-4 font-mono font-bold text-xs text-accent uppercase tracking-widest">
+                    [SEC_02] Access Credentials
+                </h2>
+                <form method="post" accept-charset="utf-8" autocomplete="off" class="p-6 space-y-6">
+                    <div class="flex flex-col gap-2">
+                        <label for="current_confirm" class="text-[10px] text-muted font-mono uppercase tracking-widest">Current_Key (Password)</label>
+                        <input class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none" 
+                               id="current_confirm" name="current_confirm" type="password" placeholder="Enter current credential to authorize">
+                    </div>
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div class="flex flex-col gap-2">
+                            <label for="password" class="text-[10px] text-muted font-mono uppercase tracking-widest">New_Access_Key</label>
+                            <input class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none" 
+                                   id="password" name="password" type="password" placeholder="New credential">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label for="confirm" class="text-[10px] text-muted font-mono uppercase tracking-widest">Verify_Access_Key</label>
+                            <input class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body transition-colors focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none" 
+                                   id="confirm" name="confirm" type="password" placeholder="Confirm new credential">
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-line/30 flex justify-end">
+                        <input type="hidden" name="nonce" value="{{ Session.nonce }}">
+                        <button type="submit" class="font-mono font-bold bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-2.5 px-8 rounded-sm transition-all text-xs tracking-widest uppercase">
+                            Rotate Access Keys
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            {# API Token Settings #}
+            {% if get_config('tokens') %}
+            <section id="tokens" class="sv-terminal overflow-hidden shadow-xl">
+                <h2 class="border-b border-line-strong bg-card p-4 font-mono font-bold text-xs text-accent uppercase tracking-widest">
+                    [SEC_03] API Access Tokens
+                </h2>
+                
+                <div class="p-6 space-y-8">
+                    {# Token Generation Form #}
+                    <div>
+                        <h3 class="text-[10px] text-muted font-mono uppercase tracking-widest mb-4">Generate New Token</h3>
+                        <form method="post" action="{{ url_for('users.tokens') }}" class="space-y-4">
+                            <div class="grid gap-6 md:grid-cols-2">
+                                <div class="flex flex-col gap-2">
+                                    <label for="expiration" class="text-[10px] text-muted font-mono uppercase tracking-widest opacity-60">Expiration_Cycle</label>
+                                    <input class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body focus:border-accent focus:outline-none" 
+                                           id="expiration" name="expiration" type="date">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="description" class="text-[10px] text-muted font-mono uppercase tracking-widest opacity-60">Token_Identifier (Optional)</label>
+                                    <input class="w-full rounded-sm border border-line-strong bg-page px-4 py-2.5 font-mono text-sm text-body focus:border-accent focus:outline-none" 
+                                           id="description" name="description" type="text" placeholder="e.g. CLI uplink">
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <input type="hidden" name="nonce" value="{{ Session.nonce }}">
+                                <button type="submit" class="font-mono font-bold bg-accent text-accent-text! hover:bg-accent-dark py-2 px-6 rounded-sm text-xs uppercase tracking-widest">
+                                    Generate Token
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    {# Existing Tokens List #}
+                    {% if tokens %}
+                    <div class="border-t border-line/30 pt-8">
+                        <h3 class="text-[10px] text-muted font-mono uppercase tracking-widest mb-4">Authorized Uplinks</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left font-mono text-xs">
+                                <thead>
+                                    <tr class="text-muted opacity-60 uppercase">
+                                        <th class="pb-4 font-bold">Identifier</th>
+                                        <th class="pb-4 font-bold">Created</th>
+                                        <th class="pb-4 font-bold">Expires</th>
+                                        <th class="pb-4 font-bold text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-line/20">
+                                    {% for token in tokens %}
+                                    <tr class="group">
+                                        <td class="py-3 font-bold text-body">{{ token.description or 'unnamed_token' }}</td>
+                                        <td class="py-3 text-muted">{{ token.created }}</td>
+                                        <td class="py-3 text-muted">{{ token.expiration or 'Never' }}</td>
+                                        <td class="py-3 text-right">
+                                            <button type="button" class="text-error-text hover:text-error-solid uppercase tracking-tighter"
+                                                    data-delete-token="{{ token.id }}">
+                                                Revoke
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
-                <div class="flex flex-col gap-2">
-                    <label for="password" class="text-xs text-muted font-mono uppercase">New Password</label>
-                    <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
-                           id="password" name="password" type="password">
-                </div>
-                <input type="hidden" name="nonce" value="{{ Session.nonce }}">
-                <button type="submit" class="mt-2 font-mono font-bold bg-accent text-accent-text! hover:bg-accent-dark py-2 px-4 rounded-sm transition-colors text-sm">
-                    CHANGE PASSWORD
-                </button>
-            </form>
-        </section>
+            </section>
+            {% endif %}
+        </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
 {% endblock %}

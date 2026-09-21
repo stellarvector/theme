@@ -1,0 +1,27 @@
+{% from "macros/icons.html" import icon %}
+
+<section class="relative overflow-hidden border-b border-line-strong bg-page">
+    {# Decorative coordinate grid, faded at the edges. #}
+    <div class="sv-grid sv-grid-fade pointer-events-none absolute inset-0 opacity-20"></div>
+
+    <div class="relative mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-24 lg:py-32">
+        <p class="sv-label sv-prompt normal-case mb-4">
+            {% block hero_prompt %}{{ hero_prompt | default('whoami') }}{% endblock %}
+        </p>
+
+        <h1 class="sv-marker !mt-0 !mb-6">
+            <span class="sv-glitch sv-glitch-auto text-4xl sm:text-5xl lg:text-6xl" 
+                  data-text="{% block hero_title %}{{ hero_title | default(get_config('ctf_name') | default('Stellar Vector')) }}{% endblock %}">
+                {% block hero_title_text %}{{ hero_title | default(get_config('ctf_name') | default('Stellar Vector')) }}{% endblock %}
+            </span>
+        </h1>
+
+        <p class="mt-6 max-w-2xl text-base text-muted text-pretty sm:text-lg lg:text-xl leading-relaxed">
+            {% block hero_subtitle %}{{ hero_subtitle | default('') }}{% endblock %}<span class="sv-caret" aria-hidden="true"></span>
+        </p>
+
+        <div class="mt-10">
+            {% block hero_extra %}{{ hero_extra | safe if hero_extra }}{% endblock %}
+        </div>
+    </div>
+</section>

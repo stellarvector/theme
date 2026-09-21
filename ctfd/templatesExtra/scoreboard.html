@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+    <div class="mb-12">
+        <p class="sv-label sv-prompt normal-case mb-2">cat /scoreboard</p>
+        <h1 class="sv-marker text-3xl">Scoreboard</h1>
+    </div>
+
+    <div id="score-graph" class="sv-terminal mb-12 hidden md:block" style="height: 400px;">
+        <div class="flex items-center justify-center h-full">
+            <span class="sv-caret text-accent"></span>
+            <span class="ml-2 font-mono text-muted">Aggregating telemetry...</span>
+        </div>
+    </div>
+
+    <div class="sv-terminal overflow-x-auto">
+        <table class="w-full text-left font-mono text-sm">
+            <thead>
+                <tr class="border-b border-line-strong">
+                    <th class="px-6 py-4 font-bold text-accent">Pos</th>
+                    <th class="px-6 py-4 font-bold text-accent">Team</th>
+                    <th class="px-6 py-4 font-bold text-accent text-right">Score</th>
+                </tr>
+            </thead>
+            <tbody id="scoreboard-body">
+                <tr>
+                    <td colspan="3" class="px-6 py-12 text-center text-muted">
+                        Initialising...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script defer src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <script defer src="{{ url_for('views.themes', theme='sv', path='js/scoreboard.min.js') }}"></script>
+{% endblock %}

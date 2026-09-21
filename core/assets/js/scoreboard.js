@@ -8,8 +8,8 @@
     async function fetchScoreboard() {
         try {
             const [scoreRes, bracketRes] = await Promise.all([
-                fetch('/api/v1/scoreboard'),
-                fetch('/api/v1/scoreboard/top/10')
+                fetch(`${window.init.urlRoot}/api/v1/scoreboard`),
+                fetch(`${window.init.urlRoot}/api/v1/scoreboard/top/5`)
             ]);
             
             const teams = (await scoreRes.json()).data;
@@ -24,12 +24,19 @@
 
     function renderGraph(topTeams) {
         const container = document.getElementById('score-graph');
-        if (!container || !Object.keys(topTeams).length) return;
+        if (!container) return;
+
+        if (!Object.keys(topTeams).length) {
+            container.innerHTML = '<div class="flex items-center justify-center h-full text-muted font-mono text-xs">NO TELEMETRY DATA AVAILABLE</div>';
+            return;
+        }
 
         const traces = [];
-        Object.entries(topTeams).forEach(([id, data]) => {
+        const colors = ['#b21010', '#3ddc84', '#56b4e9', '#f0e442', '#cc79a7'];
+        
+        Object.entries(topTeams).forEach(([id, data], i) => {
             const team = data;
-            const x = [init.start];
+            const x = [window.init.start];
             const y = [0];
 
             team.solves.forEach(s => {
@@ -42,8 +49,8 @@
                 y: y,
                 name: team.name,
                 mode: 'lines+markers',
-                line: { shape: 'hv', width: 2 },
-                marker: { size: 4 }
+                line: { shape: 'hv', width: 3, color: colors[i % colors.length] },
+                marker: { size: 6 }
             });
         });
 
@@ -56,28 +63,32 @@
             hovermode: 'closest',
             xaxis: {
                 showgrid: true,
-                gridcolor: '#332020',
-                linecolor: '#6e3232',
+                gridcolor: 'rgba(110, 50, 50, 0.15)',
+                linecolor: 'rgba(110, 50, 50, 0.3)',
                 zeroline: false
             },
             yaxis: {
                 showgrid: true,
-                gridcolor: '#332020',
-                linecolor: '#6e3232',
+                gridcolor: 'rgba(110, 50, 50, 0.15)',
+                linecolor: 'rgba(110, 50, 50, 0.3)',
                 zeroline: false
             },
             legend: { orientation: 'h', y: -0.2 }
         };
 
+        container.innerHTML = '';
         const config = { displayModeBar: false, responsive: true };
         Plotly.newPlot(container, traces, layout, config);
     }
 
     function renderScoreboard(teams) {
         if (teams.length === 0) {
-            body.innerHTML = `<tr><td colspan="3" class="px-6 py-12 text-center text-muted">No teams have scored yet.</td></tr>`;
+            body.innerHTML = `<tr><td colspan="3" class="px-6 py-12 text-center text-muted">No one has scored yet.</td></tr>`;
             return;
         }
+
+        const mode = window.init.userMode || 'teams';
+        const path = mode === 'teams' ? 'teams' : 'users';
 
         body.innerHTML = '';
         teams.forEach((team, i) => {
@@ -87,7 +98,7 @@
             row.innerHTML = `
                 <td class="px-6 py-4 text-muted group-hover:text-accent">${i + 1}</td>
                 <td class="px-6 py-4">
-                    <a href="/teams/${team.account_id}" class="text-body hover:text-link no-underline font-bold">${team.name}</a>
+                    <a href="/${path}/${team.account_id}" class="text-body hover:text-link no-underline font-bold">${team.name}</a>
                 </td>
                 <td class="px-6 py-4 text-right font-bold text-accent">${team.score}</td>
             `;

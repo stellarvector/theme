@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-3xl px-4 py-12 sm:py-20">
+    <div class="mb-12">
+        {% if title %}
+        <p class="sv-label sv-prompt normal-case mb-2">cat /pages/{{ title | lower | replace(' ', '-') }}</p>
+        <h1 class="sv-marker text-3xl">{{ title }}</h1>
+        {% endif %}
+    </div>
+
+    <article class="prose max-w-none text-muted">
+        {{ content | safe }}
+    </article>
+</div>
+{% endblock %}

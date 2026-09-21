@@ -4,26 +4,18 @@
     <div class="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4 sm:px-6 md:h-20">
         {# Site Identity & Site Switcher #}
         <div class="flex items-center gap-2">
-            <a href="/" class="group shrink-0 flex items-center no-underline hover:no-underline" aria-label="Stellar Vector home">
-                <img src="{{ url_for('views.themes', theme='sv', path='img/logo-light.png') }}" alt="Stellar Vector" class="h-9 md:h-12 w-auto light:block hidden transition-transform duration-300 group-hover:scale-105">
-                <img src="{{ url_for('views.themes', theme='sv', path='img/logo-dark.png') }}" alt="Stellar Vector" class="h-9 md:h-12 w-auto light:hidden block transition-transform duration-300 group-hover:scale-105">
+            <a href="/" class="flex items-center gap-2 no-underline group">
+                <img src="{{ url_for('views.themes', theme='sv', path='img/logo-light.png') }}" alt="Stellar Vector" class="h-8 w-auto light:block hidden">
+                <img src="{{ url_for('views.themes', theme='sv', path='img/logo-dark.png') }}" alt="Stellar Vector" class="h-8 w-auto light:hidden block">
             </a>
             {% include "partials/host-chip.html" %}
         </div>
 
         {# Desktop Navigation #}
         <nav class="hidden md:flex items-center gap-x-1" aria-label="Main">
-            <a href="/rules" 
-               class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path == '/rules' else 'text-muted hover:text-link' }}">
-                <span class="text-terminal" aria-hidden="true">$&nbsp;</span>
-                <span class="relative">
-                    rules
-                    <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path == '/rules' }}"></span>
-                </span>
-            </a>
             <a href="{{ url_for('challenges.listing') }}" 
                class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path.startswith('/challenges') else 'text-muted hover:text-link' }}">
-                <span class="text-terminal" aria-hidden="true">$&nbsp;</span>
+                <span class="text-terminal" aria-hidden="true">$ </span>
                 <span class="relative">
                     challenges
                     <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path.startswith('/challenges') }}"></span>
@@ -31,16 +23,16 @@
             </a>
             <a href="{{ url_for('scoreboard.listing') }}" 
                class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path.startswith('/scoreboard') else 'text-muted hover:text-link' }}">
-                <span class="text-terminal" aria-hidden="true">$&nbsp;</span>
+                <span class="text-terminal" aria-hidden="true">$ </span>
                 <span class="relative">
                     scoreboard
                     <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path.startswith('/scoreboard') }}"></span>
                 </span>
             </a>
-            <a href="https://blog.stellarvector.be/?utm_source=play.stellarvector.be&utm_content=nav" 
+            <a href="https://blog.stellarvector.be" 
                target="_blank" rel="noopener"
                class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 text-muted hover:text-link">
-                <span class="text-terminal" aria-hidden="true">$&nbsp;</span>
+                <span class="text-terminal" aria-hidden="true">$ </span>
                 <span class="relative">
                     blog
                     <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100"></span>
@@ -54,17 +46,17 @@
             <div class="hidden md:flex items-center gap-2">
                 {% if authed() %}
                     <a href="{{ url_for('users.private') }}" 
-                       class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path.startswith('/user') or request.path.startswith('/profile') else 'text-muted hover:text-link' }}">
-                        <span class="text-terminal" aria-hidden="true">$&nbsp;</span>
+                       class="group font-mono text-sm no-underline hover:no-underline transition-colors duration-200 rounded-sm relative inline-flex items-center h-11 px-3 {{ 'text-link' if request.path.startswith('/user') else 'text-muted hover:text-link' }}">
+                        <span class="text-terminal" aria-hidden="true">$ </span>
                         <span class="relative">
                             profile
-                            <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path.startswith('/user') or request.path.startswith('/profile') }}"></span>
+                            <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-accent scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 {{ 'scale-x-100' if request.path.startswith('/user') }}"></span>
                         </span>
                     </a>
                     {% if is_admin() %}
                         <a href="{{ url_for('admin.view') }}" target="_blank"
                            class="inline-flex h-11 items-center px-3 font-mono text-sm text-muted hover:text-link">
-                            {{ icon("settings", "size-4") }}
+                            {{ icon("cog", "size-4") }}
                         </a>
                     {% endif %}
                     <a href="{{ url_for('auth.logout') }}" 
@@ -101,7 +93,7 @@
                            transition-colors duration-200 hover:border-accent hover:text-link"
                     aria-expanded="false" aria-controls="menu-panel" aria-label="Open menu">
                 {{ icon("menu", "w-6 h-6 group-aria-expanded:hidden") }}
-                {{ icon("close", "w-6 h-6 hidden group-aria-expanded:block") }}
+                {{ icon("x", "w-6 h-6 hidden group-aria-expanded:block") }}
             </button>
         </div>
     </div>
@@ -118,10 +110,6 @@
                              border-t border-line-strong bg-surface px-4 pb-4 pt-3 sm:px-6"
          aria-label="Mobile">
         <div class="flex flex-col">
-            <a href="/rules" 
-               class="flex min-h-12 items-center px-2 py-3 font-mono text-sm {{ 'bg-accent-tint text-heading' if request.path == '/rules' else 'text-body hover:text-link' }}">
-                <span class="text-terminal mr-1.5">$</span> rules
-            </a>
             <a href="{{ url_for('challenges.listing') }}" 
                class="flex min-h-12 items-center px-2 py-3 font-mono text-sm {{ 'bg-accent-tint text-heading' if request.path.startswith('/challenges') else 'text-body hover:text-link' }}">
                 <span class="text-terminal mr-1.5">$</span> challenges
@@ -130,7 +118,7 @@
                class="flex min-h-12 items-center px-2 py-3 font-mono text-sm {{ 'bg-accent-tint text-heading' if request.path.startswith('/scoreboard') else 'text-body hover:text-link' }}">
                 <span class="text-terminal mr-1.5">$</span> scoreboard
             </a>
-            <a href="https://blog.stellarvector.be/?utm_source=play.stellarvector.be&utm_content=nav" 
+            <a href="https://blog.stellarvector.be" 
                target="_blank" rel="noopener"
                class="flex min-h-12 items-center px-2 py-3 font-mono text-sm text-body hover:text-link">
                 <span class="text-terminal mr-1.5">$</span> blog

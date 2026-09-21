@@ -9,8 +9,6 @@
     <meta name="theme-color" content="#0a0505">
     <meta name="csrf-token" content="{{ Session.nonce }}">
 
-    <link rel="icon" href="{{ url_for('views.themes', theme='sv', path='img/favicon.ico') }}" type="image/x-icon">
-
     <link rel="preload" href="{{ url_for('views.themes', theme='sv', path='fonts/space-grotesk-normal-400_700-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{ url_for('views.themes', theme='sv', path='fonts/ibm-plex-sans-normal-300_600-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{ url_for('views.themes', theme='sv', path='fonts/space-mono-normal-400-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
@@ -23,21 +21,26 @@
     
     <link rel="stylesheet" href="{{ url_for('views.themes', theme='sv', path='css/main.min.css') }}">
     
+    <script type="text/javascript">
+        var init = {
+            'urlRoot': "{{ request.script_root }}",
+            'csrfToken': "{{ Session.nonce }}",
+            'userMode': "{{ get_config('user_mode') }}",
+            'userId': {{ id | default(0) }},
+            'userName': {{ name | default(None) | tojson }},
+            'userEmail': {{ email | default(None) | tojson }},
+            'teamId': {{ team_id | default(None) | tojson }},
+            'teamName': {{ team_name | default(None) | tojson }},
+            'start': {{ start | default(None) | tojson }},
+            'end': {{ end | default(None) | tojson }}
+        };
+    </script>
+    
     <script src="{{ url_for('views.themes', theme='sv', path='js/sv-theme.min.js') }}"></script>
     
     {% block head %}{% endblock %}
 </head>
-<body class="antialiased min-h-dvh flex flex-col"
-      data-url-root="{{ request.script_root }}"
-      data-csrf-token="{{ Session.nonce }}"
-      data-user-mode="{{ get_config('user_mode') }}"
-      data-user-id="{{ id | default(0) }}"
-      data-user-name="{{ name | default('') }}"
-      data-user-email="{{ email | default('') }}"
-      data-team-id="{{ team_id | default('') }}"
-      data-team-name="{{ team_name | default('') }}"
-      data-start="{{ start | default('') }}"
-      data-end="{{ end | default('') }}">
+<body class="antialiased min-h-dvh flex flex-col">
     {% include "partials/header.html" %}
     {% include "partials/notifications.html" %}
     

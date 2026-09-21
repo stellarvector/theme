@@ -4,7 +4,9 @@
   "scripts": {
     "build:css": "tailwindcss -i static/css/main.css -o static/css/main.min.css --content \"templates/**/*.html,static/js/**/*.js\" --minify",
     "build:js": "for f in static/js/*.js; do case \"$f\" in *.min.js) :;; *) terser \"$f\" -o \"${f%.js}.min.js\" --compress --mangle;; esac; done",
-    "build": "npm run build:css && npm run build:js"
+    "build": "npm run build:css && npm run build:js",
+    "watch:css": "tailwindcss -i static/css/main.css -o static/css/main.min.css --content \"templates/**/*.html,static/js/**/*.js\" --watch",
+    "dev": "npm run watch:css"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.0",

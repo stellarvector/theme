@@ -1,0 +1,5 @@
+node_modules/
+static/css/*.min.css
+static/js/*.min.js
+.hugo_build.lock
+hugo_stats.json

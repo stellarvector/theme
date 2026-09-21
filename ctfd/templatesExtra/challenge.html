@@ -1,0 +1,57 @@
+{% from "macros/icons.html" import icon %}
+
+<div class="modal-dialog overflow-hidden rounded-sm border border-line-strong bg-card shadow-2xl" role="document">
+    <div class="modal-content border-none bg-transparent">
+        <div class="modal-header flex items-center justify-between border-b border-line-strong p-6">
+            <div>
+                <span class="sv-label text-xs text-accent mb-1 block">{{ challenge.category }}</span>
+                <h2 class="sv-marker text-xl">{{ challenge.name }}</h2>
+            </div>
+            <button type="button" class="text-muted hover:text-accent transition-colors" data-dismiss="modal" aria-label="Close">
+                {{ icon("close", "w-6 h-6") }}
+            </button>
+        </div>
+        
+        <div class="modal-body p-6 sm:p-8">
+            <div class="prose max-w-none text-muted mb-8">
+                {{ challenge.html }}
+            </div>
+
+            {% if challenge.files %}
+            <div class="grid gap-2 mb-8">
+                {% for file in challenge.files %}
+                {# File objects in CTFd have a 'location' attribute. #}
+                <a href="{{ file.location }}" class="flex items-center gap-2 p-3 rounded-xs border border-line-strong bg-surface hover:border-accent group transition-colors no-underline">
+                    {{ icon("link", "w-4 h-4 text-muted group-hover:text-accent") }}
+                    <span class="font-mono text-xs text-body group-hover:text-link">{{ file.location.split('/') | last }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if challenge.tags %}
+            <div class="flex flex-wrap gap-2 mb-8">
+                {% for tag in challenge.tags %}
+                <span class="px-2 py-0.5 font-mono text-[10px] border border-line-strong text-muted uppercase tracking-wider">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="flex flex-col gap-4">
+                <div class="flex gap-2">
+                    <input type="text" id="flag-input" placeholder="sv{...}" 
+                           class="flex-1 rounded-sm border border-line-strong bg-surface px-4 py-2.5 font-mono text-sm text-body focus:border-accent focus:outline-none">
+                    <button id="submit-flag" class="font-mono font-bold px-6 bg-accent text-accent-text! hover:bg-accent-dark transition-colors rounded-sm">
+                        SUBMIT
+                    </button>
+                </div>
+                <div id="submission-response"></div>
+            </div>
+        </div>
+        
+        <div class="modal-footer flex items-center justify-between border-t border-line-strong bg-surface/50 p-4 px-6 text-xs text-muted font-mono">
+            <span>{{ challenge.value }} points</span>
+            <span>{{ challenge.solves }} solves</span>
+        </div>
+    </div>
+</div>

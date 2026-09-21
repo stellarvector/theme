@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <div class="mb-12">
+        <p class="sv-label sv-prompt normal-case mb-2">chsh</p>
+        <h1 class="sv-marker text-3xl">Settings</h1>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-2">
+        {# Profile Settings #}
+        <section class="sv-terminal p-6">
+            <h2 class="sv-label mb-6 text-accent">Profile</h2>
+            <form method="post" accept-charset="utf-8" autocomplete="off" class="flex flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                    <label for="name" class="text-xs text-muted font-mono uppercase">User Name</label>
+                    <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
+                           id="name" name="name" type="text" value="{{ name }}" required>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="email" class="text-xs text-muted font-mono uppercase">Email</label>
+                    <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
+                           id="email" name="email" type="email" value="{{ email }}" required>
+                </div>
+                <input type="hidden" name="nonce" value="{{ Session.nonce }}">
+                <button type="submit" class="mt-2 font-mono font-bold bg-accent text-accent-text! hover:bg-accent-dark py-2 px-4 rounded-sm transition-colors text-sm">
+                    UPDATE PROFILE
+                </button>
+            </form>
+        </section>
+
+        {# Password Settings #}
+        <section class="sv-terminal p-6">
+            <h2 class="sv-label mb-6 text-accent">Security</h2>
+            <form method="post" accept-charset="utf-8" autocomplete="off" class="flex flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                    <label for="current_confirm" class="text-xs text-muted font-mono uppercase">Current Password</label>
+                    <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
+                           id="current_confirm" name="current_confirm" type="password">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="password" class="text-xs text-muted font-mono uppercase">New Password</label>
+                    <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-2 font-mono text-sm text-body transition-colors focus:border-accent focus:outline-none" 
+                           id="password" name="password" type="password">
+                </div>
+                <input type="hidden" name="nonce" value="{{ Session.nonce }}">
+                <button type="submit" class="mt-2 font-mono font-bold bg-accent text-accent-text! hover:bg-accent-dark py-2 px-4 rounded-sm transition-colors text-sm">
+                    CHANGE PASSWORD
+                </button>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -11,13 +11,15 @@
                     <div class="size-2.5 rounded-full bg-line"></div>
                     <div class="size-2.5 rounded-full bg-line"></div>
                 </div>
-                <span class="font-mono text-[10px] text-muted tracking-widest uppercase">auth.provision</span>
+                <span class="font-mono text-[10px] text-muted tracking-widest uppercase">auth.login</span>
             </div>
 
             <div class="p-8 sm:p-10">
                 <div class="mb-10 text-center">
-                    <h2 class="sv-marker text-3xl inline-block">Register</h2>
-                    <p class="mt-2 font-mono text-xs text-muted">NEW OPERATOR ONBOARDING</p>
+                    <h2 class="sv-marker text-3xl inline-block">
+                        <span class="sv-glitch sv-glitch-auto" data-text="Login">Login</span>
+                    </h2>
+                    <p class="mt-2 font-mono text-xs text-muted">SECURE UPLINK REQUIRED</p>
                 </div>
 
                 {% with messages = get_flashed_messages() %}
@@ -32,43 +34,32 @@
 
                 <form method="post" accept-charset="utf-8" autocomplete="off" class="flex flex-col gap-8">
                     <div class="flex flex-col gap-2.5">
-                        <label for="name" class="sv-label text-muted text-xs">User Name</label>
+                        <label for="name" class="sv-label text-muted text-xs">operator_id</label>
                         <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-3 font-mono text-sm text-body transition-all focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent/20 placeholder:text-muted/20" 
-                               id="name" name="name" type="text" value="" placeholder="operator_alias" required autofocus>
-                    </div>
-
-                    <div class="flex flex-col gap-2.5">
-                        <label for="email" class="sv-label text-muted text-xs">Email</label>
-                        <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-3 font-mono text-sm text-body transition-all focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent/20 placeholder:text-muted/20" 
-                               id="email" name="email" type="email" value="" placeholder="operator@stellarvector.be" required>
+                               id="name" name="name" type="text" value="" placeholder="alias@stellarvector" required autofocus>
                     </div>
                     
                     <div class="flex flex-col gap-2.5">
-                        <label for="password" class="sv-label text-muted text-xs">Password</label>
+                        <div class="flex items-center justify-between">
+                            <label for="password" class="sv-label text-muted text-xs">access_key</label>
+                            <a href="{{ url_for('auth.reset_password') }}" class="font-mono text-[10px] text-muted hover:text-link transition-colors underline decoration-dotted underline-offset-4">lost_key?</a>
+                        </div>
                         <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-3 font-mono text-sm text-body transition-all focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent/20" 
                                id="password" name="password" type="password" value="" required>
                     </div>
 
-                    {% if get_config('registration_code') %}
-                    <div class="flex flex-col gap-2.5">
-                        <label for="registration_code" class="sv-label text-muted text-xs">Registration Code</label>
-                        <input class="w-full rounded-sm border border-line-strong bg-surface px-4 py-3 font-mono text-sm text-body transition-all focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent/20 placeholder:text-muted/20" 
-                               id="registration_code" name="registration_code" type="text" placeholder="Required to register" required>
-                    </div>
-                    {% endif %}
-
                     <input type="hidden" name="nonce" value="{{ Session.nonce }}">
 
                     <button type="submit" class="group mt-2 font-mono font-bold no-underline inline-flex items-center justify-center gap-3 min-h-12 transition-all duration-200 rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-3 px-6 shadow-lg shadow-accent/10">
-                        <span>REGISTER</span>
+                        <span>ESTABLISH CONNECTION</span>
                         <span class="sv-caret-static opacity-50"></span>
                     </button>
                 </form>
 
                 <div class="mt-12 pt-8 border-t border-line/50 text-center">
                     <p class="text-sm text-muted font-mono">
-                        ALREADY ENLISTED? 
-                        <a href="{{ url_for('auth.login') }}" class="text-link hover:text-link-hover font-bold ml-2">LOGIN</a>
+                        NEW OPERATOR? 
+                        <a href="{{ url_for('auth.register') }}" class="text-link hover:text-link-hover font-bold ml-2">PROVISION ACCOUNT</a>
                     </p>
                 </div>
             </div>
