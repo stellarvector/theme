@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if request.path == '/rules' %}
+{% if request.path == '/rules' or (request.blueprint == 'views' and request.endpoint == 'views.static_html' and request.args.get('route') == 'rules') %}
     {% include "partials/rules_body.html" %}
+{% elif request.path == '/' or (request.blueprint == 'views' and request.endpoint == 'views.static_html' and (not request.args.get('route') or request.args.get('route') == 'index')) %}
+    {% include "index.html" %}
 {% else %}
     <div class="mx-auto max-w-3xl px-4 py-12 sm:py-20">
         <div class="mb-12">
