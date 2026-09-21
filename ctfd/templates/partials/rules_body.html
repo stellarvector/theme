@@ -1,0 +1,63 @@
+<div class="mx-auto max-w-3xl px-4 py-12 sm:py-20">
+    <header class="mb-12">
+        <p class="sv-label sv-prompt normal-case mb-2">cat /etc/operator/rules</p>
+        <h1 class="sv-marker text-3xl mb-4">Rules of Engagement</h1>
+        <p class="text-muted text-pretty leading-relaxed">
+            While CTFs are all about hacking, we ask that you keep your skills focused on the challenges themselves. Play fair, play hard.
+        </p>
+    </header>
+
+    <article class="prose max-w-none text-muted leading-relaxed">
+        <p class="mb-8 text-lg text-heading font-medium">
+            By playing on this Stellar Vector CTF platform, you agree to abide by these rules:
+        </p>
+
+        <ul class="space-y-6 list-none p-0">
+            <li class="flex gap-4">
+                <span class="text-terminal font-mono shrink-0">01</span>
+                <span>Any attempts at interfering with the correct functioning of this platform (denial of service, automated scans, large amounts of traffic, deleting stuff, ...) are not tolerated.</span>
+            </li>
+            <li class="flex gap-4">
+                <span class="text-terminal font-mono shrink-0">02</span>
+                <span>You are only allowed to create one account on this platform.</span>
+            </li>
+            <li class="flex gap-4">
+                <span class="text-terminal font-mono shrink-0">03</span>
+                <span>If you find something that you think might be a bug, please report it to us.</span>
+            </li>
+            <li class="flex gap-4">
+                <span class="text-terminal font-mono shrink-0">04</span>
+                <span>Do not share flags or solutions with other players before you've given them a chance to try the challenges themselves.</span>
+            </li>
+            <li class="flex gap-4">
+                <span class="text-terminal font-mono shrink-0">05</span>
+                <span>Play nicely, and behave nicely towards your fellow players.</span>
+            </li>
+            <li class="flex gap-4">
+                <span class="text-terminal font-mono shrink-0">06</span>
+                <span>If you break the rules, we will ban you on this platform, and may refuse your participation in any future Stellar Vector events.</span>
+            </li>
+            <li class="flex gap-4">
+                <span class="text-terminal font-mono shrink-0">07</span>
+                <span>The registration key for this platform is <code class="bg-surface border border-line-strong px-1.5 py-0.5 rounded-xs text-body">stellar-vector-play-nice-deadbeef</code></span>
+            </li>
+            <li class="flex gap-4 pt-4 border-t border-line/20">
+                <span class="text-accent font-mono shrink-0">NOTE</span>
+                <span class="font-bold text-heading">The flag format is <code class="bg-accent/10 text-accent px-1.5 py-0.5 rounded-xs">sv{.+}</code> unless stated otherwise.</span>
+            </li>
+        </ul>
+
+        <div class="mt-16 pt-8 border-t border-line/50 text-center">
+            {% if authed() %}
+                <p class="font-mono text-sm text-muted">
+                    <span class="text-terminal mr-2">✓</span>
+                    By creating an account you have acknowledged these rules.
+                </p>
+            {% else %}
+                <a href="{{ url_for('auth.register') }}" class="group font-mono font-bold no-underline! hover:no-underline! inline-flex items-center justify-center gap-3 min-h-12 transition-all duration-200 rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-3 px-10 shadow-lg shadow-accent/10">
+                    <span>ACKNOWLEDGE & REGISTER</span>
+                </a>
+            {% endif %}
+        </div>
+    </article>
+</div>
