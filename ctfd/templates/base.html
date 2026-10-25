@@ -15,16 +15,16 @@
     <link rel="preload" href="{{ url_for('views.themes', theme='sv', path='fonts/ibm-plex-sans-normal-300_600-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{ url_for('views.themes', theme='sv', path='fonts/space-mono-normal-400-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
 
-    <script defer src="https://go.stellarvector.be/go.js" 
-            data-website-id="2bfb19ad-e57e-4124-a51a-273cb690cedc" 
+    <script defer src="https://go.stellarvector.be/go.js"
+            data-website-id="3410012e-6795-42bf-9a5b-01a435a5d28d"
             data-domains="play.stellarvector.be"></script>
 
     <title>{% block title %}{{ get_config('ctf_name') }}{% endblock %}</title>
-    
+
     <link rel="stylesheet" href="{{ url_for('views.themes', theme='sv', path='css/main.min.css') }}">
-    
+
     <script src="{{ url_for('views.themes', theme='sv', path='js/sv-theme.min.js') }}"></script>
-    
+
     {% block head %}{% endblock %}
 </head>
 <body class="antialiased min-h-dvh flex flex-col"
@@ -40,7 +40,7 @@
       data-end="{{ end | default('') }}">
     {% include "partials/header.html" %}
     {% include "partials/notifications.html" %}
-    
+
     <main id="content" tabindex="-1" class="flex-1 w-full">
         {% with messages = get_flashed_messages() %}
             {% if messages %}

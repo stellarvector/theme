@@ -36,12 +36,6 @@
                     Register to access challenges and track your ranking on the scoreboard. Join our Discord to coordinate with other operators.
                 </p>
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                    {% if not authed() %}
-                        <a href="{{ url_for('auth.register') }}" class="group font-mono text-sm text-link no-underline flex items-center gap-2">
-                            <span class="text-terminal transition-transform group-hover:translate-x-1">$</span>
-                            <span class="border-b border-transparent hover:border-link transition-colors">register_operator</span>
-                        </a>
-                    {% endif %}
                     <a href="https://discord.gg/tbP75TNfNR" target="_blank" rel="noopener" 
                        class="group font-mono font-bold no-underline! hover:no-underline! inline-flex items-center justify-center gap-2.5 min-h-11 transition-all duration-200 rounded-sm bg-accent text-accent-text! hover:bg-accent-dark active:scale-95 py-2 px-6 shadow-md shadow-accent/5 text-sm">
                         <span>join discord</span>
